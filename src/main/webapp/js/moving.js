@@ -1,24 +1,7 @@
-var selectedElement = false;
+Draggable.create("#SvgjsCircle1016", {
+  bounds: {top:fieldY + fieldHeight/2 + 40, left: fieldX + 20, width:fieldWidth - 40, height:fieldHeight/2 - 60}, cursor:"grabbing"
+});
 
-SVG.on(draw, 'mousedown', function(e) {
-	selectedElement = e.target;
-})
-
-draw.mousemove(function(e) {
-	if (selectedElement && selectedElement.classList.contains('draggable')) {
-    e.preventDefault();
-    var dragX = e.pageX;
-    var dragY = e.pageY;
-	
-    selectedElement.setAttribute('cx', dragX);
-    selectedElement.setAttribute('cy', dragY);
-	}
-})
-
-draw.mouseup(function() {
-	selectedElement = null;
-})
-
-draw.mouseleave(function() {
-	selectedElement = null;
-})
+Draggable.create("#SvgjsCircle1018", {
+  bounds: {top:fieldY + 20, left: fieldX + 20, width:fieldWidth - 40, height:fieldHeight/2 - 60}, cursor:"grabbing"
+});

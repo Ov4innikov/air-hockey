@@ -7,7 +7,9 @@ var nameMy = 'Me'
 var nameEnemy = 'Enemy'
 
 	var draw = SVG('air').size(svgWidth, svgHeight);
-	var field = draw.group()
+	
+	var field = draw.group();
+	
 	var background = field.rect(fieldWidth, fieldHeight).attr({ 
 																x:fieldX,
 																y:fieldY,
@@ -15,15 +17,17 @@ var nameEnemy = 'Enemy'
 																stroke:'#bdea94',
 																'stroke-width': 30,
 																'stroke-linejoin':'round',
-																})
+																});
+																
+																
 	var centerCircle = field.circle(200).attr({ 
 												cx:fieldX + fieldWidth/2,
 												cy:fieldY + fieldHeight/2,
 												fill:'#0055d4', 
 												stroke:'#bdea94',
-												})
-	var centerLine = field.line(fieldX + 15, fieldY + fieldHeight/2, fieldX + fieldWidth - 15, fieldY + fieldHeight/2)
-	centerLine.stroke({color: '#bdea94'})
+												});
+	var centerLine = field.line(fieldX + 15, fieldY + fieldHeight/2, fieldX + fieldWidth - 15, fieldY + fieldHeight/2);
+	centerLine.stroke({color: '#bdea94'});
 	var myGoal = field.rect(goalWidth, goalHeight).attr({
 														fill:'#0055d4',
 														x:fieldX + fieldWidth/2 - goalWidth/2,
@@ -36,13 +40,15 @@ var nameEnemy = 'Enemy'
 					y:fieldY + fieldHeight - 15
 					});
 					
+					
 	var puck = draw.circle(30).attr({ 
 									cx:fieldX + fieldWidth/2,
 									cy:fieldY + fieldHeight/2,
 									fill:'#f4ffc9', 
 									stroke:'#bdeadb',
 									'stroke-width': 4
-									});
+									})
+									
 									
 	var myBat = draw.circle(30).attr({ 
 									cx:fieldX + fieldWidth/2,
@@ -50,7 +56,7 @@ var nameEnemy = 'Enemy'
 									fill:'#dbe3de', 
 									stroke:'#cdd1c9',
 									'stroke-width': 12
-									}).addClass('draggable');
+									})
 									
 	var enemyBat = myBat.clone();
 	enemyBat.attr({ 
