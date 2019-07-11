@@ -2,21 +2,96 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <title>Air-hockey</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        body { margin: 0 auto;
+            font-family: Roboto, Helvetica, Tahoma, Verdana, Arial, sans-serif;
+            font-size: 16px;
+            background-color: #223a68 ;
+            background-image: url('images/sky.jpg');  no-repeat;
+            background-size: 100%;
+        }
+    </style>
+
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
+<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0"
+      bgcolor="#E0E0E0" >
+<h1 align="center" style="color:#ffffff">Аэрохоккей</h1>
+<!--&lt;!&ndash; Optional JavaScript &ndash;&gt;-->
+<!--&lt;!&ndash; jQuery first, then Popper.js, then Bootstrap JS &ndash;&gt;-->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+
+<div class="container" align="center">
+
+    <table border="0" width="100%"  >
+        <tr>
+            <td align="center" width="20%"></td>
+            <td align="center" width="60%"></td>
+            <td align="left" width="20%" >
+                <div class="col-sm">
+                    <form class="form-sing">
+                        <div class="form-group">
+                            <!--label for="exampleInputEmail1">Почта</label-->
+                            <input type="login" class="form-control" id="login" aria-describedby="login" placeholder="sample">
+                            <input type="password" class="form-control" id="password" placeholder="Пароль">
+                        </div>
+                        <!--div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        </div-->
+                        <button type="submit" class="btn btn-primary">Вход</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" width="20%">
+                <!--nav class="navbar navbar-light bg-light">
+                    <a class="navbar-brand" href="#">Default</a>
+                </nav-->
+            </td>
+            <td align="center" width="60%"></td>
+            <td align="left" width="20%" >
+                <div class="col-sm">
+                    <form>
+                        <div class="form-group">
+                            <input type="login" class="form-control" id="login" aria-describedby="login" placeholder="Логин">
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="sample@sample.ru">
+
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Введите пароль">
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Повторите пароль">
+                            <input type="city" class="form-control" id="city" placeholder="Город">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Регистрация</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
 </div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> User Name: <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="LogIn"/></div>
-    <a href="/main">MDN</a>
-</form>
+
+<!--<div th:if="${param.error}">-->
+<!--    Invalid username and password.-->
+<!--</div>-->
+<!--<div th:if="${param.logout}">-->
+<!--    You have been logged out.-->
+<!--</div>-->
+<!--<form th:action="@{/login}" method="post">-->
+<!--    <div><label> User Name: <input type="text" name="username"/> </label></div>-->
+<!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
+<!--    <div><input type="submit" value="LogIn"/></div>-->
+<!--    <a href="/main">MDN</a>-->
+<!--</form>-->
 </body>
 </html>
 
