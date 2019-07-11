@@ -33,23 +33,19 @@ public class SimplePlay implements Play {
     }
 
     @Override
-    public void start() {
-        //executorService;
+    public PlayState getPlayState() {
+        return null;
+    }
+
+
+
+    @Override
+    public void handlePlayerMove(PlayerMove playerMove) {
+
     }
 
     public void stop() {
+        playStatus = PlayStatus.BREAK;
         task.stopGame();
-    }
-
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public Player getPlayer2() {
-        return player2;
-    }
-
-    public Puck getPuck() {
-        return puck;
     }
 }

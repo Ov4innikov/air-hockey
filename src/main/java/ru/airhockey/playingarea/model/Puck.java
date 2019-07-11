@@ -18,7 +18,6 @@ public class Puck {
     public static final int RADIUS = 20;
 
     private PuckSpeed speed;
-    private int direction;
     private int x;
     private int y;
     private long updateTime;

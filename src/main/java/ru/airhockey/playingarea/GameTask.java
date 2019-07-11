@@ -28,22 +28,30 @@ public class GameTask implements Callable<GameResult> {
 
     @Override
     public GameResult call() throws Exception {
+        //тестовое условие победы, после i=100, считается, что player1 выйграл
+        int i = 0;
+
         playStatus = PlayStatus.PLAYING;
         while (playStatus == PlayStatus.PLAYING) {
-            checkCrashIntoWalls();
+            checkCrash();
             puck.waitNextIteration();
             logger.trace("x = {}; y = {}; ");
             System.out.println("x = " + puck.getX() + "; y = " + puck.getY() + "; y speed = " + puck.getSpeed().getY());
+            if (i++ == 100) {
+                playStatus = PlayStatus.STOPING;
+                return new GameResult(player1);
+            }
         }
         //Проверка на очки
         return new GameResult(player1);
     }
 
-    private void checkCrashIntoWalls() {
+    private void checkCrash() {
         int xDifferenceWithLeftSide = puck.getX() - puck.RADIUS + puck.getSpeed().getX();
         int xDifferenceWithRightSide = WIDTH_OF_PLAYING_AREA - (puck.getX() + puck.RADIUS + puck.getSpeed().getX());
         int yDifferenceWithBottomSide= puck.getY() - puck.RADIUS + puck.getSpeed().getY();
         int yDifferenceWithTopSide = HEIGHT_OF_PLAYING_AREA - (puck.getY() + puck.RADIUS + puck.getSpeed().getY());
+        boolean crashWallsRightLeft = false, crashWallsTopBottom = false;
         if ((xDifferenceWithLeftSide < 0) && (puck.getSpeed().getX() < 0)) {
             puck.setX(Math.abs(xDifferenceWithLeftSide) + puck.RADIUS);
             puck.getSpeed().turnX();
@@ -51,7 +59,7 @@ public class GameTask implements Callable<GameResult> {
             puck.setX(WIDTH_OF_PLAYING_AREA - Math.abs(xDifferenceWithRightSide) - puck.RADIUS);
             puck.getSpeed().turnX();
         } else {
-            puck.setX(puck.getX() + puck.getSpeed().getX());
+            crashWallsRightLeft = true;
         }
         if ((yDifferenceWithTopSide < 0) && (puck.getSpeed().getY() > 0)) {
             puck.setY(HEIGHT_OF_PLAYING_AREA - Math.abs(yDifferenceWithTopSide) -  - puck.RADIUS);
@@ -60,11 +68,34 @@ public class GameTask implements Callable<GameResult> {
             puck.setY(Math.abs(yDifferenceWithBottomSide) +  puck.RADIUS);
             puck.getSpeed().turnY();
         } else {
-            puck.setY(puck.getY() + puck.getSpeed().getY());
+            crashWallsTopBottom = true;
         }
+        if(!checkCrashIntoPlayers()) {
+            if (crashWallsRightLeft) {
+                puck.setX(puck.getX() + puck.getSpeed().getX());
+            }
+            if (crashWallsTopBottom) {
+                puck.setY(puck.getY() + puck.getSpeed().getY());
+            }
+        }
+
     }
+
+    private boolean checkCrashIntoPlayers() {
+        int distanceBetweenPuckAndPlayer1 = (int) Math.sqrt(puck.getX() + puck.getSpeed().getX() - player1.getX()) * (puck.getX() + puck.getSpeed().getX() - player1.getX()) + (puck.getY() + puck.getSpeed().getY() - player1.getY()) * (puck.getY() + puck.getSpeed().getY() - player1.getY());
+        int distanceBetweenPuckAndPlayer2 = (int) Math.sqrt(puck.getX() + puck.getSpeed().getX() - player2.getX()) * (puck.getX() + puck.getSpeed().getX() - player2.getX()) + (puck.getY() + puck.getSpeed().getY() - player2.getY()) * (puck.getY() + puck.getSpeed().getY() - player2.getY());
+        if (distanceBetweenPuckAndPlayer1 < (puck.RADIUS + player1.RADIUS)) {
+            return true;
+        } else if ((distanceBetweenPuckAndPlayer2 < (puck.RADIUS + player1.RADIUS))) {
+            return true;
+        }
+        return false;
+    }
+
 
     public void stopGame() {
         playStatus = PlayStatus.STOPING;
     }
+
+
 }
