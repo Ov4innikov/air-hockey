@@ -1,4 +1,4 @@
-package ru.airhockey.web;
+package ru.airhockey.web.auth;
 
 //import org.apache.tomcat.jni.User;
 import org.springframework.context.annotation.Bean;

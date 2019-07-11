@@ -1,4 +1,4 @@
-package ru.airhockey.web;
+package ru.airhockey.web.auth;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
