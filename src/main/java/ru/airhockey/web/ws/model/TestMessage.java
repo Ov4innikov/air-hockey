@@ -17,20 +17,12 @@ public class TestMessage implements IMessage {
         this.from = from;
     }
 
-    public String getMesage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMesage(String message) {
+    public void setMessage(String message) {
         this.message = message;
-    }
-
-    @Override
-    public String getMessage() {
-        return "{" +
-                "\"from\":\"" + from + '\"' +
-                ", \"message\":\"" + message + '\"' +
-                '}';
     }
 
     @Override
