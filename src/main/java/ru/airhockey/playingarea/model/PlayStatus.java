@@ -1,10 +1,10 @@
 package ru.airhockey.playingarea.model;
 
 /**
- * Статусы игры: Запуск(после начала, отсчёт 3 сек.), PRE_PLAYING
+ * Статусы игры
  *
  * @author Овчинников
  */
 public enum PlayStatus {
-    STARTING, PLAYING, STOPING, STOPED, BREAK
+    FIND, STARTING, PLAYING, PUCK, STOPPING, RESULTING, BREAK
 }
