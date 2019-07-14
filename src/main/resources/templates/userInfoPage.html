@@ -1,6 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
     <title>User Info</title>
 </head>
 <body>
@@ -8,13 +10,14 @@
 <th:block th:include="/_menu"></th:block>
 
 
-<h2>User Info Page</h2>
-<h3>Welcome : <span th:utext="${#request.userPrincipal.name}"></span></h3>
-<b>This is protected page!</b>
+<h2>Добро пожаловать в игру</h2>
+<h3><span th:utext="${#request.userPrincipal.name}"></span></h3>
 
-<br/><br/>
+<!--<b>This is protected page!</b>-->
 
-<div th:if="${userInfo != null}" th:utext="${userInfo}"></div>
+<!--<br/><br/>-->
+
+<!--<div th:if="${userInfo != null}" th:utext="${userInfo}"></div>-->
 
 </body>
 
