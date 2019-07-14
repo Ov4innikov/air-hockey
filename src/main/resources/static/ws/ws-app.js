@@ -13,7 +13,7 @@ function connect() {
 }
 
 /**
- * Начинает прослушивать свой канал. Для тестовой работы заменить "/topic/message/" на "/topic/test".
+ * Начинает прослушивать свой канал. Для тестовой работы заменить "/topic/message/" на "/topic/test/".
  * @param chanel строковое значение, название канала
  * @param showMessage Важно! Это функция, входным значением которой будет полученнное в вебсокете сообщение. Передавать без скобок
  */
@@ -21,7 +21,7 @@ function openChanel(chanel, showMessage) {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         stompClient.subscribe('/topic/message/' + chanel, function (message) {
-            console.log(message);
+            console.log(message.body);
             showMessage(JSON.parse(message.body));
         });
     });
@@ -39,7 +39,7 @@ function disconnect() {
 }
 
 /**
- * Отправить сообщение на сервер. Для тестовой работы заменить "/app/message/" на "/app/test".
+ * Отправить сообщение на сервер. Для тестовой работы заменить "/app/message/" на "/app/test/".
  * @param chanel строковое значение, название канала
  * @param message сообщение для сервера, должен быть в формате JSON
  */

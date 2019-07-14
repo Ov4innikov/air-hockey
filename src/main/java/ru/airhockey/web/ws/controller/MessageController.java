@@ -21,9 +21,9 @@ public class MessageController {
      */
     @MessageMapping("/test/{id}")
     @SendTo("/topic/test/{id}")
-    public String getTestMessage(TestMessage message){
-        message.setMesage("Server: " + message.getMesage());
-        return message.getMessage();
+    public IMessage getTestMessage(TestMessage message){
+        message.setMessage("Server: " + message.getMessage());
+        return message;
     }
 
     /**
@@ -32,7 +32,7 @@ public class MessageController {
      */
     @MessageMapping("/message/{id}")
     @SendTo("/topic/message/{id}")
-    public void getMessage(IMessage message){
+    public void getMessage(IMessage message) {
 
     }
 }

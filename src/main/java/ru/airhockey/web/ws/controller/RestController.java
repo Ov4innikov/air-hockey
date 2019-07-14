@@ -24,7 +24,7 @@ public class RestController {
         System.out.println(key);
         TestMessage message = new TestMessage();
         message.setFrom("John");
-        message.setMesage("Server want say");
-        template.convertAndSend("/topic/test/"+key, message.getMessage());
+        message.setMessage("Server want say");
+        template.convertAndSend("/topic/test/"+key, message);
     }
 }

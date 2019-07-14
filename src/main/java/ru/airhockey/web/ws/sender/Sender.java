@@ -18,6 +18,6 @@ public class Sender implements ISender {
 
     @Override
     public void send(IMessage message) {
-        template.convertAndSend("/topic/message/" + ID, message.getMessage());
+        template.convertAndSend("/topic/message/" + ID, message);
     }
 }
