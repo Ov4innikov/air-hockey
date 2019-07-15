@@ -1,6 +1,5 @@
 package ru.airhockey.web.auth;
 
-import org.springframework.boot.origin.SystemEnvironmentOrigin;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,7 @@ public class AuthController {
         return "userInfoPage";
     }
 
-    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
     public String accessDenied(Model model, Principal principal) {
         if (principal != null) {
             User loginedUser = (User) ((Authentication) principal).getPrincipal();
@@ -35,7 +34,7 @@ public class AuthController {
             model.addAttribute("message", message);
         }
 
-        return "403Page";
+        return "accessDeniedPage";
     }
 
 }

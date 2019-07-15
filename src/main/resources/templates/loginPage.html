@@ -30,16 +30,6 @@
 <!-- Include _menu.html -->
 <th:block th:include="/_menu"></th:block>
 
-<!-- /login?error=true -->
-<div th:if="${#request.getParameter('error') == 'true'}"
-     style="color:red;margin:10px 0px;">
-    Login Failed!!!<br />
-    Reason :
-    <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
-          th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
-                Static summary
-         </span>
-</div>
 
 
 <div class="container" align="center">
@@ -70,6 +60,16 @@
                             <li>user2/123</li>
                         </ul>
 
+                    </div>
+
+                    <!-- /login?error=true -->
+                    <div th:if="${#request.getParameter('error') == 'true'}"
+                         style="color:red;margin:10px 0px;">
+                        Ошибка входа<br />
+                        <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+                              th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+                                  Static summary
+                             </span>
                     </div>
                 </td>
             </tr>
