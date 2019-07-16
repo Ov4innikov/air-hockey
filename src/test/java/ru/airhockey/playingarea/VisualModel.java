@@ -1,11 +1,6 @@
 package ru.airhockey.playingarea;
 
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import ru.airhockey.playingarea.model.Puck;
 
 import javax.swing.*;
