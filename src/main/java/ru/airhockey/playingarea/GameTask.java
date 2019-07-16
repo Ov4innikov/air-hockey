@@ -38,7 +38,7 @@ public class GameTask implements Callable<GameResult> {
             logger.trace("x = {}; y = {}; ");
             System.out.println("x = " + puck.getX() + "; y = " + puck.getY() + "; y speed = " + puck.getSpeed().getY());
             if (i++ == 100) {
-                playStatus = PlayStatus.STOPING;
+                playStatus = PlayStatus.STOPPING;
                 return new GameResult(player1);
             }
         }
@@ -94,7 +94,7 @@ public class GameTask implements Callable<GameResult> {
 
 
     public void stopGame() {
-        playStatus = PlayStatus.STOPING;
+        playStatus = PlayStatus.STOPPING;
     }
 
 

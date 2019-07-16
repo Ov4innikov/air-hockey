@@ -5,6 +5,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.airhockey.playingarea.DemoPlay;
 import ru.airhockey.web.ws.model.TestMessage;
 
 /**
@@ -26,5 +27,11 @@ public class RestController {
         message.setFrom("John");
         message.setMessage("Server want say");
         template.convertAndSend("/topic/test/"+key, message);
+    }
+
+    @RequestMapping("/app/demosay")
+    public void demoSay(@RequestParam String key) {
+        DemoPlay demo = new DemoPlay();
+        demo.demoPlay(template);
     }
 }

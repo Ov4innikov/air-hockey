@@ -22,6 +22,19 @@ public class Puck {
     private int y;
     private long updateTime;
 
+
+    public void Puck(PuckSpeed speed, int x, int y) {
+        this.speed = speed;
+        this.x = x;
+        this.y = y;
+    }
+
+    public void Puck(PuckSpeed speed, String x, String y) {
+        this.speed = speed;
+        this.x = Integer.parseInt(x);
+        this.y = Integer.parseInt(y);
+    }
+
     public Puck(PuckSpeed speed, int x, int y) {
         this.speed = speed;
         this.x = x;
@@ -37,5 +50,15 @@ public class Puck {
             LockSupport.parkNanos((WAIT_TIME - (System.currentTimeMillis() - updateTime)) * 1000000);
         }
         updateTime();
+    }
+
+    @Override
+    public String toString() {
+        return "Puck{" +
+                "speed=" + speed +
+                ", x=" + x +
+                ", y=" + y +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

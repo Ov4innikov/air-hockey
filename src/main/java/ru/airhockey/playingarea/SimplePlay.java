@@ -48,4 +48,8 @@ public class SimplePlay implements Play {
         playStatus = PlayStatus.BREAK;
         task.stopGame();
     }
+
+    public Puck getPuck() {
+      return null;
+    }
 }
