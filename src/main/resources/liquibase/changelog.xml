@@ -11,7 +11,8 @@
         <runningAs username="postgres"/>
     </preConditions>
     <!-- Should be only links to per-version cumulative changelog files. -->
-    <include file="dbMigrations/userCreate.xml" relativeToChangelogFile="true"/>
+    <include file="dbMigrations/UserCreate.xml" relativeToChangelogFile="true"/>
+    <include file="dbMigrations/InsertUsers.xml" relativeToChangelogFile="true"/>
 <!--    <include file="dbMigrations/gameObjects.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="dbMigrations/gameStatisticsCreate.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>
