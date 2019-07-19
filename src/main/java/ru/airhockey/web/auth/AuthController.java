@@ -37,4 +37,13 @@ public class AuthController {
         return "accessDeniedPage";
     }
 
+    @RequestMapping(value = "/sockets", method = RequestMethod.GET)
+    public String socket(Model model, Principal principal) {
+        return "sockets";
+    }
+
+    @RequestMapping(value = "/demo", method = RequestMethod.GET)
+    public String demo(Model model, Principal principal) {
+        return "demo";
+    }
 }
