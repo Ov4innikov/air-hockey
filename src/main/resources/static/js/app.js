@@ -25,14 +25,15 @@ function showMessage(message) {
 }
 
 function setDemoSay(id) {
-    $.get("/app/demosay", {key:id});
+    jQuery.get("/app/demosay", {key:id});
 }
 
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
     });
-    $( "#connect" ).click(function() { connect(); openChanel($('#socketid').val(), showMessage);});
+    $( "#connect" ).click(function() { connect(); openChanel("demoPlay", showMessage);});
     $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#demo" ).click(function () { setDemoSay($('#socketid').val());});
+    $( "#demo" ).click(function () { setDemoSay("demoPlay");});
+    console.log("duck");
 });

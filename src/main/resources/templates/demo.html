@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+ <script type="text/javascript" src="/js/svg.min.js"></script>
+ <script type="text/javascript" src="/js/graphics.js" defer></script>
+ <script type="text/javascript" src="/js/TweenMax.min.js" defer></script>
+ <script type="text/javascript" src="/js/Draggable.min.js" defer></script>
+ <script type="text/javascript" src="/js/moving.js" defer></script>
+
+ <link href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+ <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+ <script src="/webjars/jquery/3.4.0/jquery.min.js"></script>
+ <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+
+ <script type="text/javascript" src="/js/ws/ws-app.js"></script>
+ <script src="/js/app.js"></script>
+
+ <title>Innopolis Air hockey</title>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+
+<div id="air" draggable="false"></div>
+
+<div class="col-md-6">
+ <form class="form-inline">
+  <div class="form-group">
+   <label for="connect">WebSocket connection:</label>
+   <button id="connect" class="btn btn-default" type="submit">Connect</button>
+   <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>
+   <button id="demo" class="btn btn-default" type="submit">Get demo!</button>
+   <!--   <div class="form-group">-->
+   <!--    <label for="socketid">Id of pare</label>-->
+   <!--    <input type="text" id="socketid" class="form-control" placeholder="Id here">-->
+   <!--   </div>-->
+  </div>
+ </form>
+</div>
+</body>
+</html>

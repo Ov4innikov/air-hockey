@@ -12,5 +12,5 @@ public interface ISender {
      * Метод который описывает непосредственно отправку сообщения
      * @param message
      */
-    void send(IMessage message);
+    void send(String id, IMessage message);
 }
