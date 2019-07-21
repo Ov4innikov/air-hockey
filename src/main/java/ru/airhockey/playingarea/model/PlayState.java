@@ -1,5 +1,10 @@
 package ru.airhockey.playingarea.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class PlayState {
 
     PlayStatus playStatus;
