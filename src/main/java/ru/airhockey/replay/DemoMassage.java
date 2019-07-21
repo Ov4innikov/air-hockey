@@ -1,32 +1,36 @@
-package ru.airhockey.playingarea;
+package ru.airhockey.replay;
 
 import ru.airhockey.playingarea.model.PlayStatus;
 import ru.airhockey.playingarea.model.Player;
 import ru.airhockey.playingarea.model.Puck;
+import ru.airhockey.playingarea.model.PuckSpeed;
 import ru.airhockey.web.ws.model.IMessage;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Класс Демо сообщения имплементируется от IMessage, заполняется данными игроков, шайбы и статуса игры
  * на конкрентный момент времени
  *
- * @i.sibagatullin
- *
+ * @author i.sibagatullin
  */
 public class DemoMassage implements IMessage {
-        private Long tick;
-        private Player player1;
-        private Player player2;
-        private Puck puck;
-        private PlayStatus playStatus;
+    private Long tick;
+    private Player player1;
+    private Player player2;
+    private Puck puck;
+    private PlayStatus playStatus;
 
-        public DemoMassage(Long tick, Player player1, Player player2, Puck puck, PlayStatus playStatus)
-        {
-            this.tick = tick;
-            this.player1 = player1;
-            this.player2 = player2;
-            this.puck = puck;
-            this.playStatus = playStatus;
-        }
+    public DemoMassage(Long tick, Player player1, Player player2, Puck puck, PlayStatus playStatus) {
+        this.tick = tick;
+        this.player1 = player1;
+        this.player2 = player2;
+        this.puck = puck;
+        this.playStatus = playStatus;
+    }
+
     public Long getTick() {
         return tick;
     }

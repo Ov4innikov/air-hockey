@@ -18,16 +18,17 @@ public class Player {
     private int playAccount = 0;
     private int score = 0;
 
-    public void player(int x, int y, int scope, int playAccount)
-    {
+    public Player() {
+    }
+
+    public Player(int x, int y, int scope, int playAccount) {
         this.x = x;
         this.y = y;
         this.score = scope;
         this.playAccount = playAccount;
     }
 
-    public void player(String x, String y, String scope, String playAccount)
-    {
+    public Player(String x, String y, String scope, String playAccount) {
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
         this.score = Integer.parseInt(scope);
