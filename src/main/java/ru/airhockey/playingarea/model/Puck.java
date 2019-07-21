@@ -14,12 +14,12 @@ import java.util.concurrent.locks.LockSupport;
 @Getter
 @Setter
 public class Puck {
-    public static final int WAIT_TIME = 50;
+    public static final int WAIT_TIME = 20;
     public static final int RADIUS = 20;
 
     private PuckSpeed speed;
-    private int x;
-    private int y;
+    private float x;
+    private float y;
     private long updateTime;
 
     public Puck(PuckSpeed speed, String x, String y) {
@@ -40,7 +40,7 @@ public class Puck {
 
     public void waitNextIteration() {
         if (System.currentTimeMillis() - updateTime < WAIT_TIME) {
-            LockSupport.parkNanos((WAIT_TIME - (System.currentTimeMillis() - updateTime)) * 1000000);
+            LockSupport.parkNanos((WAIT_TIME - (System.currentTimeMillis() - updateTime)) * 1_000_000);
         }
         updateTime();
     }
