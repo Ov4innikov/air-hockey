@@ -72,10 +72,13 @@ public class AppUser {
         this.login = login;
     }
 
+
     @Override
     public String toString() {
-        return "User{" +
+        return "AppUser{" +
                 "name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 ", city='" + city + '\'' +
                 ", description='" + description + '\'' +
                 '}';
