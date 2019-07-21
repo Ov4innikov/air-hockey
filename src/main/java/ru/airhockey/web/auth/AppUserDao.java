@@ -30,7 +30,7 @@ public class AppUserDao extends JdbcDaoSupport {
             return null;
         }
     }
-
+    //Under Construction
     public void registerUserAccount(String userName,String login,String password,String city,String description){
         String sql = "INSERT INTO public.\"USER\"(name,login,password,city,description) " +
                 "VALUES (?,?,?,?,?);";
