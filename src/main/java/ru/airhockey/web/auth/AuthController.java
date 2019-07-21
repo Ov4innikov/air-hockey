@@ -1,13 +1,16 @@
 package ru.airhockey.web.auth;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class AuthController {
@@ -35,6 +38,18 @@ public class AuthController {
         }
 
         return "accessDeniedPage";
+    }
+
+    @RequestMapping(value = "/register",method = RequestMethod.GET)
+    public String register(Model model,Principal principal){
+        model.addAttribute("appuser", new AppUser());
+        return "registerPage";
+    }
+
+    @PostMapping(value = "/j_spring_security_register")
+    public String createEmployee(@ModelAttribute AppUser appuser) {
+        System.out.println(appuser.toString());
+        return "loginPage";
     }
 
     @RequestMapping(value = "/sockets", method = RequestMethod.GET)
