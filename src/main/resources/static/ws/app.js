@@ -22,6 +22,10 @@ function setServerSay(id) {
     $.get("/app/serversay", {key:id});
 }
 
+function setDemoSay(id) {
+    $.get("/app/demosay", {key:id});
+}
+
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
@@ -29,5 +33,7 @@ $(function () {
     $( "#connect" ).click(function() { connect(); openChanel($('#socketid').val(), showMessage);});
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendMessage($('#socketid').val(), { 'from': 'mememe', 'message': $("#name").val() }); });
-    $( "#serversay" ).click(function () { setServerSay($('#socketid').val()); })
+    $( "#serversay" ).click(function () { setServerSay($('#socketid').val());});
+    $( "#demosay" ).click(function () { setDemoSay($('#socketid').val());});
+
 });

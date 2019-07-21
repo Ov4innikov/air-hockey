@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="InsertUser" author="msalakhov">
+        <insert tableName="USER">
+            <column name="name" type="VARCHAR(255)" value="user"/>
+            <column name="login" type="varchar(255)" value="user"/>
+            <column name="password" type="varchar(255)" value="$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu"/>
+            <column name="city" type="varchar(255)" value="Tver"/>
+            <column name="description" type="varchar(255)" value="Test"/>
+        </insert>
+        <insert tableName="USER">
+            <column name="name" type="VARCHAR(255)" value="user1"/>
+            <column name="login" type="varchar(255)" value="user1"/>
+            <column name="password" type="varchar(255)" value="$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu"/>
+            <column name="city" type="varchar(255)" value="Moscow"/>
+            <column name="description" type="varchar(255)" value="Test"/>
+        </insert>
+        <insert tableName="USER">
+            <column name="name" type="VARCHAR(255)" value="user2"/>
+            <column name="login" type="varchar(255)" value="user2"/>
+            <column name="password" type="varchar(255)" value="$2a$10$PrI5Gk9L.tSZiW9FXhTS8O8Mz9E97k2FZbFvGFFaSsiTUIl.TCrFu"/>
+            <column name="city" type="varchar(255)" value="Kazan"/>
+            <column name="description" type="varchar(255)" value="Test"/>
+        </insert>
+
+    </changeSet>
+</databaseChangeLog>

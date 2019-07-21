@@ -21,4 +21,12 @@ public class PuckSpeed {
     public void turnY() {
         y = -y;
     }
+
+    @Override
+    public String toString() {
+        return "PuckSpeed{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

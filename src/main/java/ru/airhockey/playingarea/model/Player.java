@@ -19,3 +19,15 @@ public class Player {
     private float playAccount = 0;
     private float score = 0;
 }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "x=" + x +
+                ", y=" + y +
+                ", playAccount=" + playAccount +
+                ", score=" + score +
+                '}';
+    }
+}
+

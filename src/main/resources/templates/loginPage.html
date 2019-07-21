@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--<head>-->
+<!--    <title>Login</title>-->
+<!--</head>-->
+
+<head>
+    <title>Air-hockey</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <!--style>
+        body { margin: 0 auto;
+            font-family: Roboto, Helvetica, Tahoma, Verdana, Arial, sans-serif;
+            font-size: 16px;
+            background-color: #223a68 ;
+            background-image: url('images/sky.jpg');  no-repeat;
+            background-size: 100%;
+        }
+    </style-->
+
+</head>
+
+<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0"
+      bgcolor="#E0E0E0" >
+
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+
+
+<div class="container" align="center">
+    <table border="0" width="100%"  >
+            <tr>
+                <td align="center" width="20%"></td>
+                <td align="center" width="60%"></td>
+                <td align="left" width="20%" >
+                    <div class="col-sm">
+                        <form class="form-sing" th:action="@{/j_spring_security_check}" method='POST' >
+                            <div class="form-group">
+                                <!--label for="exampleInputEmail1">Почта</label-->
+                                <input type="text" name="username" class="form-control" aria-describedby="login" placeholder="sample">
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Пароль">
+                            </div>
+                            <!--div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div-->
+                            <button type="submit" name="submit" class="btn btn-primary">Вход</button>
+                        </form>
+
+                        <br>
+                        Username/pass:
+                        <ul>
+                            <li>user/123</li>
+                            <li>user1/123</li>
+                            <li>user2/123</li>
+                        </ul>
+
+                    </div>
+
+                    <!-- /login?error=true -->
+                    <div th:if="${#request.getParameter('error') == 'true'}"
+                         style="color:red;margin:10px 0px;">
+                        Ошибка входа<br />
+                        <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+                              th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+                                  Static summary
+                             </span>
+                    </div>
+                </td>
+            </tr>
+     </table>
+</div>
+
+
+</body>
+
+</html>
