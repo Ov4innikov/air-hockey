@@ -29,6 +29,9 @@ public class AppUser {
         this.description = description;
     }
 
+    public AppUser() {
+    }
+
     public String getName() {
         return name;
     }
