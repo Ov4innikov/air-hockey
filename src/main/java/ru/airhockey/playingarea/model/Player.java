@@ -13,8 +13,9 @@ import lombok.Setter;
 public class Player {
     public static final int RADIUS = 40;
 
-    private int x;
-    private int y;
-    private int playAccount = 0;
-    private int score = 0;
+    private PlayerPosition playerPosition;
+    private float x;
+    private float y;
+    private float playAccount = 0;
+    private float score = 0;
 }

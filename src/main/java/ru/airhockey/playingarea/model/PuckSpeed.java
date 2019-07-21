@@ -6,10 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PuckSpeed {
-    private int x = 0;
-    private int y = 0;
+    private float x = 0;
+    private float y = 0;
 
-    public PuckSpeed(int x, int y) {
+    public PuckSpeed(float x, float y) {
         this.x = x;
         this.y = y;
     }
