@@ -30,4 +30,16 @@ public class AppUserDao extends JdbcDaoSupport {
             return null;
         }
     }
+
+    public void registerUserAccount(String userName,String login,String password,String city,String description){
+        String sql = "INSERT INTO public.\"USER\"(name,login,password,city,description) " +
+                "VALUES (?,?,?,?,?);";
+        Object[] params = new Object[] {userName,login,password,city,description};
+        UserMapper mapper = new UserMapper();
+        try{
+            this.getJdbcTemplate().query(sql,params,mapper);
+        } catch (EmptyResultDataAccessException e){
+            e.printStackTrace();
+        }
+    }
 }
