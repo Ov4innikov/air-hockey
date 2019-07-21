@@ -45,17 +45,23 @@ public class DemoPlay {
         return gameReplay.getGameText();
     }
 
+    /**
+     * Парсим данные полученные из базы
+     * @author farhutdinov
+     * @param text вся игра в виде текста
+     * @return игра в виде готовых сообщений
+     */
     private List<DemoMassage> parseDBFormat(String text) {
         List<DemoMassage> message = new ArrayList<>();
         String[] lines = text.split("\n");
         for (String line : lines) {
             String[] point = line.split(";");
             long tick = Long.parseLong(point[0]);
-            Player player1 = new Player(point[1], point[2], point[3], point[4]);
-            Player player2 = new Player(point[5], point[6], point[7], point[8]);
+            Player player1 = new Player(PlayerPosition.valueOf(point[5]), Float.parseFloat(point[1]), Float.parseFloat(point[2]), Float.parseFloat(point[3]), Float.parseFloat(point[4]));
+            Player player2 = new Player(PlayerPosition.valueOf(point[10]), Float.parseFloat(point[6]), Float.parseFloat(point[7]), Float.parseFloat(point[8]), Float.parseFloat(point[9]));
             PuckSpeed speed = new PuckSpeed(10, 10);
-            Puck puck = new Puck(speed, point[9], point[10]);
-            PlayStatus playStatus = PlayStatus.valueOf(point[11]);
+            Puck puck = new Puck(speed, point[11], point[12]);
+            PlayStatus playStatus = PlayStatus.valueOf(point[13]);
             message.add(new DemoMassage(tick, player1, player2, puck, playStatus));
         }
         return message;
@@ -71,7 +77,9 @@ public class DemoPlay {
         try (InputStream fis = DemoPlay.class.getResourceAsStream(FILE_NAME)) {
             int c;
             while ((c = fis.read()) != -1) {
-                if ((char) c == '\r') continue;
+                if ((char) c == '\r') {
+                    continue;
+                }
                 builder.append((char) c);
             }
             replay.insertGame("demoPlay", builder.toString());

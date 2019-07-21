@@ -9,6 +9,8 @@ import ru.airhockey.replay.entity.GameReplay;
 import javax.sql.DataSource;
 
 /**
+ * Реализация дао повторов игры
+ * Сделано на Spring JDBC
  * @author folkland
  */
 @Repository

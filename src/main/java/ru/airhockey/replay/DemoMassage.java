@@ -31,6 +31,31 @@ public class DemoMassage implements IMessage {
         this.playStatus = playStatus;
     }
 
+    /**
+     * Функция которая записывает каждое действие в формате базы
+     * Согласен, не очень красиво, но зато наглядно
+     * @author farhutdinov
+     * @return
+     */
+    public String toDBFormat() {
+        StringBuilder builder = new StringBuilder();
+        builder.append(tick + ";");
+        builder.append(player1.getX() + ";");
+        builder.append(player1.getY() + ";");
+        builder.append(player1.getScore() + ";");
+        builder.append(player1.getPlayAccount() + ";");
+        builder.append(player1.getPlayerPosition() + ";");
+        builder.append(player2.getX() + ";");
+        builder.append(player2.getY() + ";");
+        builder.append(player2.getScore() + ";");
+        builder.append(player2.getPlayAccount() + ";");
+        builder.append(player2.getPlayerPosition() + ";");
+        builder.append(puck.getX() + ";");
+        builder.append(puck.getY() + ";");
+        builder.append(playStatus + ";\n");
+        return builder.toString();
+    }
+
     public Long getTick() {
         return tick;
     }
