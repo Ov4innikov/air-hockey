@@ -28,6 +28,10 @@ function setDemoSay(id) {
     jQuery.get("/app/demosay", {key:id});
 }
 
+function insertDemo() {
+    jQuery.get("/app/demoinsert");
+}
+
 $(function () {
     $("form").on('submit', function (e) {
         e.preventDefault();
@@ -35,5 +39,6 @@ $(function () {
     $( "#connect" ).click(function() { connect(); openChanel("demoPlay", showMessage);});
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#demo" ).click(function () { setDemoSay("demoPlay");});
+    $( "#insert-demo" ).click(function () { insertDemo(); });
     console.log("duck");
 });

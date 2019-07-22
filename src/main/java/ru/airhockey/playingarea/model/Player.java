@@ -18,7 +18,16 @@ public class Player {
     private float y;
     private float playAccount = 0;
     private float score = 0;
-}
+
+    public Player() {}
+
+    public Player(PlayerPosition playerPosition, float x, float y, float score, float playAccount) {
+        this.playerPosition = playerPosition;
+        this.x = x;
+        this.y = y;
+        this.playAccount = playAccount;
+        this.score = score;
+    }
 
     @Override
     public String toString() {
