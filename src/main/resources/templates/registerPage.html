@@ -109,27 +109,14 @@
     <title>Air-hockey</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-
-    <!--style>
-        body { margin: 0 auto;
-            font-family: Roboto, Helvetica, Tahoma, Verdana, Arial, sans-serif;
-            font-size: 16px;
-            background-color: #223a68 ;
-            background-image: url('images/sky.jpg');  no-repeat;
-            background-size: 100%;
-        }
-    </style-->
-
+    <th:block th:include="/include/_bootsrap"></th:block>
 </head>
 
 <body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0"
       bgcolor="#E0E0E0" >
 
 <!-- Include _menu.html -->
-<th:block th:include="/_menu"></th:block>
+<th:block th:include="/include/_menu"></th:block>
 
 <!-- /login?error=true -->
 <div th:if="${#request.getParameter('error') == 'true'}"

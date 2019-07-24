@@ -22,11 +22,13 @@ public class MvcConfig implements WebMvcConfigurer {
      * Для локальных файлов: выложить в resources/static файлы, затем подключить по аналогии с js папкой
      * Использование потом такое: /js/app.js
      * По дополнительным вопросам к farhutdinov
+     *
+     * salakhov: Добавлен resourceChain(false) что бы заработал webjars-locator. Что бы подключать ресурсы без указания версий на странице.
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/webjars/**")) {
-            registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
+            registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/").resourceChain(false);
         }
 //        if (!registry.hasMappingForPattern("/js/**")) {
             registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
