@@ -8,12 +8,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.airhockey.playingarea.model.GameResult;
-import ru.airhockey.playingarea.model.Player;
-import ru.airhockey.playingarea.model.Puck;
+import ru.airhockey.playingarea.model.*;
+import ru.airhockey.playingarea.util.PhysicsUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
@@ -31,11 +34,14 @@ public class VisualModel extends JFrame {
 
     public static void main(String[] args) throws Exception {
         gameWindow = new VisualModel();
+
         gameWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameWindow.setLocation(200,100);
-        gameWindow.setSize(GameTask.WIDTH_OF_PLAYING_AREA, GameTask.HEIGHT_OF_PLAYING_AREA);
+        gameWindow.setSize(GameTask.HEIGHT_OF_PLAYING_AREA, GameTask.WIDTH_OF_PLAYING_AREA);
         gameWindow.setResizable(false);
         simplePlay = new SimplePlay(new ForkJoinPool(20), player1, player2);
+        MouseListener winListener = new MyMouseListener(simplePlay);
+        gameWindow.addMouseListener(winListener);
         GameField gameField = new GameField();
         ExecutorService executorService = new ForkJoinPool(3);
         Future<GameResult> gameResult = executorService.submit(simplePlay);
@@ -45,10 +51,14 @@ public class VisualModel extends JFrame {
     }
 
     private static void onRepaint(Graphics g){
-        puck = simplePlay.getPlayState().getPuck();
-        drawCircle(g, puck.getX(), puck.getY(), puck.RADIUS);
-        drawCircle(g, player1.getX(), player1.getY(), player1.RADIUS);
-        drawCircle(g, player2.getX(), player2.getY(), player2.RADIUS);
+        PlayState playState = simplePlay.getPlayState();
+        if (playState.getPlayStatus() == PlayStatus.PUCK) {
+            logger.info("Puck! {}:{}", (int) player1.getPlayAccount(), (int) player2.getPlayAccount());
+        }
+        puck = playState.getPuck();
+        drawCircle(g, puck.getY(), puck.getX(), puck.RADIUS);
+        drawCircle(g, player1.getY(), player1.getX(), player1.RADIUS);
+        drawCircle(g, player2.getY(), player2.getX(), player2.RADIUS);
     }
 
     private static void drawCircle(Graphics g, float x, float y, float r){
@@ -63,6 +73,46 @@ public class VisualModel extends JFrame {
             super.paintComponent(g);
             onRepaint(g);
             repaint();
+        }
+    }
+
+    private static class MyMouseListener implements MouseListener {
+
+        private Play play;
+
+        public MyMouseListener(Play play) {
+            this.play = play;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            float x = e.getY();
+            float y = e.getX();
+            logger.info("x = {}, y = {}", y, x);
+            float corner = PhysicsUtil.getCorner(x - player1.getX(), y - player1.getY());
+            PlayerMove playerMove = new PlayerMove(player1, PlayerMoveStatus.YES, corner);
+            play.handlePlayerMove(playerMove);
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            PlayerMove playerMove = new PlayerMove(player1, PlayerMoveStatus.NO, 0);
+            play.handlePlayerMove(playerMove);
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
         }
     }
 

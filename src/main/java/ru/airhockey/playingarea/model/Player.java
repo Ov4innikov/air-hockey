@@ -3,6 +3,8 @@ package ru.airhockey.playingarea.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.concurrent.locks.LockSupport;
+
 /**
  * Игрок на игровом поле
  *
@@ -12,12 +14,14 @@ import lombok.Setter;
 @Setter
 public class Player {
     public static final int RADIUS = 40;
+    public static final int WAIT_TIME = 5;
 
     private PlayerPosition playerPosition;
     private float x;
     private float y;
     private float playAccount = 0;
     private float score = 0;
+    private long updateTime = 0;
 
     public Player() {}
 
@@ -27,6 +31,22 @@ public class Player {
         this.y = y;
         this.playAccount = playAccount;
         this.score = score;
+    }
+
+    public void updateTime() {
+        updateTime = System.currentTimeMillis();
+    }
+
+    public void waitNextIteration() {
+        if (isWaitNextIteration()) {
+            LockSupport.parkNanos((WAIT_TIME - (System.currentTimeMillis() - updateTime)) * 1_000_000);
+        }
+        updateTime();
+    }
+
+    public boolean isWaitNextIteration() {
+        if (System.currentTimeMillis() - updateTime < WAIT_TIME) return true;
+        return false;
     }
 
     @Override

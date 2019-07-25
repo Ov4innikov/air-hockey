@@ -1,9 +1,6 @@
 package ru.airhockey.playingarea.direct;
 
-import ru.airhockey.playingarea.model.Player;
-import ru.airhockey.playingarea.model.PlayerPosition;
-import ru.airhockey.playingarea.model.Puck;
-import ru.airhockey.playingarea.model.PuckSpeed;
+import ru.airhockey.playingarea.model.*;
 
 /**
  * Класс управляющий положением шайбы и игроков.
@@ -56,14 +53,18 @@ public class PlayDirect {
     }
 
     public void setUpPuckPosition(Puck puck) {
-        puck.setSpeed(new PuckSpeed(2, 3));
+        puck.setSpeed(new Speed(0, 0));
         puck.setX(upPuckPositionX);
         puck.setY(upPuckPositionY);
     }
 
     public void setDownPuckPosition(Puck puck) {
-        puck.setSpeed(new PuckSpeed(2, 3));
+        puck.setSpeed(new Speed(0, 0));
         puck.setX(downPuckPositionX);
         puck.setY(downPuckPositionY);
+    }
+
+    public PlayerMove getDefaultPlayerMove(Player player) {
+        return new PlayerMove(player, PlayerMoveStatus.NO, 0);
     }
 }

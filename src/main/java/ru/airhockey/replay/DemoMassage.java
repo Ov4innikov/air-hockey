@@ -3,12 +3,7 @@ package ru.airhockey.replay;
 import ru.airhockey.playingarea.model.PlayStatus;
 import ru.airhockey.playingarea.model.Player;
 import ru.airhockey.playingarea.model.Puck;
-import ru.airhockey.playingarea.model.PuckSpeed;
 import ru.airhockey.web.ws.model.IMessage;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Класс Демо сообщения имплементируется от IMessage, заполняется данными игроков, шайбы и статуса игры

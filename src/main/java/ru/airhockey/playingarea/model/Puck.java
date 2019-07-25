@@ -1,6 +1,5 @@
 package ru.airhockey.playingarea.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,21 +13,21 @@ import java.util.concurrent.locks.LockSupport;
 @Getter
 @Setter
 public class Puck {
-    public static final int WAIT_TIME = 20;
+    public static final int WAIT_TIME = 15;
     public static final int RADIUS = 20;
 
-    private PuckSpeed speed;
+    private Speed speed;
     private float x;
     private float y;
-    private long updateTime;
+    private long updateTime = 0;
 
-    public Puck(PuckSpeed speed, String x, String y) {
+    public Puck(Speed speed, String x, String y) {
         this.speed = speed;
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
     }
 
-    public Puck(PuckSpeed speed, int x, int y) {
+    public Puck(Speed speed, int x, int y) {
         this.speed = speed;
         this.x = x;
         this.y = y;

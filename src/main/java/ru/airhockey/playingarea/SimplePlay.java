@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.direct.PlayDirect;
 import ru.airhockey.playingarea.model.*;
+import ru.airhockey.playingarea.util.PhysicsUtil;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -36,7 +37,7 @@ public class SimplePlay implements Play {
         //TODO: logger
         logger.info("Starting SimplePlay");
         this.executorService = executorService;
-        puck = new Puck(new PuckSpeed(10, 10), 100, 200);
+        puck = new Puck(new Speed(10, 10), 100, 200);
         this.player1 = player1;
         this.player2 = player2;
     }
@@ -83,7 +84,7 @@ public class SimplePlay implements Play {
         if (playStatus == PlayStatus.PLAYING) {
             newPlayStatus = task.getPlayStatus();
             if (newPlayStatus == PlayStatus.PUCK) {
-                logger.info("New playStatus = PUCK!");
+                logger.trace("New playStatus = PUCK!");
                 task.setPlayStatus(PlayStatus.PLAYING);
             }
         } else {
@@ -98,7 +99,13 @@ public class SimplePlay implements Play {
 
     @Override
     public void handlePlayerMove(PlayerMove playerMove) {
-
+        if (task != null) {
+            if (playerMove.getPlayer() == player1) {
+                task.updatePlayer1Move(playerMove);
+            } else if (playerMove.getPlayer() == player2) {
+                task.updatePlayer2Move(playerMove);
+            }
+        }
     }
 
     @Override
