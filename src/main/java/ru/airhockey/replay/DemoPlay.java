@@ -59,7 +59,7 @@ public class DemoPlay {
             long tick = Long.parseLong(point[0]);
             Player player1 = new Player(PlayerPosition.valueOf(point[5]), Float.parseFloat(point[1]), Float.parseFloat(point[2]), Float.parseFloat(point[3]), Float.parseFloat(point[4]));
             Player player2 = new Player(PlayerPosition.valueOf(point[10]), Float.parseFloat(point[6]), Float.parseFloat(point[7]), Float.parseFloat(point[8]), Float.parseFloat(point[9]));
-            PuckSpeed speed = new PuckSpeed(10, 10);
+            Speed speed = new Speed(10, 10);
             Puck puck = new Puck(speed, point[11], point[12]);
             PlayStatus playStatus = PlayStatus.valueOf(point[13]);
             message.add(new DemoMassage(tick, player1, player2, puck, playStatus));

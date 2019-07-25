@@ -16,22 +16,28 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class GameTask implements Callable<GameResult> {
 
-    public static final int HEIGHT_OF_PLAYING_AREA = 400;
-    public static final int WIDTH_OF_PLAYING_AREA = 350;
-    public static final int WIDTH_OF_GOAL = 0;
+    public static final int HEIGHT_OF_PLAYING_AREA = 1000;
+    public static final int WIDTH_OF_PLAYING_AREA = 450;
+    public static final int WIDTH_OF_GOAL = 200;
+    public static final int DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER = 10;
 
     private static final Logger logger = LoggerFactory.getLogger(GameTask.class);
     private static final PlayDirect playDirect = PlayDirect.getInstance();
 
     private Player player1;
     private Player player2;
+    private PlayerMove player1Move;
+    private PlayerMove player2Move;
     private Puck puck;
     private volatile PlayStatus playStatus = PlayStatus.STARTING;
+    private int countOfIterationAfterCrashToPlayer = 0;
 
     public GameTask(Player player1, Player player2, Puck puck) {
         this.player1 = player1;
         this.player2 = player2;
         this.puck = puck;
+        player1Move = playDirect.getDefaultPlayerMove(player1);
+        player2Move = playDirect.getDefaultPlayerMove(player2);
     }
 
     @Override
@@ -41,6 +47,7 @@ public class GameTask implements Callable<GameResult> {
         logger.info("Game task running!");
         playStatus = PlayStatus.PLAYING;
         while (playStatus == PlayStatus.PLAYING) {
+            handlePlayersMove();
             checkCrash();
             if (playStatus == PlayStatus.PUCK) {
                 logger.info("Wait end of PUCK status...");
@@ -50,9 +57,9 @@ public class GameTask implements Callable<GameResult> {
 
             }
             puck.waitNextIteration();
-            logger.info("x = {}; y = {}; ", puck.getX(), puck.getY());
-            logger.info("player1 x = {}; player1 y = {}; player1 position = {}", player1.getX(), player1.getY(), player1.getPlayerPosition());
-            logger.info("player2 x = {}; player2 y = {}; player2 position = {}", player2.getX(), player2.getY(), player2.getPlayerPosition());
+            logger.trace("x = {}; y = {}; ", puck.getX(), puck.getY());
+            logger.trace("player1 x = {}; player1 y = {}; player1 position = {}", player1.getX(), player1.getY(), player1.getPlayerPosition());
+            logger.trace("player2 x = {}; player2 y = {}; player2 position = {}", player2.getX(), player2.getY(), player2.getPlayerPosition());
         }
         //Проверка на очки
         logger.info("Game task stopping!");
@@ -104,29 +111,38 @@ public class GameTask implements Callable<GameResult> {
             if (puck.getY() > HEIGHT_OF_PLAYING_AREA/2) {
                 if (player1.getPlayerPosition() == PlayerPosition.UP) {
                     player1.setPlayAccount(player1.getPlayAccount() + 1);
+                    player1Move = playDirect.getDefaultPlayerMove(player1);
+                    player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player1);
                     playDirect.setDownPlayerPosition(player2);
                     playDirect.setUpPuckPosition(puck);
                 } else {
                     player2.setPlayAccount(player2.getPlayAccount() + 1);
+                    player1Move = playDirect.getDefaultPlayerMove(player1);
+                    player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player2);
                     playDirect.setDownPlayerPosition(player1);
-                    playDirect.setUpPuckPosition(puck);
+                    playDirect.setDownPuckPosition(puck);
                 }
             } else {
+                logger.info("Player1Position = {}, = {}", (player1.getPlayerPosition() == PlayerPosition.DOWN), true);
                 if (player1.getPlayerPosition() == PlayerPosition.DOWN) {
                     player1.setPlayAccount(player1.getPlayAccount() + 1);
+                    player1Move = playDirect.getDefaultPlayerMove(player1);
+                    player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player2);
                     playDirect.setDownPlayerPosition(player1);
                     playDirect.setDownPuckPosition(puck);
                 } else {
                     player2.setPlayAccount(player2.getPlayAccount() + 1);
+                    player1Move = playDirect.getDefaultPlayerMove(player1);
+                    player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player2);
                     playDirect.setDownPlayerPosition(player1);
-                    playDirect.setDownPuckPosition(puck);
+                    playDirect.setUpPuckPosition(puck);
                 }
             }
-            logger.info("Puck!");
+            logger.debug("Puck!");
             return true;
         }
         return false;
@@ -135,18 +151,49 @@ public class GameTask implements Callable<GameResult> {
     private boolean checkCrashIntoPlayers() {
         float distanceBetweenPuckAndPlayer1 = (int) Math.sqrt((puck.getX() + puck.getSpeed().getX() - player1.getX()) * (puck.getX() + puck.getSpeed().getX() - player1.getX()) + (puck.getY() + puck.getSpeed().getY() - player1.getY()) * (puck.getY() + puck.getSpeed().getY() - player1.getY()));
         float distanceBetweenPuckAndPlayer2 = (int) Math.sqrt((puck.getX() + puck.getSpeed().getX() - player2.getX()) * (puck.getX() + puck.getSpeed().getX() - player2.getX()) + (puck.getY() + puck.getSpeed().getY() - player2.getY()) * (puck.getY() + puck.getSpeed().getY() - player2.getY()));
-        if (distanceBetweenPuckAndPlayer1 < (puck.RADIUS + player1.RADIUS)) {
-            logger.info("Crash into player1!");
+        float futureDistanceBetweenPuckAndPlayer1 = (int) Math.sqrt((puck.getX() + 2 * puck.getSpeed().getX() - player1.getX()) * (puck.getX() + 2 * puck.getSpeed().getX() - player1.getX()) + (puck.getY() + 2 * puck.getSpeed().getY() - player1.getY()) * (puck.getY() + 2 * puck.getSpeed().getY() - player1.getY()));
+        float futureDistanceBetweenPuckAndPlayer2 = (int) Math.sqrt((puck.getX() + 2 * puck.getSpeed().getX() - player2.getX()) * (puck.getX() + 2 * puck.getSpeed().getX() - player2.getX()) + (puck.getY() + 2 * puck.getSpeed().getY() - player2.getY()) * (puck.getY() + 2 * puck.getSpeed().getY() - player2.getY()));
+        if (distanceBetweenPuckAndPlayer1 < (puck.RADIUS + player1.RADIUS) && countOfIterationAfterCrashToPlayer <= 0) {
+            logger.trace("Crash into player1!");
             PhysicsUtil.calclateCrashResult(puck, player1);
+            countOfIterationAfterCrashToPlayer = DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER;
             return true;
-        } else if ((distanceBetweenPuckAndPlayer2 < (puck.RADIUS + player2.RADIUS))) {
-            logger.info("Crash into player2!");
+        } else if ((distanceBetweenPuckAndPlayer2 < (puck.RADIUS + player2.RADIUS)) && countOfIterationAfterCrashToPlayer <= 0) {
+            logger.trace("Crash into player2!");
             PhysicsUtil.calclateCrashResult(puck, player2);
+            countOfIterationAfterCrashToPlayer = DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER;
             return true;
         }
+        countOfIterationAfterCrashToPlayer--;
         return false;
     }
 
+    private void handlePlayersMove() {
+        handlePlayerMove(player1);
+        handlePlayerMove(player2);
+    }
+
+    private void handlePlayerMove(Player player) {
+        logger.trace("Start handlePlayerMove()!");
+        PlayerMove playerMove = null;
+        if (player == player1) {
+            playerMove = player1Move;
+        } else if (player == player2) {
+            playerMove = player2Move;
+        }
+        logger.trace("playerMove = {}", playerMove.toString());
+        if (playerMove.getPlayerMoveStatus() == PlayerMoveStatus.YES) {
+            Speed playerSpeed = PhysicsUtil.getNewSpeed(playerMove.DEFAULT_SPEED_OF_PLAYER, playerMove.getDirection());
+            if (player == player1) {
+                player1.setX(player1.getX() + playerSpeed.getX());
+                player1.setY(player1.getY() + playerSpeed.getY());
+            } else if (player == player2) {
+                player2.setX(player2.getX() + playerSpeed.getX());
+                player2.setY(player2.getY() + playerSpeed.getY());
+            }
+        }
+        logger.trace("Stop handlePlayerMove()!");
+    }
 
     public void stopGame() {
         playStatus = PlayStatus.STOPPING;
@@ -158,5 +205,13 @@ public class GameTask implements Callable<GameResult> {
 
     public void setPlayStatus(PlayStatus playStatus) {
         this.playStatus = playStatus;
+    }
+
+    public void updatePlayer1Move(PlayerMove player1Move) {
+        if (playStatus == PlayStatus.PLAYING) this.player1Move = player1Move;
+    }
+
+    public void updatePlayer2Move(PlayerMove player2Move) {
+        if (playStatus == PlayStatus.PLAYING) this.player2Move = player2Move;
     }
 }
