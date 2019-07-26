@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.direct.PlayDirect;
 import ru.airhockey.playingarea.model.*;
 import ru.airhockey.playingarea.util.PhysicsUtil;
+import ru.airhockey.replay.DemoMassage;
+import ru.airhockey.web.ws.sender.ISender;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.LockSupport;
@@ -32,12 +34,18 @@ public class GameTask implements Callable<GameResult> {
     private volatile PlayStatus playStatus = PlayStatus.STARTING;
     private int countOfIterationAfterCrashToPlayer = 0;
 
-    public GameTask(Player player1, Player player2, Puck puck) {
+    private ISender sender;
+    private String gameId;
+
+    public GameTask(Player player1, Player player2, Puck puck, ISender sender, String gameId) {
         this.player1 = player1;
         this.player2 = player2;
         this.puck = puck;
         player1Move = playDirect.getDefaultPlayerMove(player1);
         player2Move = playDirect.getDefaultPlayerMove(player2);
+
+        this.sender = sender;
+        this.gameId = gameId;
     }
 
     @Override
@@ -47,7 +55,7 @@ public class GameTask implements Callable<GameResult> {
         logger.info("Game task running!");
         playStatus = PlayStatus.PLAYING;
         while (playStatus == PlayStatus.PLAYING) {
-            handlePlayersMove();
+            sender.send(gameId, new DemoMassage(1L, player1, player2, puck, playStatus)); handlePlayersMove();
             checkCrash();
             if (playStatus == PlayStatus.PUCK) {
                 logger.info("Wait end of PUCK status...");

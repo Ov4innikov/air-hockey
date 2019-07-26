@@ -1,10 +1,13 @@
 package ru.airhockey.playingarea;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.direct.PlayDirect;
 import ru.airhockey.playingarea.model.*;
 import ru.airhockey.playingarea.util.PhysicsUtil;
+import ru.airhockey.web.ws.sender.ISender;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -16,22 +19,46 @@ import java.util.concurrent.locks.LockSupport;
  *
  * @author Овчинников
  */
+
 public class SimplePlay implements Play {
 
     private static final Logger logger = LoggerFactory.getLogger(SimplePlay.class);
     private static final PlayDirect playDirect = PlayDirect.getInstance();
     private static final long STARTIG_TIME = 3;
 
+    @Getter
+    @Setter
     private Player player1;
+    @Getter
+    @Setter
     private Player player2;
+    @Getter
+    @Setter
     private Puck puck;
     private Round round = Round.FIRST;
+    @Getter
+    @Setter
     private PlayStatus playStatus = PlayStatus.STARTING;
     private Future firstPeriod, secondPeriod;
     private GameResult result = null, firstPeriodResult, secondPeriodResult;
     private GameTask task;
 
+    private ISender sender;
+    private String gameId;
+
     private final ExecutorService executorService;
+
+    public SimplePlay(ExecutorService executorService, Player player1, Player player2, ISender sender, String gameId) {
+        //TODO: logger
+        logger.info("Starting SimplePlay");
+        this.executorService = executorService;
+        puck = new Puck(new Speed(10, 10), 100, 200);
+        this.player1 = player1;
+        this.player2 = player2;
+
+        this.sender = sender;
+        this.gameId = gameId;
+    }
 
     public SimplePlay(ExecutorService executorService, Player player1, Player player2) {
         //TODO: logger
@@ -55,7 +82,7 @@ public class SimplePlay implements Play {
             playDirect.setUpPuckPosition(puck);
             playDirect.setDownPlayerPosition(player1);
             playDirect.setUpPlayerPosition(player2);
-            task = new GameTask(player1, player2, puck);
+            task = new GameTask(player1, player2, puck, sender, gameId);
             playStatus = PlayStatus.PLAYING;
             firstPeriod = executorService.submit(task);
         }
@@ -68,7 +95,7 @@ public class SimplePlay implements Play {
             playDirect.setDownPuckPosition(puck);
             playDirect.setDownPlayerPosition(player1);
             playDirect.setUpPlayerPosition(player2);
-            task = new GameTask(player1, player2, puck);
+            task = new GameTask(player1, player2, puck, sender, gameId);
             playStatus = PlayStatus.PLAYING;
             secondPeriod = executorService.submit(task);
         }

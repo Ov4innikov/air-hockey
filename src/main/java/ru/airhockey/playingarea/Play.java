@@ -5,6 +5,7 @@ import ru.airhockey.playingarea.model.PlayState;
 import ru.airhockey.playingarea.model.PlayerMove;
 
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Интерфейс для игры

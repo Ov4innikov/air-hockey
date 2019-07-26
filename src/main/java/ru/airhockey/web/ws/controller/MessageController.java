@@ -1,8 +1,13 @@
 package ru.airhockey.web.ws.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import ru.airhockey.replay.DemoMassage;
+import ru.airhockey.service.Game;
+import ru.airhockey.service.GameManager;
+import ru.airhockey.service.IManager;
 import ru.airhockey.web.ws.model.IMessage;
 import ru.airhockey.web.ws.model.TestMessage;
 
@@ -13,6 +18,9 @@ import ru.airhockey.web.ws.model.TestMessage;
 
 @Controller
 public class MessageController {
+
+    @Autowired
+    IManager manager;
 
     /**
      * Тестовый пример подключений к вебсокету
@@ -31,8 +39,8 @@ public class MessageController {
      * @param message приходящее сообщение
      */
     @MessageMapping("/message/{id}")
-    @SendTo("/topic/message/{id}")
     public void getMessage(IMessage message) {
-
+        System.out.println("Message controller");
+        manager.setPlayerPosition(message);
     }
 }

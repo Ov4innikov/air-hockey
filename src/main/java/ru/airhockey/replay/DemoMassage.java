@@ -17,6 +17,7 @@ public class DemoMassage implements IMessage {
     private Player player2;
     private Puck puck;
     private PlayStatus playStatus;
+    private String gameId;
 
     public DemoMassage(Long tick, Player player1, Player player2, Puck puck, PlayStatus playStatus) {
         this.tick = tick;
@@ -91,6 +92,14 @@ public class DemoMassage implements IMessage {
         this.playStatus = playStatus;
     }
 
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     @Override
     public String toString() {
         return "DemoMassage{" +
@@ -99,6 +108,7 @@ public class DemoMassage implements IMessage {
                 ", player2=" + player2 +
                 ", puck=" + puck +
                 ", playStatus=" + playStatus +
+                ", gameId='" + gameId + '\'' +
                 '}';
     }
 }
