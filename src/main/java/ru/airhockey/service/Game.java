@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.airhockey.playingarea.Play;
 import ru.airhockey.playingarea.SimplePlay;
-import ru.airhockey.playingarea.model.PlayStatus;
-import ru.airhockey.playingarea.model.Player;
-import ru.airhockey.playingarea.model.PlayerMove;
-import ru.airhockey.playingarea.model.Puck;
+import ru.airhockey.playingarea.model.*;
 import ru.airhockey.replay.DemoMassage;
 import ru.airhockey.web.ws.model.IMessage;
 import ru.airhockey.web.ws.sender.ISender;
@@ -21,7 +18,7 @@ import java.util.concurrent.locks.LockSupport;
 @Getter
 @Setter
 public class Game {
-    private Play simplePlay;
+    private SimplePlay simplePlay;
     private ISender sender;
     private String gameId;
     private long tick;
@@ -44,21 +41,34 @@ public class Game {
         return demoMassage;
     }
 
-    public void setPlayerPosition(IMessage message) {
-        ClientMessage clientMessage = (ClientMessage) message;
+    public void setPlayerPosition(ClientMessage clientMessage) {
+        PlayerMove playerMove = new PlayerMove();
+        if (clientMessage.getPlayerPosition() == PlayerPosition.DOWN) {
+//            simplePlay.getPlayer1().setX(clientMessage.getPlayer().getX());
+//            simplePlay.getPlayer1().setY(clientMessage.getPlayer().getY());
+//            simplePlay.getPlayer1().setScore(clientMessage.getPlayer().getScore());
+            playerMove.setPlayer(simplePlay.getPlayer1());
+        } else {
+//            simplePlay.getPlayer2().setX(clientMessage.getPlayer().getX());
+//            simplePlay.getPlayer2().setY(clientMessage.getPlayer().getY());
+//            simplePlay.getPlayer2().setScore(clientMessage.getPlayer().getScore());
+            playerMove.setPlayer(simplePlay.getPlayer2());
+        }
 
-        PlayerMove playerMove = new PlayerMove(clientMessage.getPlayer(), clientMessage.getPlayerMoveStatus(), clientMessage.getDirection());
+        playerMove.setPlayerMoveStatus(clientMessage.getPlayerMoveStatus());
+        playerMove.setDirection(clientMessage.getDirection());
         simplePlay.handlePlayerMove(playerMove);
     }
 
     public void startGame(Player player1, Player player2) throws Exception {
         System.out.println("Service started on " + gameId + " channel");
         ExecutorService executorService = new ForkJoinPool(20);
-        simplePlay = new SimplePlay(executorService, player1, player2, sender, gameId);
+        simplePlay = new SimplePlay(executorService, player1, player2);
         tick = System.currentTimeMillis();
         executorService.submit(simplePlay);
-        while (simplePlay.getPlayState().getPlayStatus() == PlayStatus.BREAK) {
+        while (simplePlay.getPlayState().getPlayStatus() != PlayStatus.BREAK) {
             sender.send(gameId, getDemoMessage(simplePlay));
+            tick += Puck.WAIT_TIME;
             LockSupport.parkNanos(Puck.WAIT_TIME * 1_000_000);
         }
     }

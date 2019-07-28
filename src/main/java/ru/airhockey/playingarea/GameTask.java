@@ -18,7 +18,7 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class GameTask implements Callable<GameResult> {
 
-    public static final int HEIGHT_OF_PLAYING_AREA = 1000;
+    public static final int HEIGHT_OF_PLAYING_AREA = 650;
     public static final int WIDTH_OF_PLAYING_AREA = 450;
     public static final int WIDTH_OF_GOAL = 200;
     public static final int DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER = 10;
@@ -34,18 +34,13 @@ public class GameTask implements Callable<GameResult> {
     private volatile PlayStatus playStatus = PlayStatus.STARTING;
     private int countOfIterationAfterCrashToPlayer = 0;
 
-    private ISender sender;
-    private String gameId;
 
-    public GameTask(Player player1, Player player2, Puck puck, ISender sender, String gameId) {
+    public GameTask(Player player1, Player player2, Puck puck) {
         this.player1 = player1;
         this.player2 = player2;
         this.puck = puck;
         player1Move = playDirect.getDefaultPlayerMove(player1);
         player2Move = playDirect.getDefaultPlayerMove(player2);
-
-        this.sender = sender;
-        this.gameId = gameId;
     }
 
     @Override
@@ -55,7 +50,7 @@ public class GameTask implements Callable<GameResult> {
         logger.info("Game task running!");
         playStatus = PlayStatus.PLAYING;
         while (playStatus == PlayStatus.PLAYING) {
-            sender.send(gameId, new DemoMassage(1L, player1, player2, puck, playStatus)); handlePlayersMove();
+            handlePlayersMove();
             checkCrash();
             if (playStatus == PlayStatus.PUCK) {
                 logger.info("Wait end of PUCK status...");

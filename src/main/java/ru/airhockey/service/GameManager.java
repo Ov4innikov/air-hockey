@@ -36,7 +36,7 @@ public class GameManager implements IManager {
     @Override
     public void startGame(String gameId) {
         try {
-            gameMap.get(gameId).startGame(new Player(PlayerPosition.UP, 250, 60, 0, 0), new Player(PlayerPosition.DOWN, 250, 650, 0, 0));
+            gameMap.get(gameId).startGame(new Player(PlayerPosition.DOWN, 0, 0, 0, 0), new Player(PlayerPosition.UP, 0, 0, 0, 0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,6 +56,7 @@ public class GameManager implements IManager {
     @Override
     public void setPlayerPosition(IMessage message) {
         ClientMessage clientMessage = (ClientMessage) message;
-        gameMap.get(clientMessage.getGameId()).setPlayerPosition(message);
+        Game game = gameMap.get(clientMessage.getGameId());
+        gameMap.get(clientMessage.getGameId()).setPlayerPosition(clientMessage);
     }
 }

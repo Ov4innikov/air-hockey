@@ -5,6 +5,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import ru.airhockey.replay.DemoMassage;
+import ru.airhockey.service.ClientMessage;
 import ru.airhockey.service.Game;
 import ru.airhockey.service.GameManager;
 import ru.airhockey.service.IManager;
@@ -38,8 +39,14 @@ public class MessageController {
      * Рабочее подключение к вебсокетам
      * @param message приходящее сообщение
      */
+//    @MessageMapping("/message/{id}")
+//    public void getMessage(IMessage message) {
+//        System.out.println("Message controller");
+//        manager.setPlayerPosition(message);
+//    }
+
     @MessageMapping("/message/{id}")
-    public void getMessage(IMessage message) {
+    public void getMessage(ClientMessage message) {
         System.out.println("Message controller");
         manager.setPlayerPosition(message);
     }

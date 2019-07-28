@@ -13,6 +13,9 @@ public class PlayerMove {
     private PlayerMoveStatus playerMoveStatus;
     private float direction;
 
+    public PlayerMove() {
+    }
+
     public PlayerMove(Player player, PlayerMoveStatus playerMoveStatus, float direction) {
         this.player = player;
         this.playerMoveStatus = playerMoveStatus;

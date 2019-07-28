@@ -90,6 +90,7 @@ public class VisualModel extends JFrame {
             logger.info("x = {}, y = {}", y, x);
             float corner = PhysicsUtil.getCorner(x - player1.getX(), y - player1.getY());
             PlayerMove playerMove = new PlayerMove(player1, PlayerMoveStatus.YES, corner);
+            System.out.println(corner);
             play.handlePlayerMove(playerMove);
         }
 
