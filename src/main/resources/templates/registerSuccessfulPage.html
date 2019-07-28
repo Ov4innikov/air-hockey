@@ -10,12 +10,14 @@
 <!-- Include _menu.html -->
 <th:block th:include="/include/_menu"></th:block>
 
-<h2>ВЫ успешно зарегистрированы</h2>
+<h2>Вы успешно зарегистрированы</h2>
 
 <div th:if="${flashUser != null}">
     <ul>
-        <li>User Name: <span th:utext="${flashUser.name}">..</span></li>
-        <li>Email: <span th:utext="${flashUser.login}">..</span></li>
+        <li>Пользователь: <span th:utext="${flashUser.name}">..</span></li>
+        <li>Логин: <span th:utext="${flashUser.login}">..</span></li>
+        <li>Город: <span th:utext="${flashUser.city}">..</span></li>
+        <li>Описание: <span th:utext="${flashUser.description}">..</span></li>
     </ul>
 </div>
 
