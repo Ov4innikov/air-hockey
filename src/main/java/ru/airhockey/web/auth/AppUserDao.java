@@ -5,10 +5,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.airhockey.web.auth.AppUser;
 import ru.airhockey.web.auth.UserMapper;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 @Transactional
@@ -30,14 +34,19 @@ public class AppUserDao extends JdbcDaoSupport {
             return null;
         }
     }
-    //Under Construction
-    public void registerUserAccount(String userName,String login,String password,String city,String description){
+
+    public void registerUserAccount(AppUser user){
         String sql = "INSERT INTO public.\"USER\"(name,login,password,city,description) " +
                 "VALUES (?,?,?,?,?);";
-        Object[] params = new Object[] {userName,login,password,city,description};
-        UserMapper mapper = new UserMapper();
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String codePass = passwordEncoder.encode(user.getPassword());
+        Object[] params = new Object[] {user.getName(),user.getLogin(),codePass,
+                user.getCity(),user.getDescription()};
+
         try{
-            this.getJdbcTemplate().query(sql,params,mapper);
+            this.getJdbcTemplate().update(sql,params);
         } catch (EmptyResultDataAccessException e){
             e.printStackTrace();
         }

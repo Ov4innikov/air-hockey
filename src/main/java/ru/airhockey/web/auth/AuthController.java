@@ -1,15 +1,36 @@
 package ru.airhockey.web.auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 
 @Controller
 public class AuthController {
+    @Autowired
+    private AppUserDao appUserDao;
+
+    @Autowired
+    private AppUserValidator appUserValidator;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder dataBinder){
+        Object target = dataBinder.getTarget();
+        if(target == null){
+            return;
+        }
+        System.out.println("Target="+target);
+
+        if(target.getClass() == AppUser.class) {
+            dataBinder.setValidator(appUserValidator);
+        }
+    }
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)
     public String userInfo(Model model, Principal principal) {
@@ -43,9 +64,17 @@ public class AuthController {
     }
 
     @PostMapping(value = "/j_spring_security_register")
-    public String createEmployee(@ModelAttribute AppUser appuser) {
+    public String createEmployee(@ModelAttribute AppUser appuser,final RedirectAttributes redirectAttributes) {
         System.out.println(appuser.toString());
-        return "loginPage";
+        AppUser newUser = null;
+        try{
+            appUserDao.registerUserAccount(appuser);
+        }
+        catch (Exception e){
+
+        }
+        redirectAttributes.addFlashAttribute("flashUser", appuser);
+        return "redirect:/registerSuccessful";
     }
 
     @RequestMapping(value = "/sockets", method = RequestMethod.GET)
