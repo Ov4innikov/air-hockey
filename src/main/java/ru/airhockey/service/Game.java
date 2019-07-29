@@ -18,7 +18,7 @@ import java.util.concurrent.locks.LockSupport;
 @Getter
 @Setter
 public class Game {
-    private SimplePlay simplePlay;
+    private Play simplePlay;
     private ISender sender;
     private String gameId;
     private long tick;
@@ -34,14 +34,14 @@ public class Game {
         this.gameId = gameId;
     }
 
-    private DemoMassage getDemoMessage(Play play) {
-        SimplePlay simplePlay = (SimplePlay) play;
-        DemoMassage demoMassage = new DemoMassage(tick, simplePlay.getPlayer1(), simplePlay.getPlayer2(), simplePlay.getPuck(), simplePlay.getPlayStatus());
+    private DemoMassage getDemoMessage() {
+        DemoMassage demoMassage = new DemoMassage(tick, simplePlay);
         demoMassageList.add(demoMassage);
         return demoMassage;
     }
 
     public void setPlayerPosition(ClientMessage clientMessage) {
+        SimplePlay simplePlay = (SimplePlay) this.simplePlay;
         PlayerMove playerMove = new PlayerMove();
         if (clientMessage.getPlayerPosition() == PlayerPosition.DOWN) {
 //            simplePlay.getPlayer1().setX(clientMessage.getPlayer().getX());
@@ -67,10 +67,27 @@ public class Game {
         tick = System.currentTimeMillis();
         executorService.submit(simplePlay);
         while (simplePlay.getPlayState().getPlayStatus() != PlayStatus.BREAK) {
-            sender.send(gameId, getDemoMessage(simplePlay));
+            sender.send(gameId, getDemoMessage());
             tick += Puck.WAIT_TIME;
             LockSupport.parkNanos(Puck.WAIT_TIME * 1_000_000);
         }
+        executorService.shutdown();
     }
 
+    public Puck getPuckPosition() {
+        return simplePlay.getPlayState().getPuck();
+    }
+
+    public PlayStatus getPlayStatus() {
+        return simplePlay.getPlayState().getPlayStatus();
+    }
+
+    /**
+     * Need for bot
+     * I think, that bot always must be on TOP
+     * @return
+     */
+    public Player getPlayer2() {
+        return simplePlay.getPlayState().getPlayer2();
+    }
 }

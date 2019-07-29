@@ -10,4 +10,6 @@ public interface IManager {
     void endGame(String gameId);
 
     void setPlayerPosition(IMessage message);
+
+    Game getGameById(String gameId);
 }

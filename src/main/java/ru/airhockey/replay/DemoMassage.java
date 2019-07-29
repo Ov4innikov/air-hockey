@@ -1,5 +1,6 @@
 package ru.airhockey.replay;
 
+import ru.airhockey.playingarea.Play;
 import ru.airhockey.playingarea.model.PlayStatus;
 import ru.airhockey.playingarea.model.Player;
 import ru.airhockey.playingarea.model.Puck;
@@ -25,6 +26,14 @@ public class DemoMassage implements IMessage {
         this.player2 = player2;
         this.puck = puck;
         this.playStatus = playStatus;
+    }
+
+    public DemoMassage(Long tick, Play play) {
+        this.tick = tick;
+        player1 = play.getPlayState().getPlayer1();
+        player2 = play.getPlayState().getPlayer2();
+        puck = play.getPlayState().getPuck();
+        playStatus = play.getPlayState().getPlayStatus();
     }
 
     /**

@@ -7,7 +7,7 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/airhockey
     username: postgres
-    password: VanBommel123
+    password: Qwe123asd
   liquibase:
     change-log: classpath:/liquibase/changelog.xml
 #  # JPA properties

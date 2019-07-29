@@ -47,7 +47,6 @@ public class MessageController {
 
     @MessageMapping("/message/{id}")
     public void getMessage(ClientMessage message) {
-        System.out.println("Message controller");
         manager.setPlayerPosition(message);
     }
 }
