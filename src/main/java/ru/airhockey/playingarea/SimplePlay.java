@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.direct.PlayDirect;
 import ru.airhockey.playingarea.model.*;
-import ru.airhockey.playingarea.util.PhysicsUtil;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -20,7 +19,8 @@ public class SimplePlay implements Play {
 
     private static final Logger logger = LoggerFactory.getLogger(SimplePlay.class);
     private static final PlayDirect playDirect = PlayDirect.getInstance();
-    private static final long STARTIG_TIME = 3;
+    private static final long STARTING_TIME = 3;
+    private static final long PERIOD_TIME = 180;
 
     private Player player1;
     private Player player2;
@@ -45,36 +45,27 @@ public class SimplePlay implements Play {
     @Override
     public GameResult call() throws Exception {
         play();
+        logger.info("The play is stoped!");
         return result;
     }
 
     public void play() throws ExecutionException, InterruptedException {
-        logger.info("STARTING 1");
+        logger.info("STARTING");
+        playDirect.setUpPuckPosition(puck);
+        playDirect.setDownPlayerPosition(player1);
+        playDirect.setUpPlayerPosition(player2);
         if (playStatus != PlayStatus.BREAK) {
-            LockSupport.parkNanos(STARTIG_TIME * 1_000_000_000);
-            playDirect.setUpPuckPosition(puck);
-            playDirect.setDownPlayerPosition(player1);
-            playDirect.setUpPlayerPosition(player2);
+            LockSupport.parkNanos(STARTING_TIME * 1_000_000_000);
             task = new GameTask(player1, player2, puck);
             playStatus = PlayStatus.PLAYING;
             firstPeriod = executorService.submit(task);
         }
+        LockSupport.parkNanos(PERIOD_TIME * 1_000_000_000);
+        playStatus = PlayStatus.RESULTING;
+        stop();
         firstPeriodResult = (GameResult) firstPeriod.get();
-
-        logger.info("STARTING 2");
-        if (playStatus != PlayStatus.BREAK) {
-            playStatus = PlayStatus.STARTING;
-            LockSupport.parkNanos(STARTIG_TIME * 1_000_000_000);
-            playDirect.setDownPuckPosition(puck);
-            playDirect.setDownPlayerPosition(player1);
-            playDirect.setUpPlayerPosition(player2);
-            task = new GameTask(player1, player2, puck);
-            playStatus = PlayStatus.PLAYING;
-            secondPeriod = executorService.submit(task);
-        }
-        secondPeriodResult = (GameResult) secondPeriod.get();
-        if ((firstPeriodResult.getWinner() == player1) && (secondPeriodResult.getWinner() == player1)) result = new GameResult(player1);
-        if ((firstPeriodResult.getWinner() == player2) && (secondPeriodResult.getWinner() == player2)) result = new GameResult(player2);
+        logger.info("Winner = {}", firstPeriodResult.getWinner().getPlayerPosition());
+        result = firstPeriodResult;
     }
 
     @Override
@@ -99,6 +90,7 @@ public class SimplePlay implements Play {
 
     @Override
     public void handlePlayerMove(PlayerMove playerMove) {
+        if (playStatus != PlayStatus.PLAYING) return;
         if (task != null) {
             if (playerMove.getPlayer() == player1) {
                 task.updatePlayer1Move(playerMove);
