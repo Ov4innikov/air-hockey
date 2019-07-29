@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class PlayerMove {
 
-    public static final long DEFAULT_SPEED_OF_PLAYER = 2;
+    public static final long DEFAULT_SPEED_OF_PLAYER = 3;
 
     private Player player;
     private PlayerMoveStatus playerMoveStatus;

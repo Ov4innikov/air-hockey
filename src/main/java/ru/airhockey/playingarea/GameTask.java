@@ -123,14 +123,14 @@ public class GameTask implements Callable<GameResult> {
             if (puck.getY() > HEIGHT_OF_PLAYING_AREA/2) {
                 logger.info("Up, y = {}", puck.getY());
                 if (player1.getPlayerPosition() == PlayerPosition.UP) {
-                    player1.setPlayAccount(player1.getPlayAccount() + 1);
+                    player2.setPlayAccount(player2.getPlayAccount() + 1);
                     player1Move = playDirect.getDefaultPlayerMove(player1);
                     player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player1);
                     playDirect.setDownPlayerPosition(player2);
                     playDirect.setUpPuckPosition(puck);
                 } else {
-                    player2.setPlayAccount(player2.getPlayAccount() + 1);
+                    player1.setPlayAccount(player1.getPlayAccount() + 1);
                     player1Move = playDirect.getDefaultPlayerMove(player1);
                     player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player2);
@@ -140,14 +140,14 @@ public class GameTask implements Callable<GameResult> {
             } else {
                 logger.info("Down, y = {}", puck.getY());
                 if (player1.getPlayerPosition() == PlayerPosition.DOWN) {
-                    player1.setPlayAccount(player1.getPlayAccount() + 1);
+                    player2.setPlayAccount(player2.getPlayAccount() + 1);
                     player1Move = playDirect.getDefaultPlayerMove(player1);
                     player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player2);
                     playDirect.setDownPlayerPosition(player1);
                     playDirect.setDownPuckPosition(puck);
                 } else {
-                    player2.setPlayAccount(player2.getPlayAccount() + 1);
+                    player1.setPlayAccount(player1.getPlayAccount() + 1);
                     player1Move = playDirect.getDefaultPlayerMove(player1);
                     player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player2);

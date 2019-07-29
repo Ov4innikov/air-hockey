@@ -20,7 +20,7 @@ public class SimplePlay implements Play {
     private static final Logger logger = LoggerFactory.getLogger(SimplePlay.class);
     private static final PlayDirect playDirect = PlayDirect.getInstance();
     private static final long STARTING_TIME = 3;
-    private static final long PERIOD_TIME = 180;
+    private static final long PERIOD_TIME = 30;
 
     private Player player1;
     private Player player2;
