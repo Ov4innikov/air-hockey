@@ -27,13 +27,13 @@ public class PlayDirect {
 
     public PlayDirect () {
         upPlayerPositionX = 225;
-        upPlayerPositionY = 200;
+        upPlayerPositionY = 800;
         downPlayerPositionX = 225;
-        downPlayerPositionY = 800;
+        downPlayerPositionY = 200;
         upPuckPositionX = 225;
-        upPuckPositionY = 350;
+        upPuckPositionY = 650;
         downPuckPositionX = 225;
-        downPuckPositionY = 650;
+        downPuckPositionY = 350;
     }
 
     public static PlayDirect getInstance() {

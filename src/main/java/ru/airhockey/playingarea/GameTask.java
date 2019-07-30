@@ -20,6 +20,8 @@ public class GameTask implements Callable<GameResult> {
     public static final int WIDTH_OF_PLAYING_AREA = 450;
     public static final int WIDTH_OF_GOAL = 200;
     public static final int DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER = 10;
+    public static final int PLAYER_INTERVAL_WITH_BORDER = 10;
+    public static final int PLAYER_INTERVAL_WITH_CENTER = 10;
 
     private static final Logger logger = LoggerFactory.getLogger(GameTask.class);
     private static final PlayDirect playDirect = PlayDirect.getInstance();
@@ -63,7 +65,18 @@ public class GameTask implements Callable<GameResult> {
         }
         //Проверка на очки
         logger.info("Game task stopping!");
-        return new GameResult(player1);
+        if (player1.getPlayAccount() > player2.getPlayAccount()) {
+            return new GameResult(player1);
+        } else if (player1.getPlayAccount() < player2.getPlayAccount()) {
+            return new GameResult(player2);
+        } else {
+            logger.info("Win by score, player1 = {}, player2 = {}", player1.getScore(), player2.getScore());
+            if (player1.getScore() > player2.getScore()) {
+                return new GameResult(player1);
+            } else {
+                return new GameResult(player2);
+            }
+        }
     }
 
     private void checkCrash() {
@@ -107,41 +120,42 @@ public class GameTask implements Callable<GameResult> {
 
     private boolean checkPuckIntoGoal() {
         if ((puck.getX() + puck.getSpeed().getX() > WIDTH_OF_PLAYING_AREA/2 - WIDTH_OF_GOAL/2) && (puck.getX() + puck.getSpeed().getX() < WIDTH_OF_PLAYING_AREA/2 + WIDTH_OF_GOAL/2)) {
-            playStatus = PlayStatus.PUCK;
             if (puck.getY() > HEIGHT_OF_PLAYING_AREA/2) {
+                logger.info("Up, y = {}", puck.getY());
                 if (player1.getPlayerPosition() == PlayerPosition.UP) {
-                    player1.setPlayAccount(player1.getPlayAccount() + 1);
+                    player2.setPlayAccount(player2.getPlayAccount() + 1);
                     player1Move = playDirect.getDefaultPlayerMove(player1);
                     player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player1);
                     playDirect.setDownPlayerPosition(player2);
                     playDirect.setUpPuckPosition(puck);
                 } else {
-                    player2.setPlayAccount(player2.getPlayAccount() + 1);
-                    player1Move = playDirect.getDefaultPlayerMove(player1);
-                    player2Move = playDirect.getDefaultPlayerMove(player2);
-                    playDirect.setUpPlayerPosition(player2);
-                    playDirect.setDownPlayerPosition(player1);
-                    playDirect.setDownPuckPosition(puck);
-                }
-            } else {
-                logger.info("Player1Position = {}, = {}", (player1.getPlayerPosition() == PlayerPosition.DOWN), true);
-                if (player1.getPlayerPosition() == PlayerPosition.DOWN) {
                     player1.setPlayAccount(player1.getPlayAccount() + 1);
-                    player1Move = playDirect.getDefaultPlayerMove(player1);
-                    player2Move = playDirect.getDefaultPlayerMove(player2);
-                    playDirect.setUpPlayerPosition(player2);
-                    playDirect.setDownPlayerPosition(player1);
-                    playDirect.setDownPuckPosition(puck);
-                } else {
-                    player2.setPlayAccount(player2.getPlayAccount() + 1);
                     player1Move = playDirect.getDefaultPlayerMove(player1);
                     player2Move = playDirect.getDefaultPlayerMove(player2);
                     playDirect.setUpPlayerPosition(player2);
                     playDirect.setDownPlayerPosition(player1);
                     playDirect.setUpPuckPosition(puck);
                 }
+            } else {
+                logger.info("Down, y = {}", puck.getY());
+                if (player1.getPlayerPosition() == PlayerPosition.DOWN) {
+                    player2.setPlayAccount(player2.getPlayAccount() + 1);
+                    player1Move = playDirect.getDefaultPlayerMove(player1);
+                    player2Move = playDirect.getDefaultPlayerMove(player2);
+                    playDirect.setUpPlayerPosition(player2);
+                    playDirect.setDownPlayerPosition(player1);
+                    playDirect.setDownPuckPosition(puck);
+                } else {
+                    player1.setPlayAccount(player1.getPlayAccount() + 1);
+                    player1Move = playDirect.getDefaultPlayerMove(player1);
+                    player2Move = playDirect.getDefaultPlayerMove(player2);
+                    playDirect.setUpPlayerPosition(player2);
+                    playDirect.setDownPlayerPosition(player1);
+                    playDirect.setDownPuckPosition(puck);
+                }
             }
+            playStatus = PlayStatus.PUCK;
             logger.debug("Puck!");
             return true;
         }
@@ -184,6 +198,7 @@ public class GameTask implements Callable<GameResult> {
         logger.trace("playerMove = {}", playerMove.toString());
         if (playerMove.getPlayerMoveStatus() == PlayerMoveStatus.YES) {
             Speed playerSpeed = PhysicsUtil.getNewSpeed(playerMove.DEFAULT_SPEED_OF_PLAYER, playerMove.getDirection());
+            checkPlayerMove(player, playerSpeed);
             if (player == player1) {
                 player1.setX(player1.getX() + playerSpeed.getX());
                 player1.setY(player1.getY() + playerSpeed.getY());
@@ -192,7 +207,47 @@ public class GameTask implements Callable<GameResult> {
                 player2.setY(player2.getY() + playerSpeed.getY());
             }
         }
+        if (player.getPlayerPosition() == PlayerPosition.UP) player.setScore(player.getScore() + (HEIGHT_OF_PLAYING_AREA - player.getY()));
+        if (player.getPlayerPosition() == PlayerPosition.DOWN) player.setScore(player.getScore() + player.getY());
         logger.trace("Stop handlePlayerMove()!");
+    }
+
+    private void checkPlayerMove(Player player, Speed speed) {
+        logger.trace("Start checkPlayerMove()!");
+        int topY = HEIGHT_OF_PLAYING_AREA/2 - PLAYER_INTERVAL_WITH_CENTER;
+        int bottomY = HEIGHT_OF_PLAYING_AREA/2 + PLAYER_INTERVAL_WITH_CENTER;
+        int rightX = WIDTH_OF_PLAYING_AREA - PLAYER_INTERVAL_WITH_BORDER;
+        int leftX = 0 + PLAYER_INTERVAL_WITH_BORDER;
+
+        if ((player.getX() + speed.getX() + player.RADIUS) > rightX) {
+            player.setX(rightX - player.RADIUS);
+            speed.setX(0);
+        }
+        if ((player.getX() + speed.getX() - player.RADIUS) < leftX) {
+            player.setX(leftX + player.RADIUS);
+            speed.setX(0);
+        }
+
+        if (player.getPlayerPosition() == PlayerPosition.DOWN) {
+            if ((player.getY() + speed.getY() + player.RADIUS) > topY) {
+                player.setY(topY - player.RADIUS);
+                speed.setY(0);
+            }
+            if ((player.getY() + speed.getY() - player.RADIUS) < 0) {
+                player.setY(player.RADIUS);
+                speed.setY(0);
+            }
+        } else if (player.getPlayerPosition() == PlayerPosition.UP) {
+            if ((player.getY() + speed.getY() - player.RADIUS) < bottomY) {
+                player.setY(bottomY + player.RADIUS);
+                speed.setY(0);
+            }
+            if ((player.getY() + speed.getY() + player.RADIUS) > HEIGHT_OF_PLAYING_AREA) {
+                player.setY(HEIGHT_OF_PLAYING_AREA - player.RADIUS);
+                speed.setY(0);
+            }
+        }
+        logger.trace("Stop checkPlayerMove()!");
     }
 
     public void stopGame() {
