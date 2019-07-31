@@ -1,5 +1,6 @@
 package ru.airhockey.playingarea.direct;
 
+import ru.airhockey.playingarea.GameTask;
 import ru.airhockey.playingarea.model.*;
 
 /**
@@ -26,14 +27,14 @@ public class PlayDirect {
     }
 
     public PlayDirect () {
-        upPlayerPositionX = 225;
-        upPlayerPositionY = 800;
-        downPlayerPositionX = 225;
-        downPlayerPositionY = 200;
-        upPuckPositionX = 225;
-        upPuckPositionY = 650;
-        downPuckPositionX = 225;
-        downPuckPositionY = 350;
+        upPlayerPositionX = GameTask.WIDTH_OF_PLAYING_AREA / 2;
+        upPlayerPositionY = GameTask.HEIGHT_OF_PLAYING_AREA - Player.RADIUS - 30;
+        downPlayerPositionX = GameTask.WIDTH_OF_PLAYING_AREA / 2;
+        downPlayerPositionY = Player.RADIUS + 30;
+        upPuckPositionX = GameTask.WIDTH_OF_PLAYING_AREA / 2;
+        upPuckPositionY = upPlayerPositionY - Player.RADIUS - Puck.RADIUS - 30;
+        downPuckPositionX = GameTask.WIDTH_OF_PLAYING_AREA / 2;
+        downPuckPositionY = downPlayerPositionY + Player.RADIUS + Puck.RADIUS - 30;
     }
 
     public static PlayDirect getInstance() {
