@@ -56,7 +56,6 @@ public class GameManager implements IManager {
     @Override
     public void setPlayerPosition(IMessage message) {
         ClientMessage clientMessage = (ClientMessage) message;
-        Game game = gameMap.get(clientMessage.getGameId());
         gameMap.get(clientMessage.getGameId()).setPlayerPosition(clientMessage);
     }
 
