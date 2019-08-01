@@ -1,6 +1,11 @@
 package ru.airhockey.playingarea;
 
 
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.model.*;
@@ -15,6 +20,7 @@ import java.awt.event.WindowListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 public class VisualModel extends JFrame {
 
@@ -25,6 +31,7 @@ public class VisualModel extends JFrame {
     private static SimplePlay simplePlay;
     private static Player player1 = new Player();
     private static Player player2 = new Player();
+    private static Player player;
 
     public static void main(String[] args) throws Exception {
         gameWindow = new VisualModel();
@@ -87,16 +94,20 @@ public class VisualModel extends JFrame {
         public void mousePressed(MouseEvent e) {
             float x = e.getY();
             float y = e.getX();
-            logger.info("x = {}, y = {}", y, x);
-            float corner = PhysicsUtil.getCorner(x - player1.getX(), y - player1.getY());
-            PlayerMove playerMove = new PlayerMove(player1, PlayerMoveStatus.YES, corner);
-            System.out.println(corner);
+            if (y > GameTask.HEIGHT_OF_PLAYING_AREA/2) {
+                player = player2;
+            } else {
+                player = player1;
+            }
+            logger.info("x = {}, y = {}", x, y);
+            float corner = PhysicsUtil.getCorner(x - player.getX(), y - player.getY());
+            PlayerMove playerMove = new PlayerMove(player, PlayerMoveStatus.YES, corner);
             play.handlePlayerMove(playerMove);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            PlayerMove playerMove = new PlayerMove(player1, PlayerMoveStatus.NO, 0);
+            PlayerMove playerMove = new PlayerMove(player, PlayerMoveStatus.NO, 0);
             play.handlePlayerMove(playerMove);
         }
 

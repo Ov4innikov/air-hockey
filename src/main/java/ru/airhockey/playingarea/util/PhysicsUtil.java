@@ -45,7 +45,7 @@ public class PhysicsUtil {
         float x = xOfPuckAtCrashTime - player.getX();
         float y = yOfPuckAtCrashTime - player.getY();
         float distanceBetweenPuckAndPlayer = (float) Math.sqrt(x * x + y * y);
-        logger.debug("distanceBetweenPuckAndPlayer = {}", distanceBetweenPuckAndPlayer);
+        logger.trace("distanceBetweenPuckAndPlayer = {}", distanceBetweenPuckAndPlayer);
         int i = 0;
         while (distanceBetweenPuckAndPlayer > Puck.RADIUS + Player.RADIUS) {
             i++;
@@ -57,11 +57,11 @@ public class PhysicsUtil {
         }
         float l = getCorner(puck.getSpeed());
         float b = getCorner(xOfPuckAtCrashTime - player.getX(), yOfPuckAtCrashTime - player.getY());
-        logger.info("l  = {}, b = {}", l, b);
+        logger.trace("l  = {}, b = {}", l, b);
         l = (l + 180) % 360;
         l = (2 * b - l + 360) % 360;
         Speed puckSpeed = puck.getSpeed();
-        logger.debug("old puckSpeed = {}", puckSpeed);
+        logger.trace("old puckSpeed = {}", puckSpeed);
         float hypotenuse = (float) Math.sqrt(puckSpeed.getX() * puckSpeed.getX() + puckSpeed.getY() * puckSpeed.getY());
         Speed newPuckSpeed;
         if (puck.getSpeed().getX() == 0.0 && puck.getSpeed().getY() == 0.0) {
@@ -69,7 +69,7 @@ public class PhysicsUtil {
         } else {
             newPuckSpeed = getNewSpeed(hypotenuse, l);
         }
-        logger.debug("new puckSpeed = {}", newPuckSpeed);
+        logger.trace("new puckSpeed = {}", newPuckSpeed);
         puck.setSpeed(newPuckSpeed);
         puck.setX(puck.getX() + puck.getSpeed().getX()/10*(Math.abs(10 - i)));
         puck.setY(puck.getY() + puck.getSpeed().getY()/10*(Math.abs(10 - i)));

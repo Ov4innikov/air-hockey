@@ -15,7 +15,7 @@ function setConnected(connected) {
 }
 
 function showMessage(message) {
-    if (message.player2.score > 0) {
+    if (message.playStatus === 'PUCK') {
         console.log(message);
     }
     statusText.text(message.playStatus);

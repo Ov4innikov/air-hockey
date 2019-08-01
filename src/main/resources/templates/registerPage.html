@@ -1,121 +1,17 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"-->
-<!--      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">-->
-<!--<head>-->
-<!--    <title>Air-hockey</title>-->
-<!--    <meta charset="utf-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
-
-<!--    <style>-->
-<!--        body { margin: 0 auto;-->
-<!--            font-family: Roboto, Helvetica, Tahoma, Verdana, Arial, sans-serif;-->
-<!--            font-size: 16px;-->
-<!--            background-color: #223a68 ;-->
-<!--            background-image: url('images/sky.jpg');  no-repeat;-->
-<!--            background-size: 100%;-->
-<!--        }-->
-<!--    </style>-->
-
-<!--</head>-->
-<!--<body>-->
-<!--<body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0"-->
-<!--      bgcolor="#E0E0E0" >-->
-<!--<h1 align="center" style="color:#ffffff">Аэрохоккей</h1>-->
-<!--&lt;!&ndash;&lt;!&ndash; Optional JavaScript &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash; jQuery first, then Popper.js, then Bootstrap JS &ndash;&gt;&ndash;&gt;-->
-<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
-<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
-
-
-
-
-<!--<div class="container" align="center">-->
-
-<!--    <table border="0" width="100%"  >-->
-<!--        <tr>-->
-<!--            <td align="center" width="20%"></td>-->
-<!--            <td align="center" width="60%"></td>-->
-<!--            <td align="left" width="20%" >-->
-<!--                <div class="col-sm">-->
-<!--                    <form class="form-sing">-->
-<!--                        <div class="form-group">-->
-<!--                            &lt;!&ndash;label for="exampleInputEmail1">Почта</label&ndash;&gt;-->
-<!--                            <input type="login" class="form-control" id="login" aria-describedby="login" placeholder="sample">-->
-<!--                            <input type="password" class="form-control" id="password" placeholder="Пароль">-->
-<!--                        </div>-->
-<!--                        &lt;!&ndash;div class="form-check">-->
-<!--                            <input type="checkbox" class="form-check-input" id="exampleCheck1">-->
-<!--                            <label class="form-check-label" for="exampleCheck1">Check me out</label>-->
-<!--                        </div&ndash;&gt;-->
-<!--                        <button type="submit" class="btn btn-primary">Вход</button>-->
-<!--                    </form>-->
-<!--                    <a href="/main">Secity checker temporary link</a>-->
-<!--                </div>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--        <tr>-->
-<!--            <td align="center" width="20%">-->
-<!--                &lt;!&ndash;nav class="navbar navbar-light bg-light">-->
-<!--                    <a class="navbar-brand" href="#">Default</a>-->
-<!--                </nav&ndash;&gt;-->
-<!--            </td>-->
-<!--            <td align="center" width="60%"></td>-->
-<!--            <td align="left" width="20%" >-->
-<!--                <div class="col-sm">-->
-<!--                    <form>-->
-<!--                        <div class="form-group">-->
-<!--                            <input type="login" class="form-control" id="login" aria-describedby="login" placeholder="Логин">-->
-<!--                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="sample@sample.ru">-->
-<!--                            <input type="city" class="form-control" id="city" placeholder="Город">-->
-
-<!--                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Введите пароль">-->
-<!--                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Повторите пароль">-->
-
-<!--                        </div>-->
-<!--                        <button type="submit" class="btn btn-primary">Регистрация</button>-->
-<!--                    </form>-->
-<!--                </div>-->
-<!--            </td>-->
-<!--        </tr>-->
-<!--    </table>-->
-
-<!--</div>-->
-
-<!--&lt;!&ndash;<div th:if="${param.error}">&ndash;&gt;-->
-<!--&lt;!&ndash;    Invalid username and password.&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<div th:if="${param.logout}">&ndash;&gt;-->
-<!--&lt;!&ndash;    You have been logged out.&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--&lt;!&ndash;<form th:action="@{/login}" method="post">&ndash;&gt;-->
-<!--&lt;!&ndash;    <div><label> User Name: <input type="text" name="username"/> </label></div>&ndash;&gt;-->
-<!--&lt;!&ndash;    <div><label> Password: <input type="password" name="password"/> </label></div>&ndash;&gt;-->
-<!--&lt;!&ndash;    <div><input type="submit" value="LogIn"/></div>&ndash;&gt;-->
-<!--&lt;!&ndash;    <a href="/main">MDN</a>&ndash;&gt;-->
-<!--&lt;!&ndash;</form>&ndash;&gt;-->
-<!--</body>-->
-<!--</html>-->
-
-
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<!--<head>-->
-<!--    <title>Login</title>-->
-<!--</head>-->
 
 <head>
     <title>Air-hockey</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:include="/include/_bootsrap"></th:block>
+
 </head>
 
 <body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0"
       bgcolor="#E0E0E0" >
 
-<!-- Include _menu.html -->
 <th:block th:include="/include/_menu"></th:block>
 
 <!-- /login?error=true -->
@@ -135,21 +31,19 @@
     <table border="0" width="100%"  >
         <tr>
             <td align="center" width="20%">
-                <!--nav class="navbar navbar-light bg-light">
-                    <a class="navbar-brand" href="#">Default</a>
-                </nav-->
             </td>
             <td align="center" width="60%"></td>
             <td align="left" width="20%" >
                 <div class="col-sm">
-                    <form>
+                    <form class="form-sing" th:action="@{/j_spring_security_register}" th:object="${appuser}" method="POST">
                         <div class="form-group">
-                            <input type="login" class="form-control" id="login" aria-describedby="login" placeholder="Логин">
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="sample@sample.ru">
-                            <input type="city" class="form-control" id="city" placeholder="Город">
+                            <input type="text" th:field="*{name}" class="form-control" id="name" aria-describedby="Name" placeholder="Имя"/>
+                            <input type="text" th:field="*{login}" class="form-control" id="login" aria-describedby="login" placeholder="Логин"/>
+                            <input type="text" th:field="*{password}" class="form-control" id="password" placeholder="Введите пароль"/>
+                            <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="Город"/>
+                            <input type="text" th:field="*{description}" class="form-control" id="description" placeholder="О себе"/>
 
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Введите пароль">
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Повторите пароль">
+<!--                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Повторите пароль">-->
 
                         </div>
                         <button type="submit" class="btn btn-primary">Регистрация</button>

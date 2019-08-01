@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Successfully registered</title>
+    <th:block th:include="/include/_bootsrap"></th:block>
+</head>
+
+<body>
+
+<!-- Include _menu.html -->
+<th:block th:include="/include/_menu"></th:block>
+
+<h2>Вы успешно зарегистрированы</h2>
+
+<div th:if="${flashUser != null}">
+    <ul>
+        <li>Пользователь: <span th:utext="${flashUser.name}">..</span></li>
+        <li>Логин: <span th:utext="${flashUser.login}">..</span></li>
+        <li>Город: <span th:utext="${flashUser.city}">..</span></li>
+        <li>Описание: <span th:utext="${flashUser.description}">..</span></li>
+    </ul>
+</div>
+
+
+</body>
+</html>

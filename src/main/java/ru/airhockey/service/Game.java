@@ -71,6 +71,9 @@ public class Game {
             tick += Puck.WAIT_TIME;
             LockSupport.parkNanos(Puck.WAIT_TIME * 1_000_000);
         }
+        if (simplePlay.getPlayState().getPlayStatus() == PlayStatus.BREAK) {
+            sender.send(gameId, getDemoMessage());
+        }
         executorService.shutdown();
     }
 

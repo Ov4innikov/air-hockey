@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
 
         // The pages does not require login
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+        http.authorizeRequests().antMatchers("/", "/login", "/logout","/registerSuccessful").permitAll();
         http.authorizeRequests().antMatchers("images").permitAll();
 
         // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login")//
-                .defaultSuccessUrl("/userAccountInfo")//
+                .defaultSuccessUrl("/userInfo")//
                 .failureUrl("/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password")
@@ -84,19 +84,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-//    /**
-//     * Функция заглушка для проверки работы безопасности
-//     * @return
-//     */
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService(){
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                            .username("user")
-//                            .password("password")
-//                            .roles("USER")
-//                            .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }
