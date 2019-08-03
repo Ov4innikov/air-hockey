@@ -41,7 +41,7 @@ public class DemoPlay {
     }
 
     private String getTextFromDB(String gameId) {
-        GameReplay gameReplay = replay.getGameById(gameId);
+        GameReplay gameReplay = replay.getGameByGameId(gameId);
         return gameReplay.getGameText();
     }
 
