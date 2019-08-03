@@ -1,8 +1,8 @@
 package ru.airhockey.bot;
 
 import ru.airhockey.playingarea.model.Player;
+import ru.airhockey.playingarea.model.PlayerMove;
 import ru.airhockey.playingarea.model.Puck;
-import ru.airhockey.service.ClientMessage;
 
 /**
  * Интерфейс для описания любого бота
@@ -11,5 +11,5 @@ import ru.airhockey.service.ClientMessage;
  */
 public interface Level {
 
-    ClientMessage calculateMoving(Puck puck, Player player);
+    PlayerMove calculateMoving(Puck puck, Player player);
 }
