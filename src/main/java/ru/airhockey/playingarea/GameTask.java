@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.direct.PlayDirect;
 import ru.airhockey.playingarea.model.*;
 import ru.airhockey.playingarea.util.PhysicsUtil;
-import ru.airhockey.replay.DemoMassage;
-import ru.airhockey.web.ws.sender.ISender;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.LockSupport;
@@ -18,8 +16,8 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class GameTask implements Callable<GameResult> {
 
-    public static final int HEIGHT_OF_PLAYING_AREA = 650;
-    public static final int WIDTH_OF_PLAYING_AREA = 450;
+    public static final int HEIGHT_OF_PLAYING_AREA = 600;
+    public static final int WIDTH_OF_PLAYING_AREA = 350;
     public static final int WIDTH_OF_GOAL = 200;
     public static final int DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER = 10;
     public static final int PLAYER_INTERVAL_WITH_BORDER = 10;
@@ -35,7 +33,6 @@ public class GameTask implements Callable<GameResult> {
     private Puck puck;
     private volatile PlayStatus playStatus = PlayStatus.STARTING;
     private int countOfIterationAfterCrashToPlayer = 0;
-
 
     public GameTask(Player player1, Player player2, Puck puck) {
         this.player1 = player1;
