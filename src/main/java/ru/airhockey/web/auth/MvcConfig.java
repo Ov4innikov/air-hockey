@@ -1,6 +1,9 @@
 package ru.airhockey.web.auth;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -13,8 +16,8 @@ public class MvcConfig implements WebMvcConfigurer {
        registry.addViewController("/").setViewName("welcomePage");
        registry.addViewController("/main").setViewName("welcomePage");
        registry.addViewController("/login").setViewName("loginPage");
-       registry.addViewController("/register").setViewName("registerPage");
        registry.addViewController("/logoutSuccessful").setViewName("logoutSuccessfullPage");
+        registry.addViewController("/registerSuccessful").setViewName("registerSuccessfulPage");
     }
 
     /*
@@ -33,5 +36,14 @@ public class MvcConfig implements WebMvcConfigurer {
 //        if (!registry.hasMappingForPattern("/js/**")) {
             registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
 //        }
+    }
+
+    @Bean
+    public MessageSource messageSource(){
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+
+        messageSource.setBasename("classpath:validation");
+        messageSource.setDefaultEncoding("UTF-8");
+        return messageSource;
     }
 }
