@@ -77,10 +77,6 @@ public class AppUser {
         return passwordConfirm;
     }
 
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
     @Override
     public String toString() {
         return "AppUser{" +
