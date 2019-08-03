@@ -1,5 +1,6 @@
 package ru.airhockey.replay;
 
+import ru.airhockey.playingarea.Play;
 import ru.airhockey.playingarea.model.PlayStatus;
 import ru.airhockey.playingarea.model.Player;
 import ru.airhockey.playingarea.model.Puck;
@@ -17,6 +18,7 @@ public class DemoMassage implements IMessage {
     private Player player2;
     private Puck puck;
     private PlayStatus playStatus;
+    private String gameId;
 
     public DemoMassage(Long tick, Player player1, Player player2, Puck puck, PlayStatus playStatus) {
         this.tick = tick;
@@ -24,6 +26,14 @@ public class DemoMassage implements IMessage {
         this.player2 = player2;
         this.puck = puck;
         this.playStatus = playStatus;
+    }
+
+    public DemoMassage(Long tick, Play play) {
+        this.tick = tick;
+        player1 = play.getPlayState().getPlayer1();
+        player2 = play.getPlayState().getPlayer2();
+        puck = play.getPlayState().getPuck();
+        playStatus = play.getPlayState().getPlayStatus();
     }
 
     /**
@@ -91,6 +101,14 @@ public class DemoMassage implements IMessage {
         this.playStatus = playStatus;
     }
 
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
+    }
+
     @Override
     public String toString() {
         return "DemoMassage{" +
@@ -99,6 +117,7 @@ public class DemoMassage implements IMessage {
                 ", player2=" + player2 +
                 ", puck=" + puck +
                 ", playStatus=" + playStatus +
+                ", gameId='" + gameId + '\'' +
                 '}';
     }
 }

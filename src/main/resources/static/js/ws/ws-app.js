@@ -10,6 +10,7 @@ let stompClient = null;
 function connect() {
     let socket = new SockJS('/air-hockey');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null;
 }
 
 /**
@@ -21,7 +22,6 @@ function openChanel(chanel, showMessage) {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         stompClient.subscribe('/topic/message/' + chanel, function (message) {
-            console.log(message.body);
             showMessage(JSON.parse(message.body));
         });
     });

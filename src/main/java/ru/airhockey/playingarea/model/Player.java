@@ -52,10 +52,12 @@ public class Player {
     @Override
     public String toString() {
         return "Player{" +
-                "x=" + x +
+                "playerPosition=" + playerPosition +
+                ", x=" + x +
                 ", y=" + y +
                 ", playAccount=" + playAccount +
                 ", score=" + score +
+                ", updateTime=" + updateTime +
                 '}';
     }
 }

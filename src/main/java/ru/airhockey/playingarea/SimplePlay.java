@@ -1,5 +1,7 @@
 package ru.airhockey.playingarea;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.direct.PlayDirect;
@@ -22,10 +24,18 @@ public class SimplePlay implements Play {
     private static final long STARTING_TIME = 3;
     private static final long PERIOD_TIME = 30;
 
+    @Getter
+    @Setter
     private Player player1;
+    @Getter
+    @Setter
     private Player player2;
+    @Getter
+    @Setter
     private Puck puck;
     private Round round = Round.FIRST;
+    @Getter
+    @Setter
     private PlayStatus playStatus = PlayStatus.STARTING;
     private Future firstPeriod, secondPeriod;
     private GameResult result = null, firstPeriodResult, secondPeriodResult;

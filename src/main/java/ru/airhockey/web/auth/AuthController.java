@@ -86,4 +86,9 @@ public class AuthController {
     public String demo(Model model, Principal principal) {
         return "demo";
     }
+
+    @RequestMapping(value = "/game", method = RequestMethod.GET)
+    public String game(Model model, Principal principal) {
+        return "game";
+    }
 }
