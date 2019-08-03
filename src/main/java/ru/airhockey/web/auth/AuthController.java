@@ -98,12 +98,12 @@ public class AuthController {
         return "game";
     }
 
-    @RequestMapping(value = "/gameHistory", method = RequestMethod.GET)
+    @RequestMapping(value = "/userStatistics", method = RequestMethod.GET)
     public String gameHistory(Model model, Principal principal) {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         AppUser appUser = appUserDao.findUserAccount(loginedUser.getUsername());
         List<GameHistory> historyList = historyDAO.getGamesByIdUser(appUser.getId());
         model.addAttribute("gameHistory", historyList);
-        return "gameHistory";
+        return "userStatistics";
     }
 }
