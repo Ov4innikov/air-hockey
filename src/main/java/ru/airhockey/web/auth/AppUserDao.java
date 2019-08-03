@@ -25,8 +25,8 @@ public class AppUserDao extends JdbcDaoSupport {
         this.setDataSource(dataSource);
     }
 
-    public AppUser findUserAccount(String userName)  throws DataAccessException {
-        String sql = "SELECT name, login, password, city, description from public.\"USER\" where name=?";
+    public AppUser findUserAccount(String userName){
+        String sql = "SELECT id, name, login, password, city, description from public.\"USER\" where name=?";
         Object[] params = new Object[] {userName};
         UserMapper mapper = new UserMapper();
         try{
