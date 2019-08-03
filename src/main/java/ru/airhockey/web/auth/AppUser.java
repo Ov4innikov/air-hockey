@@ -69,6 +69,10 @@ public class AppUser {
         return login;
     }
 
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     public void setLogin(String login) {
         this.login = login;
     }
