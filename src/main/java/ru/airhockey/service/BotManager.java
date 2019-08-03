@@ -29,8 +29,8 @@ public class BotManager implements IBotManager {
     }
 
     @Override
-    public void createGame(String gameId, BotLevel botLevel) {
-        manager.createGame(gameId);
+    public void createGame(String gameId, BotLevel botLevel, int user) {
+        manager.createGame(gameId, -1, user);
         Bot bot = new Bot(gameId, manager.getGameById(gameId), botLevel);
         botMap.put(gameId, bot);
     }

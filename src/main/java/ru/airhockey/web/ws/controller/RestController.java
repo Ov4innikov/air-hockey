@@ -9,7 +9,6 @@ import ru.airhockey.bot.BotLevel;
 import ru.airhockey.replay.DemoPlay;
 import ru.airhockey.service.IBotManager;
 import ru.airhockey.service.IManager;
-import ru.airhockey.web.ws.model.IMessage;
 import ru.airhockey.web.ws.model.TestMessage;
 import ru.airhockey.web.ws.sender.ISender;
 
@@ -56,8 +55,13 @@ public class RestController {
     @RequestMapping("/start")
     public void startGame(@RequestParam String gameId) {
         System.out.println("Controller started");
-        manager.createGame(gameId);
+        manager.createGame(gameId, 0, 0);
         manager.startGame(gameId);
+    }
+
+    @RequestMapping("/end")
+    public void endGame(@RequestParam String gameId) {
+        manager.endGame(gameId);
     }
 
 //    @RequestMapping("/bot-game")
@@ -69,7 +73,7 @@ public class RestController {
     @RequestMapping("/bot-game")
     public void gameWithBot(@RequestParam String gameId, @RequestParam BotLevel level) {
         BotCreateMessage message = new BotCreateMessage(gameId, level);
-        botManager.createGame(message.getGameId(), message.getBotLevel());
+        botManager.createGame(message.getGameId(), message.getBotLevel(), 0);
         botManager.startGame(message.getGameId());
     }
 
