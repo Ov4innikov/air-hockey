@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <th:block th:include="/include/_bootsrap"></th:block>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/include/_menu"></th:block>
+
+<h1> Список сыгранных игр</h1>
+
+<p th:each="history: ${gameHistory}">
+    <span th:text="${history.id_game}"/>
+</p>
+</body>
+</html>

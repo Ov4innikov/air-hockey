@@ -14,6 +14,7 @@
     <include file="dbMigrations/UserCreate.xml" relativeToChangelogFile="true"/>
     <include file="dbMigrations/InsertUsers.xml" relativeToChangelogFile="true"/>
     <include file="dbMigrations/gameReplay.xml" relativeToChangelogFile="true"/>
+    <include file="dbMigrations/gameHistory.xml" relativeToChangelogFile="true"/>
 <!--    <include file="dbMigrations/gameObjects.xml" relativeToChangelogFile="true"/>-->
 <!--    <include file="dbMigrations/gameStatisticsCreate.xml" relativeToChangelogFile="true"/>-->
 </databaseChangeLog>
