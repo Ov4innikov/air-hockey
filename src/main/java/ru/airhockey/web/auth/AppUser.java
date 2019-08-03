@@ -18,6 +18,7 @@ public class AppUser {
     private String name;
     private String login;
     private String password;
+    private String passwordConfirm;
     private String city;
     private String description;
 
@@ -72,6 +73,13 @@ public class AppUser {
         this.login = login;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 
     @Override
     public String toString() {
