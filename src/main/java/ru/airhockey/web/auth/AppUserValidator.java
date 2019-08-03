@@ -22,16 +22,24 @@ public class AppUserValidator implements Validator {
     }
 
     public void validate(Object target, Errors errors) {
+        System.out.println("!!!!!! VALIDATION");
         AppUser appUser = (AppUser) target;
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userName", "NotEmpty.appUserForm.userName");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty.appUserForm.email");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.appUserForm.password");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NotEmpty.appUser.name");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "login", "NotEmpty.appUser.login");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty.appUser.password");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "passwordConfirm", "NotEmpty.appUser.passwordConfirm");
+//
+//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+//        if (appUser.getName().length() < 6 || appUser.getName().length() > 32) {
+//            errors.rejectValue("name", "NotEmpty.appUser.name");
+//        }
+//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (appUser.getName().length() < 6 || appUser.getName().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+        if (!errors.hasErrors()) {
+            if (!appUser.getPasswordConfirm().equals(appUser.getPassword())) {
+                errors.rejectValue("passwordConfirm", "Match.appUser.passwordConfirm");
+            }
         }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
 
     }
 }

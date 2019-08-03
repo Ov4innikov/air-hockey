@@ -21,6 +21,7 @@ public class AppUser {
     private String password;
     private String city;
     private String description;
+    private String passwordConfirm;
 
     public AppUser(int id, String name, String login, String password, String city, String description) {
         this.id = id;
@@ -80,6 +81,14 @@ public class AppUser {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     @Override
