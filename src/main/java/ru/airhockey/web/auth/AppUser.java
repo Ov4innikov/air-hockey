@@ -15,13 +15,15 @@ package ru.airhockey.web.auth;
  */
 
 public class AppUser {
+    private int id;
     private String name;
     private String login;
     private String password;
     private String city;
     private String description;
 
-    public AppUser(String name, String login, String password, String city, String description) {
+    public AppUser(int id, String name, String login, String password, String city, String description) {
+        this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
@@ -72,6 +74,13 @@ public class AppUser {
         this.login = login;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {

@@ -24,14 +24,19 @@ public class Game {
     private long tick;
     private List<DemoMassage> demoMassageList;
 
+    private int user1;
+    private int user2;
+
     public Game() {
         demoMassageList = new ArrayList<>();
     }
 
-    public Game(ISender sender, String gameId) {
+    public Game(ISender sender, String gameId, int user1, int user2) {
         this();
         this.sender = sender;
         this.gameId = gameId;
+        this.user1 = user1;
+        this.user2 = user2;
     }
 
     private DemoMassage getDemoMessage() {
@@ -44,14 +49,8 @@ public class Game {
         SimplePlay simplePlay = (SimplePlay) this.simplePlay;
         PlayerMove playerMove = new PlayerMove();
         if (clientMessage.getPlayerPosition() == PlayerPosition.DOWN) {
-//            simplePlay.getPlayer1().setX(clientMessage.getPlayer().getX());
-//            simplePlay.getPlayer1().setY(clientMessage.getPlayer().getY());
-//            simplePlay.getPlayer1().setScore(clientMessage.getPlayer().getScore());
             playerMove.setPlayer(simplePlay.getPlayer1());
         } else {
-//            simplePlay.getPlayer2().setX(clientMessage.getPlayer().getX());
-//            simplePlay.getPlayer2().setY(clientMessage.getPlayer().getY());
-//            simplePlay.getPlayer2().setScore(clientMessage.getPlayer().getScore());
             playerMove.setPlayer(simplePlay.getPlayer2());
         }
 
@@ -60,7 +59,7 @@ public class Game {
         simplePlay.handlePlayerMove(playerMove);
     }
 
-    public void startGame(Player player1, Player player2) throws Exception {
+    public void startGame(Player player1, Player player2) {
         System.out.println("Service started on " + gameId + " channel");
         ExecutorService executorService = new ForkJoinPool(20);
         simplePlay = new SimplePlay(executorService, player1, player2);

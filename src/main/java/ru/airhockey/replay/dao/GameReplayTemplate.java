@@ -27,9 +27,18 @@ public class GameReplayTemplate extends JdbcDaoSupport implements GameReplayDAO 
     }
 
     @Override
-    public GameReplay getGameById(String gameId) {
+    public GameReplay getGameByGameId(String gameId) {
         String sql = "select * from public.GAME_REPLAY where game_id = ?";
         Object[] params = new Object[] {gameId};
+        GameReplayMapper mapper = new GameReplayMapper();
+        GameReplay replay = this.getJdbcTemplate().queryForObject(sql, params, mapper);
+        return replay;
+    }
+
+    @Override
+    public GameReplay getGameById(int id) {
+        String sql = "select * from public.GAME_REPLAY where id = ?";
+        Object[] params = new Object[] {id};
         GameReplayMapper mapper = new GameReplayMapper();
         GameReplay replay = this.getJdbcTemplate().queryForObject(sql, params, mapper);
         return replay;

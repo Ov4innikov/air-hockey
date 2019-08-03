@@ -8,8 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.airhockey.statistics.dao.GameHistoryDAO;
+import ru.airhockey.statistics.entity.GameHistory;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class AuthController {
@@ -18,6 +21,9 @@ public class AuthController {
 
     @Autowired
     private AppUserValidator appUserValidator;
+
+    @Autowired
+    GameHistoryDAO historyDAO;
 
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder){
@@ -90,5 +96,14 @@ public class AuthController {
     @RequestMapping(value = "/game", method = RequestMethod.GET)
     public String game(Model model, Principal principal) {
         return "game";
+    }
+
+    @RequestMapping(value = "/userStatistics", method = RequestMethod.GET)
+    public String gameHistory(Model model, Principal principal) {
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        AppUser appUser = appUserDao.findUserAccount(loginedUser.getUsername());
+        List<GameHistory> historyList = historyDAO.getGamesByIdUser(appUser.getId());
+        model.addAttribute("gameHistory", historyList);
+        return "userStatistics";
     }
 }

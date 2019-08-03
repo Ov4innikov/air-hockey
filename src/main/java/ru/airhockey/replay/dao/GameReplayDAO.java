@@ -9,6 +9,7 @@ import ru.airhockey.replay.entity.GameReplay;
 public interface GameReplayDAO {
 
     void insertGame(String gameId, String gameText);
-    GameReplay getGameById(String gameId);
+    GameReplay getGameByGameId(String gameId);
+    GameReplay getGameById(int id);
     void clearTable();
 }

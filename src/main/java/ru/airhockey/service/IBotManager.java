@@ -9,7 +9,7 @@ import ru.airhockey.bot.BotLevel;
  */
 public interface IBotManager {
 
-    void createGame(String gameId, BotLevel botLevel);
+    void createGame(String gameId, BotLevel botLevel, int user);
     void startGame(String gameId);
     void endGame(String gameId);
 

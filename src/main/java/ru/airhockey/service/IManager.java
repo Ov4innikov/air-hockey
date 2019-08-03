@@ -3,7 +3,7 @@ package ru.airhockey.service;
 import ru.airhockey.web.ws.model.IMessage;
 
 public interface IManager {
-    void createGame(String gameId);
+    void createGame(String gameId, int user1, int user2);
 
     void startGame(String gameId);
 

@@ -1,6 +1,7 @@
 package ru.airhockey.bot;
 
 import ru.airhockey.playingarea.model.PlayStatus;
+import ru.airhockey.playingarea.model.PlayerMove;
 import ru.airhockey.playingarea.model.Puck;
 import ru.airhockey.service.ClientMessage;
 import ru.airhockey.service.Game;
@@ -31,11 +32,12 @@ public class Bot implements Callable<String> {
         LockSupport.parkNanos(10_000 * 1_000_000);
         Level level = null;
         switch (botLevel) {
-            case MIDDLE: level = new RadiusBot(gameId); break;
-            default: level = new RadiusBot(gameId); break;
+            case MIDDLE: level = new RadiusBot(); break;
+            default: level = new RadiusBot(); break;
         }
         while (game.getPlayStatus() != PlayStatus.BREAK && !breakBotPlaying) {
-            game.setPlayerPosition(level.calculateMoving(game.getPuckPosition(), game.getPlayer2()));
+            PlayerMove playerMove = level.calculateMoving(game.getPuckPosition(), game.getPlayer2());
+            game.setPlayerPosition(new ClientMessage(gameId, playerMove.getPlayer().getPlayerPosition(), playerMove.getPlayerMoveStatus(), playerMove.getDirection()));
             LockSupport.parkNanos(Puck.WAIT_TIME * 1_000_000);
         }
         return "ok";
