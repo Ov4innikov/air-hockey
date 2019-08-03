@@ -16,8 +16,8 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class GameTask implements Callable<GameResult> {
 
-    public static final int HEIGHT_OF_PLAYING_AREA = 1000;
-    public static final int WIDTH_OF_PLAYING_AREA = 450;
+    public static final int HEIGHT_OF_PLAYING_AREA = 600;
+    public static final int WIDTH_OF_PLAYING_AREA = 350;
     public static final int WIDTH_OF_GOAL = 200;
     public static final int DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER = 10;
     public static final int PLAYER_INTERVAL_WITH_BORDER = 10;
