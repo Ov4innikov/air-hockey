@@ -2,6 +2,7 @@ package ru.airhockey.replay;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import ru.airhockey.playingarea.GameTask;
 import ru.airhockey.playingarea.model.*;
 import ru.airhockey.replay.dao.GameReplayDAO;
 import ru.airhockey.replay.entity.GameReplay;
@@ -10,6 +11,7 @@ import ru.airhockey.web.ws.sender.ISender;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * Класс прорисовки демо игры
@@ -32,11 +34,7 @@ public class DemoPlay {
         List<DemoMassage> messages = parseDBFormat(gameText);
         for (DemoMassage message: messages) {
             sender.send(demoSocketName, message);
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            LockSupport.parkNanos(Puck.WAIT_TIME * 1_000_000);
         }
     }
 
