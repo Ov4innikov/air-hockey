@@ -35,6 +35,18 @@ public class AppUserDao extends JdbcDaoSupport {
         }
     }
 
+    public AppUser findUserById(int id){
+        String sql = "SELECT id, name, login, password, city, description from public.\"USER\" where id=?";
+        Object[] params = new Object[] {id};
+        UserMapper mapper = new UserMapper();
+        try{
+            AppUser user = this.getJdbcTemplate().queryForObject(sql, params, mapper);
+            return user;
+        } catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
     public void registerUserAccount(AppUser user){
         String sql = "INSERT INTO public.\"USER\"(name,login,password,city,description) " +
                 "VALUES (?,?,?,?,?);";
