@@ -3,6 +3,7 @@ package ru.airhockey.playingarea.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Objects;
 import java.util.concurrent.locks.LockSupport;
 
 /**
@@ -59,6 +60,24 @@ public class Player {
                 ", score=" + score +
                 ", updateTime=" + updateTime +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Float.compare(player.x, x) == 0 &&
+                Float.compare(player.y, y) == 0 &&
+                Float.compare(player.playAccount, playAccount) == 0 &&
+                Float.compare(player.score, score) == 0 &&
+                updateTime == player.updateTime &&
+                playerPosition == player.playerPosition;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(playerPosition, x, y, playAccount, score, updateTime);
     }
 }
 

@@ -41,6 +41,7 @@ public class UserStatisticsTemplate extends JdbcDaoSupport implements UserStatis
 
     @Override
     public void updateStatistics(int idUser, UserResult result, int scored, int missed, boolean isBot) {
+        if (idUser == -1) return;
         UserStatistics statistics = getStatisticsByUserId(idUser);
         statistics.setScoredPuck(statistics.getScoredPuck() + scored);
         statistics.setMissedPuck(statistics.getMissedPuck() + missed);

@@ -7,6 +7,9 @@ import ru.airhockey.playingarea.model.PlayerPosition;
 import ru.airhockey.replay.DemoMassage;
 import ru.airhockey.replay.dao.GameReplayDAO;
 import ru.airhockey.statistics.dao.GameHistoryDAO;
+import ru.airhockey.statistics.dao.UserStatisticsDAO;
+import ru.airhockey.statistics.entity.GameHistory;
+import ru.airhockey.statistics.entity.UserResult;
 import ru.airhockey.web.ws.model.IMessage;
 import ru.airhockey.web.ws.sender.ISender;
 
@@ -23,6 +26,8 @@ public class GameManager implements IManager {
     GameReplayDAO template;
     @Autowired
     GameHistoryDAO historyDAO;
+    @Autowired
+    UserStatisticsDAO userStatisticsDAO;
 
     private Map<String, Game> gameMap;
 
@@ -47,14 +52,29 @@ public class GameManager implements IManager {
 
     @Override
     public void endGame(String gameId) {
-        List<DemoMassage> demoMassageList = gameMap.get(gameId).getDemoMassageList();
+        Game game = gameMap.get(gameId);
+        List<DemoMassage> demoMassageList = game.getDemoMassageList();
         StringBuilder builder = new StringBuilder();
         for (DemoMassage demoMassage : demoMassageList) {
             builder.append(demoMassage.toDBFormat());
         }
         template.insertGame(gameId, builder.toString());
-        if (gameMap.get(gameId).getUser1() != -1) historyDAO.insertGame(gameId, gameMap.get(gameId).getUser1());
-        if (gameMap.get(gameId).getUser2() != -1) historyDAO.insertGame(gameId, gameMap.get(gameId).getUser2());
+        if (game.getUser1() != -1) historyDAO.insertGame(gameId, game.getUser1());
+        if (game.getUser2() != -1) historyDAO.insertGame(gameId, game.getUser2());
+        boolean isBot = false;
+        if (game.getUser1() == -1 || game.getUser2() == -1) {
+            isBot = true;
+        }
+        UserResult user1 = UserResult.WIN;
+        UserResult user2 = UserResult.LOSE;
+        Player player1 = game.getSimplePlay().getPlayState().getPlayer1();
+        Player player2 = game.getSimplePlay().getPlayState().getPlayer2();
+        if (player2.equals(game.getSimplePlay().getPlayState().getWinner())) {
+            user1 = UserResult.LOSE;
+            user2 = UserResult.WIN;
+        }
+        userStatisticsDAO.updateStatistics(game.getUser1(), user1, (int) player1.getPlayAccount(), (int) player2.getPlayAccount(), isBot);
+        userStatisticsDAO.updateStatistics(game.getUser2(), user2, (int) player2.getPlayAccount(), (int) player1.getPlayAccount(), isBot);
         gameMap.remove(gameId);
     }
 
