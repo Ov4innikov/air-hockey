@@ -1,18 +1,14 @@
 package ru.airhockey.web.auth;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.airhockey.web.auth.AppUser;
-import ru.airhockey.web.auth.UserMapper;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.sql.DataSource;
 
 @Repository
 @Transactional
@@ -47,7 +43,7 @@ public class AppUserDao extends JdbcDaoSupport {
         }
     }
 
-    public void registerUserAccount(AppUser user){
+    public void registerUserAccount(AppUser user) throws DataAccessException {
         String sql = "INSERT INTO public.\"USER\"(name,login,password,city,description) " +
                 "VALUES (?,?,?,?,?);";
 
@@ -57,10 +53,6 @@ public class AppUserDao extends JdbcDaoSupport {
         Object[] params = new Object[] {user.getName(),user.getLogin(),codePass,
                 user.getCity(),user.getDescription()};
 
-        try{
-            this.getJdbcTemplate().update(sql,params);
-        } catch (EmptyResultDataAccessException e){
-            e.printStackTrace();
-        }
+        this.getJdbcTemplate().update(sql,params);
     }
 }

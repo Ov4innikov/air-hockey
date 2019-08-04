@@ -5,6 +5,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -74,19 +76,27 @@ public class AuthController {
 
     @RequestMapping(value = "/register",method = RequestMethod.GET)
     public String register(Model model,Principal principal){
-        model.addAttribute("appuser", new AppUser());
+        model.addAttribute("appUser", new AppUser());
         return "registerPage";
     }
 
     @PostMapping(value = "/j_spring_security_register")
-    public String createEmployee(@ModelAttribute AppUser appuser,final RedirectAttributes redirectAttributes) {
+    public String createEmployee(Model model,@ModelAttribute("appUser") @Validated AppUser appuser, BindingResult result, final RedirectAttributes redirectAttributes) {
         System.out.println(appuser.toString());
+
+        if (result.hasErrors()) {
+            model.addAttribute("appUser", appuser);
+            model.addAttribute("errorMessage", "Error: " + "sdfsdfs");
+            return "registerPage";
+        }
+
         AppUser newUser = null;
         try{
             appUserDao.registerUserAccount(appuser);
         }
         catch (Exception e){
-
+            model.addAttribute("errorMessage", "Error: " + e.getMessage() );
+            return "registerPage";
         }
         AppUser registeredUser = appUserDao.findUserAccount(appuser.getName());
         userStatisticsDAO.insertStatistics(registeredUser.getId());
