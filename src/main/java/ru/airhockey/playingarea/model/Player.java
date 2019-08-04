@@ -13,7 +13,7 @@ import java.util.concurrent.locks.LockSupport;
 @Getter
 @Setter
 public class Player {
-    public static final int RADIUS = 40;
+    public static final int RADIUS = 20;
     public static final int WAIT_TIME = 5;
 
     private PlayerPosition playerPosition;

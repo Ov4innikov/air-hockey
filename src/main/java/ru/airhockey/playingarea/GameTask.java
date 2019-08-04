@@ -16,8 +16,8 @@ import java.util.concurrent.locks.LockSupport;
  */
 public class GameTask implements Callable<GameResult> {
 
-    public static final int HEIGHT_OF_PLAYING_AREA = 600;
-    public static final int WIDTH_OF_PLAYING_AREA = 350;
+    public static final int HEIGHT_OF_PLAYING_AREA = 650;
+    public static final int WIDTH_OF_PLAYING_AREA = 450;
     public static final int WIDTH_OF_GOAL = 200;
     public static final int DEFAULT_COUNT_OF_ITERATION_AFTER_CRASH_TO_PLAYER = 10;
     public static final int PLAYER_INTERVAL_WITH_BORDER = 10;
@@ -228,7 +228,7 @@ public class GameTask implements Callable<GameResult> {
             speed.setX(0);
         }
 
-        if (player.getPlayerPosition() == PlayerPosition.DOWN) {
+        if (player.getPlayerPosition() == PlayerPosition.UP) {
             if ((player.getY() + speed.getY() + player.RADIUS) > topY) {
                 player.setY(topY - player.RADIUS);
                 speed.setY(0);
@@ -237,7 +237,7 @@ public class GameTask implements Callable<GameResult> {
                 player.setY(player.RADIUS);
                 speed.setY(0);
             }
-        } else if (player.getPlayerPosition() == PlayerPosition.UP) {
+        } else if (player.getPlayerPosition() == PlayerPosition.DOWN) {
             if ((player.getY() + speed.getY() - player.RADIUS) < bottomY) {
                 player.setY(bottomY + player.RADIUS);
                 speed.setY(0);
