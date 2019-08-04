@@ -24,7 +24,7 @@ public class AppUserDao extends JdbcDaoSupport {
     }
 
     public AppUser findUserAccount(String userName){
-        String sql = "SELECT name, login, password, city, description from public.\"USER\" where name=?";
+        String sql = "SELECT id, name, login, password, city, description from public.\"USER\" where name=?";
         Object[] params = new Object[] {userName};
         UserMapper mapper = new UserMapper();
         try{
