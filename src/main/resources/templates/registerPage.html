@@ -7,6 +7,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <th:block th:include="/include/_bootsrap"></th:block>
 
+    <style>
+        th, td {
+            padding: 5px;
+        }
+        td span  {
+            font-size:90%;
+            font-style: italic;
+            color: red;
+        }
+        .error {
+            color: red;
+            font-style: italic;
+        }
+    </style>
 </head>
 
 <body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0"
@@ -23,7 +37,6 @@
           th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
                 Static summary
          </span>
-
 </div>
 
 
@@ -35,17 +48,29 @@
             <td align="center" width="60%"></td>
             <td align="left" width="20%" >
                 <div class="col-sm">
-                    <form class="form-sing" th:action="@{/j_spring_security_register}" th:object="${appuser}" method="POST">
+                    <form class="form-sing" th:action="@{/j_spring_security_register}" th:object="${appUser}" method="POST">
                         <div class="form-group">
+
                             <input type="text" th:field="*{name}" class="form-control" id="name" aria-describedby="Name" placeholder="Имя"/>
+                            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">..</span>
                             <input type="text" th:field="*{login}" class="form-control" id="login" aria-describedby="login" placeholder="Логин"/>
+                            <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}">..</span>
                             <input type="text" th:field="*{password}" class="form-control" id="password" placeholder="Введите пароль"/>
+                            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">..</span>
+                            <input type="text" th:field="*{passwordConfirm}" class="form-control" id="passwordConfirm" placeholder="Повтор пароля"/>
+                            <span th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}">..</span>
+
+
                             <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="Город"/>
                             <input type="text" th:field="*{description}" class="form-control" id="description" placeholder="О себе"/>
 
 <!--                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Повторите пароль">-->
 
                         </div>
+
+                        <div th:if="${errorMessage != null}"
+                             th:utext="${errorMessage}" class="error">...</div>
+
                         <button type="submit" class="btn btn-primary">Регистрация</button>
                     </form>
                 </div>
