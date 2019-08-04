@@ -20,7 +20,6 @@ function connect() {
  */
 function openChanel(chanel, showMessage) {
     stompClient.connect({}, function (frame) {
-        setConnected(true);
         stompClient.subscribe('/topic/message/' + chanel, function (message) {
             showMessage(JSON.parse(message.body));
         });
@@ -34,7 +33,6 @@ function disconnect() {
     if (stompClient !== null) {
         stompClient.disconnect();
     }
-    setConnected(false);
     console.log("Disconnected");
 }
 

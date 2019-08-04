@@ -25,8 +25,7 @@
                                                                     th:text="${userStatistics.botMatchCount} - ${userStatistics.botWinCount}"/><br>
     <span class="badge">Количество забитых шайб: </span> <span class="badge badge-primary"
                                                                th:text="${userStatistics.scoredPuck}"/><br>
-    <span class="badge">Количество пропущенных шайб: </span> <span class="badge badge-primary"
-                                                                   th:text="${userStatistics.missedPuck}"/><br>
+    <span class="badge">Количество пропущенных шайб: </span> <span class="badge badge-primary" th:text="${userStatistics.missedPuck}"/><br>
     <span class="badge">Рейтинг: </span> <span class="badge badge-primary" th:text="${userStatistics.elo}"/>
 </div>
 
@@ -34,12 +33,13 @@
     <h6> Список сыгранных игр</h6>
     <div class="list-group" th:each="history: ${gameHistory}">
         <div class="list-group-item">
-            <a style="margin-right: 40px" href="#" th:text="${history.id_game}"/>
-            <div class="badge" th:classappend="${history.win} ? badge-success : badge-danger">
-                <span th:text="${username}"/>
-                <span style="margin-left: 10px; margin-right: 10px">VS</span>
-                <span th:text="${history.opponentName}"/>
-            </div>
+            <a style="margin-right: 40px" th:href="@{/demo/{gameId}(gameId=${history.id_game})}">
+                <div class="badge" th:classappend="${history.win} ? badge-success : badge-danger">
+                    <span th:text="${username}"/>
+                    <span style="margin-left: 10px; margin-right: 10px">VS</span>
+                    <span th:text="${history.opponentName}"/>
+                </div>
+            </a>
         </div>
     </div>
 </div>

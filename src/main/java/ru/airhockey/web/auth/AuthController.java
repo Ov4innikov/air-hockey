@@ -99,8 +99,9 @@ public class AuthController {
         return "sockets";
     }
 
-    @RequestMapping(value = "/demo", method = RequestMethod.GET)
-    public String demo(Model model, Principal principal) {
+    @RequestMapping(value = "/demo/{gameId}", method = RequestMethod.GET)
+    public String demo(Model model, Principal principal, @PathVariable String gameId) {
+        model.addAttribute("gameId", gameId);
         return "demo";
     }
 
