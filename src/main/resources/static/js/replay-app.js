@@ -1,18 +1,9 @@
-
-// function setConnected(connected) {
-    // $("#connect").prop("disabled", connected);
-    // $("#disconnect").prop("disabled", !connected);
-    // if (connected) {
-    //     $("#conversation").show();
-    // }
-    // else {
-    //     $("#conversation").hide();
-    // }
-    // $("#userinfo").html("");
-// }
-
 function showMessage(message) {
-    if (message.playStatus === 'BREAK') alert('gracias');
+    if (message.playStatus === 'BREAK') {
+        console.log('gracias');
+        disconnect();
+        return;
+    }
     statusText.text(message.playStatus);
     timeText.text(message.tick + '');
     scoreMyText.text(message.player2.score + '');
@@ -31,11 +22,4 @@ $(function () {
     connect();
     openChanel(gameId, showMessage);
     startReplay(gameId);
-    // $("form").on('submit', function (e) {
-    //     e.preventDefault();
-    // });
-    // $( "#connect" ).click(function() { connect(); openChanel("demoPlay", showMessage);});
-    // $( "#disconnect" ).click(function() { disconnect(); });
-    // $( "#demo" ).click(function () { setDemoSay("demoPlay");});
-    // $( "#insert-demo" ).click(function () { insertDemo(); });
 });
