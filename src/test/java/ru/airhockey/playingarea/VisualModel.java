@@ -38,7 +38,7 @@ public class VisualModel extends JFrame {
 
         gameWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameWindow.setLocation(200,100);
-        gameWindow.setSize(GameTask.HEIGHT_OF_PLAYING_AREA, GameTask.WIDTH_OF_PLAYING_AREA);
+        gameWindow.setSize(GameTask.HEIGHT_OF_PLAYING_AREA, GameTask.WIDTH_OF_PLAYING_AREA + 30);
         gameWindow.setResizable(false);
         simplePlay = new SimplePlay(new ForkJoinPool(20), player1, player2);
         MouseListener winListener = new MyMouseListener(simplePlay);
