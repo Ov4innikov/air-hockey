@@ -20,9 +20,9 @@ public class GameHistoryTemplate extends JdbcDaoSupport implements GameHistoryDA
     public GameHistoryTemplate(DataSource dataSource) { this.setDataSource(dataSource); }
 
     @Override
-    public void insertGame(String idGame, int idUser) {
-        String sql = "insert into public.GAME_HISTORY(id_game, id_user) values(?,?)";
-        this.getJdbcTemplate().update(sql, idGame, idUser);
+    public void insertGame(String idGame, int idUser, int opponent, boolean isWin) {
+        String sql = "insert into public.GAME_HISTORY(id_game, id_user, opponent, is_win) values(?,?,?,?)";
+        this.getJdbcTemplate().update(sql, idGame, idUser, opponent, isWin);
     }
 
     @Override

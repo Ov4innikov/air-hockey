@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface GameHistoryDAO {
 
-    void insertGame(String idGame, int idUser);
+    void insertGame(String idGame, int idUser, int opponent, boolean is_win);
     List<GameHistory> getGamesByIdUser(int idUser);
 }

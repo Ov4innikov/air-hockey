@@ -13,7 +13,8 @@ public class GameHistoryMapper implements RowMapper<GameHistory> {
 
     @Override
     public GameHistory mapRow(ResultSet resultSet, int i) throws SQLException {
-        GameHistory history = new GameHistory(resultSet.getInt("id"), resultSet.getString("id_game"), resultSet.getInt("id_user"));
+        GameHistory history = new GameHistory(resultSet.getInt("id"), resultSet.getString("id_game"), resultSet.getInt("id_user"),
+                resultSet.getInt("opponent"), resultSet.getBoolean("is_win"));
         return history;
     }
 }

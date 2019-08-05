@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // If no login, it will redirect to /login page.
         http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER')");
         http.authorizeRequests().antMatchers("/sockets").access("hasAnyRole('ROLE_USER')");
-        http.authorizeRequests().antMatchers("/demo").access("hasAnyRole('ROLE_USER')");
+        http.authorizeRequests().antMatchers("/demo/{gameId}").access("hasAnyRole('ROLE_USER')");
         http.authorizeRequests().antMatchers("/game").access("hasAnyRole('ROLE_USER')");
         http.authorizeRequests().antMatchers("/userStatistics").access("hasAnyRole('ROLE_USER')");
 

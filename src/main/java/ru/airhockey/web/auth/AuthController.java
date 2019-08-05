@@ -10,8 +10,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.airhockey.replay.dao.GameReplayDAO;
 import ru.airhockey.statistics.dao.GameHistoryDAO;
+import ru.airhockey.statistics.dao.UserStatisticsDAO;
 import ru.airhockey.statistics.entity.GameHistory;
+import ru.airhockey.statistics.entity.UserStatistics;
 
 import java.security.Principal;
 import java.util.List;
@@ -25,7 +28,13 @@ public class AuthController {
     private AppUserValidator appUserValidator;
 
     @Autowired
-    GameHistoryDAO historyDAO;
+    private GameHistoryDAO historyDAO;
+
+    @Autowired
+    private UserStatisticsDAO userStatisticsDAO;
+
+    @Autowired
+    private GameReplayDAO replayDAO;
 
     @InitBinder
     protected void initBinder(WebDataBinder dataBinder){
@@ -89,6 +98,8 @@ public class AuthController {
             model.addAttribute("errorMessage", "Error: " + e.getMessage() );
             return "registerPage";
         }
+        AppUser registeredUser = appUserDao.findUserAccount(appuser.getName());
+        userStatisticsDAO.insertStatistics(registeredUser.getId());
         redirectAttributes.addFlashAttribute("flashUser", appuser);
         return "redirect:/registerSuccessful";
     }
@@ -98,8 +109,9 @@ public class AuthController {
         return "sockets";
     }
 
-    @RequestMapping(value = "/demo", method = RequestMethod.GET)
-    public String demo(Model model, Principal principal) {
+    @RequestMapping(value = "/demo/{gameId}", method = RequestMethod.GET)
+    public String demo(Model model, Principal principal, @PathVariable String gameId) {
+        model.addAttribute("gameId", gameId);
         return "demo";
     }
 
@@ -112,8 +124,19 @@ public class AuthController {
     public String gameHistory(Model model, Principal principal) {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         AppUser appUser = appUserDao.findUserAccount(loginedUser.getUsername());
+//        userStatisticsDAO.insertStatistics(appUser.getId());
+//        historyDAO.insertGame("demoPlay", appUser.getId());
         List<GameHistory> historyList = historyDAO.getGamesByIdUser(appUser.getId());
+        for (GameHistory history: historyList) {
+            if(history.getOpponent() != 0) {
+                AppUser opponent = appUserDao.findUserById(history.getOpponent());
+                history.setOpponentName(opponent.getName());
+            } else history.setOpponentName("none");
+        }
+        UserStatistics statistics = userStatisticsDAO.getStatisticsByUserId(appUser.getId());
         model.addAttribute("gameHistory", historyList);
+        model.addAttribute("userStatistics", statistics);
+        model.addAttribute("username", appUser.getName());
         return "userStatistics";
     }
 }
