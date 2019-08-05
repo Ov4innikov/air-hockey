@@ -30,7 +30,7 @@ public class UserStatisticsTemplate extends JdbcDaoSupport implements UserStatis
         RowMapper<UserStatistics> mapper = new UserStatisticsMapper();
         UserStatistics statistics = new UserStatistics();
         try {
-            this.getJdbcTemplate().queryForObject(sql, params, mapper);
+            statistics = this.getJdbcTemplate().queryForObject(sql, params, mapper);
         } catch (Exception e) {
             e.printStackTrace();
         }
