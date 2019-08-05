@@ -49,18 +49,6 @@ field.mousemove(function(e) {
     }
 });
 
-field.mouseover(function(e) {
-    e.preventDefault();
-    if (selectedElement) {
-        sendMessage($('#socketid').val(), {
-            'gameId': $('#socketid').val(),
-            'playerPosition': 'DOWN',
-            'playerMoveStatus': 'NO',
-            'direction': getCorner(e.offsetX - myBat.cx(), e.offsetY - myBat.cy())
-        });
-    }
-});
-
 field.mouseup(function() {
     selectedElement = null;
 
@@ -138,9 +126,6 @@ var myBat = field.circle(batDiameter).attr({
     cx: fieldX + fieldWidth / 2,
     cy: fieldY + fieldHeight - 30,
     fill: '#dbe3de'
-    // stroke: '#cdd1c9',
-    // 'stroke-width': batBorder,
-    // 'stroke-alignment': 'inner'
 });
 
 var enemyBat = myBat.clone();
