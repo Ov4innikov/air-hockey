@@ -34,7 +34,7 @@ public class PlayDirect {
         upPuckPositionX = GameTask.WIDTH_OF_PLAYING_AREA / 2;
         upPuckPositionY = upPlayerPositionY - Player.RADIUS - Puck.RADIUS - 30;
         downPuckPositionX = GameTask.WIDTH_OF_PLAYING_AREA / 2;
-        downPuckPositionY = downPlayerPositionY + Player.RADIUS + Puck.RADIUS - 30;
+        downPuckPositionY = downPlayerPositionY + Player.RADIUS + Puck.RADIUS + 30;
     }
 
     public static PlayDirect getInstance() {
