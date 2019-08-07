@@ -21,13 +21,7 @@ public class Puck {
     private float y;
     private long updateTime = 0;
 
-    public Puck(Speed speed, String x, String y) {
-        this.speed = speed;
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
-    }
-
-    public Puck(Speed speed, int x, int y) {
+    public Puck(Speed speed, float x, float y) {
         this.speed = speed;
         this.x = x;
         this.y = y;
