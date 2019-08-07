@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="userStatistics" author="farhutdinov">
+        <createTable tableName="USER_STATISTICS">
+            <column name="id" type="serial">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_user" type="number" />
+            <column name="match_count" type="number" />
+            <column name="win_count" type="number" />
+            <column name="bot_match_count" type="number" />
+            <column name="bot_win_count" type="number" />
+            <column name="scored_puck" type="number" />
+            <column name="missed_puck" type="number" />
+            <column name="elo" type="number" />
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,11 +1,6 @@
 package ru.airhockey.playingarea;
 
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.airhockey.playingarea.model.*;
@@ -38,7 +33,7 @@ public class VisualModel extends JFrame {
 
         gameWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         gameWindow.setLocation(200,100);
-        gameWindow.setSize(GameTask.HEIGHT_OF_PLAYING_AREA, GameTask.WIDTH_OF_PLAYING_AREA);
+        gameWindow.setSize(GameTask.HEIGHT_OF_PLAYING_AREA, GameTask.WIDTH_OF_PLAYING_AREA + 30);
         gameWindow.setResizable(false);
         simplePlay = new SimplePlay(new ForkJoinPool(20), player1, player2);
         MouseListener winListener = new MyMouseListener(simplePlay);

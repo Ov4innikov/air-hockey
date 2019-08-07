@@ -17,6 +17,7 @@ function setConnected(connected) {
 }
 
 function showMessage(message) {
+    console.log(message);
     if (message.playStatus === 'PUCK') {
         console.log(message);
     }
@@ -24,9 +25,9 @@ function showMessage(message) {
     timeText.text(convertMs(message.tick) + '');
     scoreMyText.text(message.player1.playAccount + '');
     scoreEnemyText.text(message.player2.playAccount + '');
-    enemyBat.cx(message.player2.x + fieldX).cy(message.player2.y + fieldY);
-    myBat.cx(message.player1.x + fieldX).cy(message.player1.y + fieldY);
-    rpuck.cx(message.puck.x + fieldX).cy(message.puck.y + fieldY);
+    enemyBat.cx(message.player2.x + fieldX).cy(fieldHeight - message.player2.y + fieldY);
+    myBat.cx(message.player1.x + fieldX).cy(fieldHeight - message.player1.y + fieldY);
+    rpuck.cx(message.puck.x + fieldX).cy(fieldHeight - message.puck.y + fieldY);
 }
 
 function convertMs(ms) {

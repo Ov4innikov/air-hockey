@@ -40,11 +40,12 @@ field.mousedown(function(e) {
 field.mousemove(function(e) {
     e.preventDefault();
     if (selectedElement) {
+        console.log((fieldHeight - e.offsetY) - (fieldHeight - enemyBat.cy()));
         sendMessage($('#socketid').val(), {
             'gameId': $('#socketid').val(),
-            'playerPosition': 'DOWN',
+            'playerPosition': 'UP',
             'playerMoveStatus': 'YES',
-            'direction': getCorner(e.offsetX - myBat.cx(), e.offsetY - myBat.cy())
+            'direction': getCorner(e.offsetX - enemyBat.cx(), enemyBat.cy() - e.offsetY)
         });
     }
 });

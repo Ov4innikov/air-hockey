@@ -90,6 +90,6 @@ public class Game {
      * @return
      */
     public Player getPlayer2() {
-        return simplePlay.getPlayState().getPlayer2();
+        return simplePlay.getPlayState().getPlayer1();
     }
 }

@@ -228,7 +228,7 @@ public class GameTask implements Callable<GameResult> {
             speed.setX(0);
         }
 
-        if (player.getPlayerPosition() == PlayerPosition.UP) {
+        if (player.getPlayerPosition() == PlayerPosition.DOWN) {
             if ((player.getY() + speed.getY() + player.RADIUS) > topY) {
                 player.setY(topY - player.RADIUS);
                 speed.setY(0);
@@ -237,7 +237,7 @@ public class GameTask implements Callable<GameResult> {
                 player.setY(player.RADIUS);
                 speed.setY(0);
             }
-        } else if (player.getPlayerPosition() == PlayerPosition.DOWN) {
+        } else if (player.getPlayerPosition() == PlayerPosition.UP) {
             if ((player.getY() + speed.getY() - player.RADIUS) < bottomY) {
                 player.setY(bottomY + player.RADIUS);
                 speed.setY(0);

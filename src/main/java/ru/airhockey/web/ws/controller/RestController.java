@@ -42,9 +42,9 @@ public class RestController {
         sender.send(key, message);
     }
 
-    @RequestMapping("/demosay")
-    public void demoSay(@RequestParam String key) {
-        demo.demoPlay(key);
+    @RequestMapping("/replay")
+    public void demoSay(@RequestParam String gameId) {
+        demo.demoPlay(gameId);
     }
 
     @RequestMapping("/demoinsert")
