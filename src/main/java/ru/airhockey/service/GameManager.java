@@ -52,7 +52,8 @@ public class GameManager implements IManager {
 
     @Override
     public void endGame(String gameId) {
-        Game game = gameMap.get(gameId);
+        Game game = gameMap.remove(gameId);
+        if (game == null) return;
         List<DemoMassage> demoMassageList = game.getDemoMassageList();
         StringBuilder builder = new StringBuilder();
         for (DemoMassage demoMassage : demoMassageList) {
@@ -77,7 +78,6 @@ public class GameManager implements IManager {
         if (game.getUser2() != -1) historyDAO.insertGame(gameId, game.getUser2(), game.getUser1(), !isWin);
         userStatisticsDAO.updateStatistics(game.getUser1(), user1, (int) player1.getPlayAccount(), (int) player2.getPlayAccount(), isBot);
         userStatisticsDAO.updateStatistics(game.getUser2(), user2, (int) player2.getPlayAccount(), (int) player1.getPlayAccount(), isBot);
-        gameMap.remove(gameId);
     }
 
     @Override

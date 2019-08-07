@@ -29,35 +29,12 @@ function getCorner(x, y) {
 
 var field = draw.group();
 
-// SVG.on(field, 'mousedown', function(e) {
-//     selectedElement = e.target;
-// })
-
-field.mousedown(function(e) {
-    selectedElement = e.target;
-});
-
-field.mousemove(function(e) {
-    e.preventDefault();
-    if (selectedElement) {
-        console.log((fieldHeight - e.offsetY) - (fieldHeight - enemyBat.cy()));
-        sendMessage($('#socketid').val(), {
-            'gameId': $('#socketid').val(),
-            'playerPosition': 'UP',
-            'playerMoveStatus': 'YES',
-            'direction': getCorner(e.offsetX - enemyBat.cx(), enemyBat.cy() - e.offsetY)
-        });
-    }
-});
-
-field.mouseup(function() {
-    selectedElement = null;
-
-    sendMessage($('#socketid').val(), {
-        'gameId': $('#socketid').val(),
-        'playerPosition': 'DOWN',
-        'playerMoveStatus': 'NO',
-        'direction': 0.0
+field.on('mousemove', function (e) {
+    sendMessage($('#gameId').val(), {
+        'gameId': $('#gameId').val(),
+        'playerPosition': $('#userPosition').val(),
+        'playerMoveStatus': 'YES',
+        'direction': getCorner(e.offsetX - myBat.cx(), e.offsetY - myBat.cy())
     });
 });
 
@@ -142,7 +119,7 @@ var scoreMyText = draw.text(scoreMy + '').font({
     y: fieldHeight - 50
 });
 
-var nameMyText = draw.text(nameMy + '').font({
+var nameMyText = draw.text($('#userName1').val() + '').font({
     size: 72,
     family: 'Mistral',
     fill: '#4e55d4',
@@ -154,7 +131,7 @@ var scoreEnemyText = scoreMyText.clone().text(scoreEnemy + '').font({
     y: 70
 });
 
-var nameEnemyText = nameMyText.clone().text(nameEnemy + '').font({
+var nameEnemyText = nameMyText.clone().text($('#userName2').val()  + '').font({
     y: 0
 });
 
@@ -165,3 +142,4 @@ var timeText = nameMyText.clone().text('Time').font({
 var statusText = nameMyText.clone().text('Status').font({
     y: fieldY + fieldHeight / 2 - 100
 });
+	

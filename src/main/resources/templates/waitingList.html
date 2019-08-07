@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+ <th:block th:include="/include/_bootsrap"></th:block>
+
+ <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+ <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+
+ <script type="text/javascript" src="/js/ws/ws-app.js"></script>
+ <script src="/js/wait-app.js"></script>
+
+
+ <title>Innopolis Air hockey</title>
+</head>
+<body>
+<th:block th:include="/include/_menu"></th:block>
+
+<input type="hidden" id="UserQueueID" th:value="${UserQueueID}"/>
+
+<button class="btn btn-primary" th:onclick="'window.location.href = \''+@{/app/matchUser?key={gameId}(gameId=${UserQueueID})}+'\''" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Подключиться к игре </button>
+<div class="collapse" id="collapseExample">
+ <div class="progress" style="margin-top: 20px">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+   <span>Поиск игры<span class="dotdotdot"></span></span>
+  </div>
+ </div>
+</div>
+</body>
+</html>

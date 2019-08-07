@@ -2,13 +2,16 @@ package ru.airhockey.web.ws.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import ru.airhockey.bot.BotCreateMessage;
 import ru.airhockey.bot.BotLevel;
+import ru.airhockey.playingarea.model.PlayerPosition;
 import ru.airhockey.replay.DemoPlay;
 import ru.airhockey.service.IBotManager;
 import ru.airhockey.service.IManager;
+import ru.airhockey.waitingList.MatchedUser;
+import ru.airhockey.waitingList.SearchPlayerManager;
 import ru.airhockey.web.ws.model.TestMessage;
 import ru.airhockey.web.ws.sender.ISender;
 
@@ -27,6 +30,9 @@ public class RestController {
 
     @Autowired
     DemoPlay demo;
+
+    @Autowired
+    SearchPlayerManager SearchPlayer;
 
     @Autowired
     IManager manager;
@@ -53,15 +59,16 @@ public class RestController {
     }
 
     @RequestMapping("/start")
-    public void startGame(@RequestParam String gameId) {
+    public void startGame(@RequestParam String gameId, @RequestParam int user1,@RequestParam int user2) {
         System.out.println("Controller started");
-        manager.createGame(gameId, 0, 0);
+        manager.createGame(gameId, user1, user2);
         manager.startGame(gameId);
     }
 
     @RequestMapping("/end")
-    public void endGame(@RequestParam String gameId) {
+    public String endGame(@RequestParam String gameId) {
         manager.endGame(gameId);
+        return "redirect:/userStatistics";
     }
 
 //    @RequestMapping("/bot-game")
@@ -80,5 +87,25 @@ public class RestController {
     @RequestMapping("/bot-game-end")
     public void gameWithBotEnd(@RequestParam String gameId) {
         botManager.endGame(gameId);
+    }
+
+    @RequestMapping(value = "/matchUser", method = RequestMethod.GET)
+    public ModelAndView matchUser(@RequestParam int key) {
+        SearchPlayer.addQueue(key);
+        MatchedUser matchedUser = SearchPlayer.matchUserAndStart(key);
+        if(matchedUser!=null){
+
+            ModelAndView mav = new ModelAndView("redirect:/game");
+            mav.addObject("user1",matchedUser.getUser1());
+            mav.addObject("user2",matchedUser.getUser2());
+            if(key==matchedUser.getUser1()) {
+                mav.addObject("userPosition", PlayerPosition.DOWN);
+            }  else {
+                mav.addObject("userPosition", PlayerPosition.UP);
+            }
+            mav.addObject("gameID",matchedUser.getGameID());
+           return mav;
+        }
+        return null;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.airhockey.replay.entity.GameReplay;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 /**
  * Реализация дао повторов игры
@@ -42,6 +43,13 @@ public class GameReplayTemplate extends JdbcDaoSupport implements GameReplayDAO 
         GameReplayMapper mapper = new GameReplayMapper();
         GameReplay replay = this.getJdbcTemplate().queryForObject(sql, params, mapper);
         return replay;
+    }
+
+    @Override
+    public List<GameReplay> getGames() {
+        String sql = "select * from public.GAME_REPLAY";
+        List<GameReplay> gameReplays = this.getJdbcTemplate().query(sql, new GameReplayMapper());
+        return gameReplays;
     }
 
     @Override

@@ -30,6 +30,7 @@ public class DemoPlay {
     GameReplayDAO replay;
 
     public void demoPlay(String demoSocketName) {
+        List<GameReplay> gameReplays = replay.getGames();
         String gameText = getTextFromDB(demoSocketName);
         List<DemoMassage> messages = parseDBFormat(gameText);
         for (DemoMassage message: messages) {
@@ -58,7 +59,7 @@ public class DemoPlay {
             Player player1 = new Player(PlayerPosition.valueOf(point[5]), Float.parseFloat(point[1]), Float.parseFloat(point[2]), Float.parseFloat(point[3]), Float.parseFloat(point[4]));
             Player player2 = new Player(PlayerPosition.valueOf(point[10]), Float.parseFloat(point[6]), Float.parseFloat(point[7]), Float.parseFloat(point[8]), Float.parseFloat(point[9]));
             Speed speed = new Speed(10, 10);
-            Puck puck = new Puck(speed, point[11], point[12]);
+            Puck puck = new Puck(speed, Float.parseFloat(point[11]), Float.parseFloat(point[12]));
             PlayStatus playStatus = PlayStatus.valueOf(point[13]);
             message.add(new DemoMassage(tick, player1, player2, puck, playStatus));
         }
