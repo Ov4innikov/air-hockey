@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.airhockey.playingarea.model.PlayerPosition;
 import ru.airhockey.replay.dao.GameReplayDAO;
 import ru.airhockey.statistics.dao.GameHistoryDAO;
 import ru.airhockey.statistics.dao.UserStatisticsDAO;
@@ -56,7 +57,9 @@ public class AuthController {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         String userInfo = WebUtils.toString(loginedUser);
         model.addAttribute("userInfo", userInfo);
-        return "userInfoPage";
+        AppUser appUser = appUserDao.findUserAccount(loginedUser.getUsername());
+        model.addAttribute( "UserQueueID", appUser.getId());
+        return "waitingList";
     }
 
     @RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
@@ -109,14 +112,22 @@ public class AuthController {
         return "sockets";
     }
 
-    @RequestMapping(value = "/demo/{gameId}", method = RequestMethod.GET)
-    public String demo(Model model, Principal principal, @PathVariable String gameId) {
+    @RequestMapping(value = "/demo", method = RequestMethod.GET)
+    public String demo(Model model, Principal principal, @RequestParam String gameId) {
         model.addAttribute("gameId", gameId);
         return "demo";
     }
 
     @RequestMapping(value = "/game", method = RequestMethod.GET)
-    public String game(Model model, Principal principal) {
+    public String game(Model model, Principal principal, @RequestParam int user1, @RequestParam int user2 , @RequestParam String gameID, @RequestParam PlayerPosition userPosition) {
+        model.addAttribute("user1", user1);
+        model.addAttribute("user2", user2);
+        model.addAttribute("gameID", gameID);
+        model.addAttribute("userPosition", userPosition);
+        AppUser appUser1 = appUserDao.findUserById(user1);
+        AppUser appUser2 = appUserDao.findUserById(user2);
+        model.addAttribute("userName1", appUser1.getName());
+        model.addAttribute("userName2", appUser2.getName());
         return "game";
     }
 
@@ -139,4 +150,13 @@ public class AuthController {
         model.addAttribute("username", appUser.getName());
         return "userStatistics";
     }
+
+    @RequestMapping(value = "/waitingList", method = RequestMethod.GET)
+    public String waitingList(Model model, Principal principal) {
+        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+        AppUser appUser = appUserDao.findUserAccount(loginedUser.getUsername());
+        model.addAttribute( "UserQueueID", appUser.getId());
+        return "waitingList";
+    }
+
 }

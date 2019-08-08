@@ -8,7 +8,6 @@ var rpuckRadius = 30;
 var batRadius = 30;
 var goalWidth = 140, goalHeight = 15;
 var scoreMy = scoreEnemy = 0;
-var nameMy = 'Me';
 var nameEnemy = 'Enemy';
 
 var draw = SVG('air').size(svgWidth, svgHeight).attr({'background-color': '#0f0b4cf0'});
@@ -31,9 +30,9 @@ function getCorner(x, y) {
 var field = draw.group();
 
 field.on('mousemove', function (e) {
-    sendMessage($('#socketid').val(), {
-        'gameId': $('#socketid').val(),
-        'playerPosition': 'DOWN',
+    sendMessage($('#gameId').val(), {
+        'gameId': $('#gameId').val(),
+        'playerPosition': $('#userPosition').val(),
         'playerMoveStatus': 'YES',
         'direction': getCorner(e.offsetX - myBat.cx(), e.offsetY - myBat.cy())
     });
@@ -100,7 +99,7 @@ var scoreMyText = draw.text(scoreMy + '').font({
     y: fieldHeight - 50
 });
 
-var nameMyText = draw.text(nameMy + '').font({
+var nameMyText = draw.text($('#userName1').val() + '').font({
     size: 72,
     family: 'Mistral',
     fill: '#4e55d4',
@@ -112,7 +111,7 @@ var scoreEnemyText = scoreMyText.clone().text(scoreEnemy + '').font({
     y: 70
 });
 
-var nameEnemyText = nameMyText.clone().text(nameEnemy + '').font({
+var nameEnemyText = nameMyText.clone().text($('#userName2').val()  + '').font({
     y: 0
 });
 

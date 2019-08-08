@@ -1,6 +1,5 @@
 function showMessage(message) {
     if (message.playStatus === 'BREAK') {
-        console.log('gracias');
         disconnect();
         return;
     }

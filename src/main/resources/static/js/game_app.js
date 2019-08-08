@@ -18,6 +18,12 @@ function showMessage(message) {
     if (message.playStatus === 'PUCK') {
         console.log(message);
     }
+    if (message.playStatus === 'BREAK') {
+        console.log('gracias');
+        disconnect();
+        jQuery.get("/app/end", {gameId:$("#gameId").val()});
+        return;
+    }
     statusText.text(message.playStatus);
     timeText.text(message.tick + '');
     scoreMyText.text(message.player1.score + '');
@@ -27,8 +33,8 @@ function showMessage(message) {
     rpuck.cx(message.puck.x + 15 + 50).cy(message.puck.y + 15 + 35);
 }
 
-function setStart(id) {
-    jQuery.get("/app/start", {gameId:id});
+function setStart(id,user1,user2) {
+    jQuery.get("/app/start", {gameId:id ,user1:user1, user2:user2});
 }
 
 function setBot(id) {
@@ -50,15 +56,20 @@ function getCorner(x, y) {
 
     return corner;
 }
-
 $(function () {
-    $("form").on('submit', function (e) {
-        e.preventDefault();
-    });
-    $( "#connect" ).click(function() { connect(); openChanel($("#socketid").val(), showMessage);});
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#start" ).click(function () { setStart($("#socketid").val());});
-    $( "#bot" ).click(function () { setBot($("#socketid").val());});
+    let gameId = $("#gameId").val();
+    connect();
+    openChanel(gameId, showMessage);
+    setStart(gameId,$("#user1").val(),$("#user2").val());
+})
+// $(function () {
+//     $("form").on('submit', function (e) {
+//         e.preventDefault();
+//     });
+//     $( "#connect" ).click(function() { connect(); openChanel($("#socketid").val(), showMessage);});
+//     $( "#disconnect" ).click(function() { disconnect(); });
+//     $( "#start" ).click(function () { setStart($("#socketid").val());});
+//     $( "#bot" ).click(function () { setBot($("#socketid").val());});
 
     // Draggable.create("#SvgjsCircle1018", {
     //     bounds: {top:fieldY + 20, left: fieldX + 20, width:fieldWidth - 40, height:fieldHeight/2 - 60}, cursor:"grabbing",
@@ -129,4 +140,4 @@ $(function () {
     //         });
     //     }
     // });
-});
+//});

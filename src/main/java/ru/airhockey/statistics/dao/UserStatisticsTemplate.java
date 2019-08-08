@@ -28,11 +28,13 @@ public class UserStatisticsTemplate extends JdbcDaoSupport implements UserStatis
         String sql = "select * from public.USER_STATISTICS where id_user = ?";
         Object[] params = new Object[] {idUser};
         RowMapper<UserStatistics> mapper = new UserStatisticsMapper();
-        UserStatistics statistics = new UserStatistics();
+        UserStatistics statistics;
         try {
             statistics = this.getJdbcTemplate().queryForObject(sql, params, mapper);
         } catch (Exception e) {
             e.printStackTrace();
+            insertStatistics(idUser);
+            statistics = this.getJdbcTemplate().queryForObject(sql, params, mapper);
         }
         return statistics;
     }
@@ -48,14 +50,7 @@ public class UserStatisticsTemplate extends JdbcDaoSupport implements UserStatis
     public void updateStatistics(int idUser, UserResult result, int scored, int missed, boolean isBot) {
         if (idUser == -1) return;
 
-        UserStatistics statistics;
-        try {
-            statistics = getStatisticsByUserId(idUser);
-        } catch (Exception e) {
-            e.printStackTrace();
-            insertStatistics(idUser);
-            statistics = getStatisticsByUserId(idUser);
-        }
+        UserStatistics statistics = getStatisticsByUserId(idUser);
         statistics.setScoredPuck(statistics.getScoredPuck() + scored);
         statistics.setMissedPuck(statistics.getMissedPuck() + missed);
         if (isBot) {

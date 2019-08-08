@@ -1,24 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
- <th:block th:include="/include/_bootsrap"></th:block>
+    <th:block th:include="/include/_bootsrap"></th:block>
 
- <script type="text/javascript" src="/js/svg.min.js"></script>
- <script type="text/javascript" src="/js/graphics.js" defer></script>
- <script type="text/javascript" src="/js/TweenMax.min.js" defer></script>
- <script type="text/javascript" src="/js/Draggable.min.js" defer></script>
- <script type="text/javascript" src="/js/moving.js" defer></script>
+    <script type="text/javascript" src="/js/svg.min.js"></script>
+    <script type="text/javascript" src="/js/graphics.js" defer></script>
+    <script type="text/javascript" src="/js/TweenMax.min.js" defer></script>
+    <script type="text/javascript" src="/js/Draggable.min.js" defer></script>
+    <script type="text/javascript" src="/js/moving.js" defer></script>
 
- <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
- <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
+    <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
 
- <script type="text/javascript" src="/js/ws/ws-app.js"></script>
- <script src="/js/game_app.js" defer></script>
+    <script type="text/javascript" src="/js/ws/ws-app.js"></script>
+    <script src="/js/game_app.js" defer></script>
 
-
- <title>Innopolis Air hockey</title>
+    <title>Innopolis Air hockey</title>
 </head>
 <body>
 <!-- Include _menu.html -->
@@ -28,19 +27,27 @@
 <div id="air" draggable="false"></div>
 
 <div class="col-md-6">
- <form class="form-inline">
-  <div class="form-group">
-   <label for="connect">WebSocket connection:</label>
-   <button id="connect" class="btn btn-default" type="submit">Connect</button>
-   <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>
-   <button id="start" class="btn btn-default" type="submit">Start!</button>
-      <div class="form-group">
-       <label for="socketid">Id of pare</label>
-       <input type="text" id="socketid" class="form-control" placeholder="Id here">
-      </div>
-  </div>
-  <button id="bot" class="btn btn-default" type="submit">BOT</button>
- </form>
+    <form class="form-inline">
+        <!--  <div class="form-group">-->
+        <!--   <label for="connect">WebSocket connection:</label>-->
+        <!--   <button id="connect" class="btn btn-default" type="submit">Connect</button>-->
+        <!--   <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect</button>-->
+        <!--   <button id="start" class="btn btn-default" type="submit">Start!</button>-->
+        <!--      <div class="form-group">-->
+        <!--       <label for="socketid">Id of pare</label>-->
+        <!--       <input type="text" id="socketid" class="form-control" placeholder="Id here">-->
+        <!--      -->
+        <!--      </div>-->
+        <!--  </div>-->
+        <!--  <button id="bot" class="btn btn-default" type="submit">BOT</button>-->
+        <input type="text" id="user1" th:value="${user1}"/>
+        <input type="text" id="user2" th:value="${user2}"/>
+        <input type="text" id="userName1" th:value="${userName1}"/>
+        <input type="text" id="userName2" th:value="${userName2}"/>
+        <input type="text" id="gameId" th:value="${gameID}"/>
+        <input type="text" id="userPosition" th:value="${userPosition}"/>
+
+    </form>
 </div>
 </body>
 </html>
