@@ -30,11 +30,15 @@ function getCorner(x, y) {
 var field = draw.group();
 
 field.on('mousemove', function (e) {
+    var bat = myBat;
+    if ($('#userPosition').val() === 'UP') {
+        bat = enemyBat;
+    }
     sendMessage($('#gameId').val(), {
         'gameId': $('#gameId').val(),
         'playerPosition': $('#userPosition').val(),
         'playerMoveStatus': 'YES',
-        'direction': getCorner(e.offsetX - myBat.cx(), e.offsetY - myBat.cy())
+        'direction': getCorner(e.offsetX - bat.cx(), bat.cy() - e.offsetY)
     });
 });
 
