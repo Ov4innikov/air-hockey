@@ -5,36 +5,49 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <th:block th:include="/include/_bootsrap"></th:block>
+    <th:block th:include="include/_bootsrap"></th:block>
 </head>
 
 <body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginheight="0" marginwidth="0"
       bgcolor="#E0E0E0" >
 
 <!-- Include _menu.html -->
-<th:block th:include="/include/_menu"></th:block>
+<th:block th:include="include/_menu"></th:block>
 
 
 
 <div class="container" align="center">
     <table border="0" width="100%"  >
             <tr>
-                <td align="center" width="20%"></td>
-                <td align="center" width="60%"></td>
-                <td align="left" width="20%" >
+                <td align="center" width="10%"></td>
+                <td align="center" width="40%"></td>
+                <td align="left" width="50%" >
                     <div class="col-sm">
                         <form class="form-sing" th:action="@{/j_spring_security_check}" method='POST' >
                             <div class="form-group">
-                                <!--label for="exampleInputEmail1">Почта</label-->
-                                <input type="text" name="username" class="form-control" aria-describedby="login" placeholder="sample">
-                                <input type="password" name="password" class="form-control" id="password" placeholder="Пароль">
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td align="center" width="50%"><input type="text" name="username" class="form-control" aria-describedby="login" placeholder="Имя"></td>
+                                        <td align="center" width="50%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" width="50%"><input type="password" name="password" class="form-control" id="password" placeholder="Пароль"></td>
+                                        <td align="center" width="50%"></td>
+                                    </tr>
+                                </table>
                             </div>
-                            <!--div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div-->
+
                             <button type="submit" name="submit" class="btn btn-primary">Вход</button>
                         </form>
+                        <!-- /login?error=true -->
+                        <div th:if="${#request.getParameter('error') == 'true'}"
+                             style="color:red;margin:10px 0px;">
+                            Ошибка входа<br />
+                            <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
+                                  th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
+                                  Static summary
+                             </span>
+                        </div>
 
                         <br>
                         Username/pass:
@@ -46,15 +59,6 @@
 
                     </div>
 
-                    <!-- /login?error=true -->
-                    <div th:if="${#request.getParameter('error') == 'true'}"
-                         style="color:red;margin:10px 0px;">
-                        Ошибка входа<br />
-                        <span th:if="${#session!= null and #session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION') != null}"
-                              th:utext="${#session.getAttribute('SPRING_SECURITY_LAST_EXCEPTION').message}">
-                                  Static summary
-                             </span>
-                    </div>
                 </td>
             </tr>
      </table>
