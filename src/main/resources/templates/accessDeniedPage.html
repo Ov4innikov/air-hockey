@@ -4,12 +4,12 @@
     <title>Access Denied</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <th:block th:include="/include/_bootstrap"></th:block>
+    <th:block th:include="include/_bootstrap"></th:block>
 </head>
 
 <body>
 <!-- Include _menu.html -->
-<th:block th:include="/include/_menu"></th:block>
+<th:block th:include="include/_menu"></th:block>
 
 <h3 th:if="${message != null}" th:utext="${message}" style="color: red;"></h3>
 

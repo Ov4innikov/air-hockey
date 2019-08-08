@@ -43,7 +43,18 @@ public class AppUserDao extends JdbcDaoSupport {
         }
     }
 
-    public void registerUserAccount(AppUser user) throws DataAccessException {
+    public int getUsersCount(String userName) throws DataAccessException {
+        String sql = "SELECT count(*) from public.\"USER\" where name=?";
+        Object[] params = new Object[] {userName};
+        int a =this.getJdbcTemplate().queryForObject(sql, params,Integer.class);
+        return a;
+    }
+
+    public void registerUserAccount(AppUser user) throws Exception {
+
+        if(getUsersCount(user.getName())!=0)
+            throw new Exception("Пользователь c таким именем уже зарегистрирован");
+
         String sql = "INSERT INTO public.\"USER\"(name,login,password,city,description) " +
                 "VALUES (?,?,?,?,?);";
 

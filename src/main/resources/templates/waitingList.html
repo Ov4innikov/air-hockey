@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
- <th:block th:include="/include/_bootsrap"></th:block>
+ <th:block th:include="include/_bootsrap"></th:block>
 
  <script src="/webjars/sockjs-client/1.0.2/sockjs.min.js"></script>
  <script src="/webjars/stomp-websocket/2.3.3/stomp.min.js"></script>
@@ -15,7 +15,7 @@
  <title>Innopolis Air hockey</title>
 </head>
 <body>
-<th:block th:include="/include/_menu"></th:block>
+<th:block th:include="include/_menu"></th:block>
 
 <input type="hidden" id="UserQueueID" th:value="${UserQueueID}"/>
 

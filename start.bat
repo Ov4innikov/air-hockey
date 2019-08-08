@@ -1,0 +1,1 @@
+java -Dserver.port=8080 -Dspring.datasource.url=jdbc:postgresql://localhost:5432/airhockey -Dspring.datasource.username=postgres -Dspring.datasource.password=Qwe123asd -jar original-air-hockey-1.0-SNAPSHOT.jar

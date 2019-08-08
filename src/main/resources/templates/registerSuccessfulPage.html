@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Successfully registered</title>
-    <th:block th:include="/include/_bootsrap"></th:block>
+    <th:block th:include="include/_bootsrap"></th:block>
 </head>
 
 <body>
 
 <!-- Include _menu.html -->
-<th:block th:include="/include/_menu"></th:block>
+<th:block th:include="include/_menu"></th:block>
 
 <h2>Вы успешно зарегистрированы</h2>
 
@@ -20,7 +20,7 @@
         <li>Описание: <span th:utext="${flashUser.description}">..</span></li>
     </ul>
 </div>
-
+<a href="/login">Вход</a>
 
 </body>
 </html>

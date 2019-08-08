@@ -89,7 +89,7 @@ public class AuthController {
 
         if (result.hasErrors()) {
             model.addAttribute("appUser", appuser);
-            model.addAttribute("errorMessage", "Error: " + "sdfsdfs");
+            model.addAttribute("errorMessage", "Error: " + "При регистрации возникли ошибки");
             return "registerPage";
         }
 
