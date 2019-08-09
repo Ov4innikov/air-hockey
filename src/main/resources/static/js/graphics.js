@@ -34,7 +34,7 @@ field.on('mousemove', function (e) {
         'gameId': $('#gameId').val(),
         'playerPosition': $('#userPosition').val(),
         'playerMoveStatus': 'YES',
-        'direction': getCorner(e.offsetX - myBat.cx(), e.offsetY - myBat.cy())
+        'direction': getCorner(e.offsetX - enemyBat.cx(), enemyBat.cy() - e.offsetY)
     });
 });
 

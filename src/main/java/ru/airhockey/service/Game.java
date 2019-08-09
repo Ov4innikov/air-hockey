@@ -86,10 +86,10 @@ public class Game {
 
     /**
      * Need for bot
-     * I think, that bot always must be on TOP
+     * I think, that bot always must be on DOWN
      * @return
      */
-    public Player getPlayer2() {
-        return simplePlay.getPlayState().getPlayer2();
+    public Player getPlayer() {
+        return simplePlay.getPlayState().getPlayer1();
     }
 }

@@ -19,6 +19,8 @@
 
 <input type="hidden" id="UserQueueID" th:value="${UserQueueID}"/>
 
+<button class="btn btn-primary" th:onclick="'window.location.href = \''+@{/game?user1=-1&gameID=bot&userPosition=UP&user2={gameId}(gameId=${UserQueueID})}+'\''" type="button"> Играть с ботом </button>
+
 <button class="btn btn-primary" th:onclick="'window.location.href = \''+@{/app/matchUser?key={gameId}(gameId=${UserQueueID})}+'\''" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Подключиться к игре </button>
 <div class="collapse" id="collapseExample">
  <div class="progress" style="margin-top: 20px">

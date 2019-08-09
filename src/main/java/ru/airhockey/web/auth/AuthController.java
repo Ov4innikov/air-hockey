@@ -18,6 +18,7 @@ import ru.airhockey.statistics.entity.GameHistory;
 import ru.airhockey.statistics.entity.UserStatistics;
 
 import java.security.Principal;
+import java.time.Instant;
 import java.util.List;
 
 @Controller
@@ -122,12 +123,23 @@ public class AuthController {
     public String game(Model model, Principal principal, @RequestParam int user1, @RequestParam int user2 , @RequestParam String gameID, @RequestParam PlayerPosition userPosition) {
         model.addAttribute("user1", user1);
         model.addAttribute("user2", user2);
+        if ("bot".equals(gameID)) {
+            gameID = gameID = String.valueOf(user1) + "_" + String.valueOf(user2) + "_" + Instant.now().toString();
+        }
         model.addAttribute("gameID", gameID);
         model.addAttribute("userPosition", userPosition);
-        AppUser appUser1 = appUserDao.findUserById(user1);
-        AppUser appUser2 = appUserDao.findUserById(user2);
-        model.addAttribute("userName1", appUser1.getName());
-        model.addAttribute("userName2", appUser2.getName());
+        String username1 = "Bot";
+        String username2 = "Bot";
+        if (user1 != -1) {
+            AppUser appUser = appUserDao.findUserById(user1);
+            username1 = appUser.getName();
+        }
+        if (user2 != -1) {
+            AppUser appUser = appUserDao.findUserById(user2);
+            username2 = appUser.getName();
+        }
+        model.addAttribute("userName1", username1);
+        model.addAttribute("userName2", username2);
         return "game";
     }
 
@@ -158,5 +170,4 @@ public class AuthController {
         model.addAttribute( "UserQueueID", appUser.getId());
         return "waitingList";
     }
-
 }

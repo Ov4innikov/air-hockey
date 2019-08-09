@@ -78,9 +78,9 @@ public class RestController {
 //    }
 
     @RequestMapping("/bot-game")
-    public void gameWithBot(@RequestParam String gameId, @RequestParam BotLevel level) {
+    public void gameWithBot(@RequestParam String gameId, @RequestParam BotLevel level, @RequestParam int user) {
         BotCreateMessage message = new BotCreateMessage(gameId, level);
-        botManager.createGame(message.getGameId(), message.getBotLevel(), 0);
+        botManager.createGame(message.getGameId(), message.getBotLevel(), user);
         botManager.startGame(message.getGameId());
     }
 

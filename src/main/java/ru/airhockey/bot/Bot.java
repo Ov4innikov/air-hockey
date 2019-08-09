@@ -36,7 +36,7 @@ public class Bot implements Callable<String> {
             default: level = new RadiusBot(); break;
         }
         while (game.getPlayStatus() != PlayStatus.BREAK && !breakBotPlaying) {
-            PlayerMove playerMove = level.calculateMoving(game.getPuckPosition(), game.getPlayer2());
+            PlayerMove playerMove = level.calculateMoving(game.getPuckPosition(), game.getPlayer());
             game.setPlayerPosition(new ClientMessage(gameId, playerMove.getPlayer().getPlayerPosition(), playerMove.getPlayerMoveStatus(), playerMove.getDirection()));
             LockSupport.parkNanos(Puck.WAIT_TIME * 1_000_000);
         }
