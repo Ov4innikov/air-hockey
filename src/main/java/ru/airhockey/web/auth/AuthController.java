@@ -23,6 +23,9 @@ import java.util.List;
 
 @Controller
 public class AuthController {
+
+    public static final String BOT_NAME = "BOT";
+
     @Autowired
     private AppUserDao appUserDao;
 
@@ -108,14 +111,17 @@ public class AuthController {
         return "redirect:/registerSuccessful";
     }
 
-    @RequestMapping(value = "/sockets", method = RequestMethod.GET)
-    public String socket(Model model, Principal principal) {
-        return "sockets";
-    }
-
     @RequestMapping(value = "/demo", method = RequestMethod.GET)
-    public String demo(Model model, Principal principal, @RequestParam String gameId) {
+    public String demo(Model model, Principal principal, @RequestParam String gameId, @RequestParam String user1, @RequestParam String user2, @RequestParam PlayerPosition position) {
         model.addAttribute("gameId", gameId);
+        String username1 = user1;
+        String username2 = user2;
+        if (position == PlayerPosition.UP) {
+            username1 = user2;
+            username2 = user1;
+        }
+        model.addAttribute("user1", username1);
+        model.addAttribute("user2", username2);
         return "demo";
     }
 
@@ -128,8 +134,8 @@ public class AuthController {
         }
         model.addAttribute("gameID", gameID);
         model.addAttribute("userPosition", userPosition);
-        String username1 = "Bot";
-        String username2 = "Bot";
+        String username1 = BOT_NAME;
+        String username2 = BOT_NAME;
         if (user1 != -1) {
             AppUser appUser = appUserDao.findUserById(user1);
             username1 = appUser.getName();
@@ -147,14 +153,12 @@ public class AuthController {
     public String gameHistory(Model model, Principal principal) {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         AppUser appUser = appUserDao.findUserAccount(loginedUser.getUsername());
-//        userStatisticsDAO.insertStatistics(appUser.getId());
-//        historyDAO.insertGame("demoPlay", appUser.getId());
         List<GameHistory> historyList = historyDAO.getGamesByIdUser(appUser.getId());
         for (GameHistory history: historyList) {
-            if(history.getOpponent() != 0) {
+            if(history.getOpponent() != -1) {
                 AppUser opponent = appUserDao.findUserById(history.getOpponent());
                 history.setOpponentName(opponent.getName());
-            } else history.setOpponentName("none");
+            } else history.setOpponentName(BOT_NAME);
         }
         UserStatistics statistics = userStatisticsDAO.getStatisticsByUserId(appUser.getId());
         model.addAttribute("gameHistory", historyList);

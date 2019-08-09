@@ -1,29 +1,27 @@
-var svgWidth = 1000, svgHeight = 700;
+var svgWidth = 1000, svgHeight = 750;
 var fieldWidth = 450, fieldHeight = 650;
 var fieldX = 50, fieldY = 35;
-var fieldBorder = 30;
-var rpuckBorder = 4;
-var batBorder = 12;
-var rpuckRadius = 30;
-var batRadius = 30;
-var goalWidth = 140, goalHeight = 15;
+var rpuckDiameter = 20;
+var batDiameter = 40;
+var goalWidth = 200, goalHeight = 15;
 var scoreMy = scoreEnemy = 0;
-var nameMy = 'Me';
-var nameEnemy = 'Enemy';
 
 var draw = SVG('air').size(svgWidth, svgHeight).attr({'background-color': '#0f0b4cf0'});
 
 var field = draw.group();
 
+var downLayer = field.rect(fieldWidth + 60, fieldHeight + 60).attr({
+    x: fieldX - 30,
+    y: fieldY - 30,
+    fill: '#bdea94',
+    rx: 30
+});
+
 var background = field.rect(fieldWidth, fieldHeight).attr({
     x: fieldX,
     y: fieldY,
     fill: '#0055d4',
-    stroke: '#bdea94',
-    'stroke-width': fieldBorder,
-    'stroke-linejoin': 'round'
 });
-
 
 var centerCircle = field.circle(200).attr({
     cx: fieldX + fieldWidth / 2,
@@ -31,36 +29,33 @@ var centerCircle = field.circle(200).attr({
     fill: '#0055d4',
     stroke: '#bdea94'
 });
-var centerLine = field.line(fieldX + 15, fieldY + fieldHeight / 2, fieldX + fieldWidth - 15, fieldY + fieldHeight / 2);
+
+var centerLine = field.line(fieldX, fieldY + fieldHeight / 2, fieldX + fieldWidth, fieldY + fieldHeight / 2);
 centerLine.stroke({color: '#bdea94'});
+
 var myGoal = field.rect(goalWidth, goalHeight).attr({
     fill: '#0055d4',
     x: fieldX + fieldWidth / 2 - goalWidth / 2,
-    y: fieldY
+    y: fieldY - goalHeight
 });
+
 var enemyGoal = myGoal.clone();
 enemyGoal.attr({
     fill: '#0055d4',
     x: fieldX + fieldWidth / 2 - goalWidth / 2,
-    y: fieldY + fieldHeight - 15
+    y: fieldY + fieldHeight
 });
 
+var rpuck = field.circle(rpuckDiameter).attr({
+    cx:fieldX + fieldWidth/2,
+    cy:fieldY + fieldHeight/2,
+    fill:'#f4ffc9'
+})
 
-var rpuck = field.circle(rpuckRadius).attr({
-    cx: fieldX + fieldWidth / 2,
-    cy: fieldY + fieldHeight / 2,
-    fill: '#f4ffc9',
-    stroke: '#bdeadb',
-    'stroke-width': rpuckBorder
-});
-
-
-var myBat = field.circle(batRadius).attr({
+var myBat = field.circle(batDiameter).attr({
     cx: fieldX + fieldWidth / 2,
     cy: fieldY + fieldHeight - 30,
-    fill: '#dbe3de',
-    stroke: '#cdd1c9',
-    'stroke-width': batBorder
+    fill: '#dbe3de'
 });
 
 var enemyBat = myBat.clone();
@@ -76,7 +71,7 @@ var scoreMyText = draw.text(scoreMy + '').font({
     y: fieldHeight - 50
 });
 
-var nameMyText = draw.text(nameMy + '').font({
+var nameMyText = draw.text($('#user1').val() + '').font({
     size: 72,
     family: 'Mistral',
     fill: '#4e55d4',
@@ -88,7 +83,7 @@ var scoreEnemyText = scoreMyText.clone().text(scoreEnemy + '').font({
     y: 70
 });
 
-var nameEnemyText = nameMyText.clone().text(nameEnemy + '').font({
+var nameEnemyText = nameMyText.clone().text($('#user2').val()  + '').font({
     y: 0
 });
 

@@ -1,15 +1,21 @@
 function showMessage(message) {
     if (message.playStatus === 'BREAK') {
         disconnect();
+        $("#goToStatistics").click();
         return;
     }
     statusText.text(message.playStatus);
-    timeText.text(message.tick + '');
-    scoreMyText.text(message.player2.score + '');
-    scoreEnemyText.text(message.player1.score + '');
-    enemyBat.x(message.player1.x + fieldX + batBorder).y(message.player1.y + fieldY + batBorder);
-    myBat.x(message.player2.x + fieldX + batBorder).y(message.player2.y + fieldY + batBorder);
-    rpuck.x(message.puck.x + message.puck.speed.x + fieldX - fieldBorder/2 - rpuckRadius).y(message.puck.y + message.puck.speed.x + fieldY - fieldBorder/2 - rpuckRadius);
+    timeText.text(convertMs(message.tick) + '');
+    scoreMyText.text(message.player1.playAccount + '');
+    scoreEnemyText.text(message.player2.playAccount + '');
+    enemyBat.cx(message.player2.x + fieldX).cy(fieldHeight - message.player2.y + fieldY);
+    myBat.cx(message.player1.x + fieldX).cy(fieldHeight - message.player1.y + fieldY);
+    rpuck.cx(message.puck.x + fieldX).cy(fieldHeight - message.puck.y + fieldY);
+}
+
+function convertMs(ms) {
+    var date = new Date(ms);
+    return date.toLocaleTimeString();
 }
 
 function startReplay(id) {

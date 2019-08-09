@@ -1,21 +1,3 @@
-// import { connect } from 'ws/ws-app';
-// import { disconnect } from 'ws/ws-app';
-// import { sendMessage } from 'ws/ws-app';
-
-var timeNow = 0;
-
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#userinfo").html("");
-}
-
 function showMessage(message) {
     console.log(message);
     if (message.playStatus === 'BREAK') {
@@ -43,15 +25,9 @@ function setStart(id,user1,user2) {
     else jQuery.get("/app/bot-game", {gameId:id , level:'MIDDLE', user: user2});
 }
 
-function setBot(id) {
-    jQuery.get("/app/bot-game", {gameId:id, level: 'MIDDLE'});
-    // jQuery.post("/app/bot-game", {gameId:id, level: 'MIDDLE'});
-    timeNow = new Date().getTime();
-}
 $(function () {
     let gameId = $("#gameId").val();
     connect();
     openChanel(gameId, showMessage);
     setStart(gameId,$("#user1").val(),$("#user2").val());
-})
 });

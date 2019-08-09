@@ -40,30 +40,17 @@ public class RestController {
     @Autowired
     IBotManager botManager;
 
-    @RequestMapping("/serversay")
-    public void serverSay(@RequestParam String key) {
-        TestMessage message = new TestMessage();
-        message.setFrom("John");
-        message.setMessage("Server want say");
-        sender.send(key, message);
-    }
-
     @RequestMapping("/replay")
     public void demoSay(@RequestParam String gameId) {
         demo.demoPlay(gameId);
     }
 
-    @RequestMapping("/demoinsert")
-    public void demoInsert() {
-        demo.insertGame();
-    }
-
     @RequestMapping("/start")
     public void startGame(@RequestParam String gameId, @RequestParam int user1,@RequestParam int user2) {
-        System.out.println("Controller started");
-//        manager.createGame(gameId, user1, user2);
-        if (!manager.isGameStarted(gameId)) {
-            manager.startGame(gameId);
+        synchronized (this) {
+            if (!manager.isGameStarted(gameId)) {
+                manager.startGame(gameId);
+            }
         }
     }
 
@@ -72,12 +59,6 @@ public class RestController {
         manager.endGame(gameId);
         return "redirect:/userStatistics";
     }
-
-//    @RequestMapping("/bot-game")
-//    public void gameWithBot(@RequestParam BotCreateMessage message) {
-//        botManager.createGame(message.getGameId(), message.getBotLevel());
-//        botManager.startGame(message.getGameId());
-//    }
 
     @RequestMapping("/bot-game")
     public void gameWithBot(@RequestParam String gameId, @RequestParam BotLevel level, @RequestParam int user) {
