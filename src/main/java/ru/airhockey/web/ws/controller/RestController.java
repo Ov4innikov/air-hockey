@@ -61,8 +61,10 @@ public class RestController {
     @RequestMapping("/start")
     public void startGame(@RequestParam String gameId, @RequestParam int user1,@RequestParam int user2) {
         System.out.println("Controller started");
-        manager.createGame(gameId, user1, user2);
-        manager.startGame(gameId);
+//        manager.createGame(gameId, user1, user2);
+        if (!manager.isGameStarted(gameId)) {
+            manager.startGame(gameId);
+        }
     }
 
     @RequestMapping("/end")
@@ -104,6 +106,7 @@ public class RestController {
                 mav.addObject("userPosition", PlayerPosition.UP);
             }
             mav.addObject("gameID",matchedUser.getGameID());
+            manager.createGame(matchedUser.getGameID(), matchedUser.getUser1(), matchedUser.getUser2());
            return mav;
         }
         return null;
