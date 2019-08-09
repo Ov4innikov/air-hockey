@@ -23,7 +23,7 @@ public class Game {
     private String gameId;
     private long tick;
     private List<DemoMassage> demoMassageList;
-
+    private boolean isStarted;
     private int user1;
     private int user2;
 
@@ -33,6 +33,7 @@ public class Game {
 
     public Game(ISender sender, String gameId, int user1, int user2) {
         this();
+        isStarted = false;
         this.sender = sender;
         this.gameId = gameId;
         this.user1 = user1;
@@ -60,6 +61,7 @@ public class Game {
     }
 
     public void startGame(Player player1, Player player2) {
+        isStarted = true;
         System.out.println("Service started on " + gameId + " channel");
         ExecutorService executorService = new ForkJoinPool(20);
         simplePlay = new SimplePlay(executorService, player1, player2);

@@ -90,4 +90,9 @@ public class GameManager implements IManager {
     public Game getGameById(String gameId) {
         return gameMap.get(gameId);
     }
+
+    @Override
+    public boolean isGameStarted(String gameId) {
+        return gameMap.get(gameId).isStarted();
+    }
 }

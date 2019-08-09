@@ -12,4 +12,6 @@ public interface IManager {
     void setPlayerPosition(IMessage message);
 
     Game getGameById(String gameId);
+
+    boolean isGameStarted(String gameId);
 }

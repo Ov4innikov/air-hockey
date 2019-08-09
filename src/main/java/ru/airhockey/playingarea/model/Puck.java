@@ -14,7 +14,7 @@ import java.util.concurrent.locks.LockSupport;
 @Setter
 public class Puck {
     public static final int WAIT_TIME = 15;
-    public static final int RADIUS = 20;
+    public static final int RADIUS = 10;
 
     private Speed speed;
     private float x;

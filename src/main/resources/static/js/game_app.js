@@ -2,6 +2,8 @@
 // import { disconnect } from 'ws/ws-app';
 // import { sendMessage } from 'ws/ws-app';
 
+var timeNow = 0;
+
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
     $("#disconnect").prop("disabled", !connected);
@@ -17,19 +19,23 @@ function setConnected(connected) {
 function showMessage(message) {
     console.log(message);
     if (message.playStatus === 'BREAK') {
-        console.log('gracias');
         disconnect();
         if (user1 != -1) jQuery.get("/app/end", {gameId:$("#gameId").val()});
         else jQuery.get("/app/bot-game-end", {gameId:$("#gameId").val()});
         return;
     }
     statusText.text(message.playStatus);
-    timeText.text(message.tick + '');
-    scoreMyText.text(message.player1.score + '');
-    scoreEnemyText.text(message.player2.score + '');
-    enemyBat.cx(message.player2.x).cy( fieldHeight - message.player2.y);
-    myBat.cx(message.player1.x).cy(fieldHeight - message.player1.y);
-    rpuck.cx(message.puck.x).cy(fieldHeight - message.puck.y);
+    timeText.text(convertMs(message.tick) + '');
+    scoreMyText.text(message.player1.playAccount + '');
+    scoreEnemyText.text(message.player2.playAccount + '');
+    enemyBat.cx(message.player2.x + fieldX).cy(fieldHeight - message.player2.y + fieldY);
+    myBat.cx(message.player1.x + fieldX).cy(fieldHeight - message.player1.y + fieldY);
+    rpuck.cx(message.puck.x + fieldX).cy(fieldHeight - message.puck.y + fieldY);
+}
+
+function convertMs(ms) {
+    var date = new Date(ms);
+    return date.toLocaleTimeString();
 }
 
 function setStart(id,user1,user2) {
@@ -40,25 +46,12 @@ function setStart(id,user1,user2) {
 function setBot(id) {
     jQuery.get("/app/bot-game", {gameId:id, level: 'MIDDLE'});
     // jQuery.post("/app/bot-game", {gameId:id, level: 'MIDDLE'});
-}
-
-function getCorner(x, y) {
-    var corner = 0;
-    if (x >= 0 && y >= 0) {
-        corner = (Math.atan(Math.abs(y) / Math.abs(x)) * 180 / Math.PI) % 360;
-    } else if (x < 0 && y >= 0) {
-        corner = (Math.atan(Math.abs(x) / Math.abs(y)) * 180 / Math.PI + 90) % 360;
-    } else if (x < 0 && y < 0) {
-        corner = (Math.atan(Math.abs(y) / Math.abs(x)) * 180 / Math.PI + 180) % 360;
-    } else if (x >= 0 && y < 0) {
-        corner = (Math.atan(Math.abs(x) / Math.abs(y)) * 180 / Math.PI + 270) % 360;
-    }
-
-    return corner;
+    timeNow = new Date().getTime();
 }
 $(function () {
     let gameId = $("#gameId").val();
     connect();
     openChanel(gameId, showMessage);
     setStart(gameId,$("#user1").val(),$("#user2").val());
+})
 });
