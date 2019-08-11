@@ -49,5 +49,26 @@
 
     </form>
 </div>
+
+<div id="myModalBox" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Заголовок модального окна -->
+            <div class="modal-header">
+                <h3 class="modal-title">Игра окончена!</h3>
+            </div>
+            <!-- Основное содержимое модального окна -->
+            <div class="modal-body">
+                Содержимое модального окна...
+            </div>
+            <!-- Футер модального окна -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" th:onclick="'window.location.href = \''+@{/waitingList}+'\''">Перейти в лист ожидания</button>
+                <button type="button" class="btn btn-primary" th:onclick="'window.location.href = \''+@{/userStatistics}+'\''">Перейти к статистике</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
