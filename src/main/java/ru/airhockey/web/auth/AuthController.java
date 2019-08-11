@@ -19,6 +19,7 @@ import ru.airhockey.statistics.entity.UserStatistics;
 
 import java.security.Principal;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -161,6 +162,7 @@ public class AuthController {
             } else history.setOpponentName(BOT_NAME);
         }
         UserStatistics statistics = userStatisticsDAO.getStatisticsByUserId(appUser.getId());
+        Collections.reverse(historyList);
         model.addAttribute("gameHistory", historyList);
         model.addAttribute("userStatistics", statistics);
         model.addAttribute("username", appUser.getName());

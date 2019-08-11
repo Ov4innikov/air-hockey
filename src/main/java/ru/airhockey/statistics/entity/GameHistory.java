@@ -14,14 +14,16 @@ public class GameHistory {
     private String opponentName;
     private boolean isWin;
     private PlayerPosition position;
+    private String gameDate;
 
-    public GameHistory(int id, String id_game, int id_user, int opponent, boolean isWin, PlayerPosition position) {
+    public GameHistory(int id, String id_game, int id_user, int opponent, boolean isWin, PlayerPosition position, String gameDate) {
         this.id = id;
         this.id_game = id_game;
         this.id_user = id_user;
         this.opponent = opponent;
         this.isWin = isWin;
         this.position = position;
+        this.gameDate = gameDate;
     }
 
     public int getId() {
@@ -78,6 +80,14 @@ public class GameHistory {
 
     public void setPosition(PlayerPosition position) {
         this.position = position;
+    }
+
+    public String getGameDate() {
+        return gameDate;
+    }
+
+    public void setGameDate(String gameDate) {
+        this.gameDate = gameDate;
     }
 
     @Override

@@ -8,6 +8,9 @@ import ru.airhockey.playingarea.model.PlayerPosition;
 import ru.airhockey.statistics.entity.GameHistory;
 
 import javax.sql.DataSource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,8 +25,9 @@ public class GameHistoryTemplate extends JdbcDaoSupport implements GameHistoryDA
 
     @Override
     public void insertGame(String idGame, int idUser, int opponent, boolean isWin, PlayerPosition position) {
-        String sql = "insert into public.GAME_HISTORY(id_game, id_user, opponent, is_win, position) values(?,?,?,?,?)";
-        this.getJdbcTemplate().update(sql, idGame, idUser, opponent, isWin, position.toString());
+        String sql = "insert into public.GAME_HISTORY(id_game, id_user, opponent, is_win, position, game_date) values(?,?,?,?,?,?)";
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        this.getJdbcTemplate().update(sql, idGame, idUser, opponent, isWin, position.toString(), format.format(new Date()));
     }
 
     @Override
