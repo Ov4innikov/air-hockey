@@ -30,7 +30,6 @@ public class DemoPlay {
     GameReplayDAO replay;
 
     public void demoPlay(String demoSocketName) {
-        List<GameReplay> gameReplays = replay.getGames();
         String gameText = getTextFromDB(demoSocketName);
         List<DemoMassage> messages = parseDBFormat(gameText);
         for (DemoMassage message: messages) {

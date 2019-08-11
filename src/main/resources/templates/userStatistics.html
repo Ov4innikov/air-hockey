@@ -33,13 +33,14 @@
     <h6> Список сыгранных игр</h6>
     <div class="list-group" th:each="history: ${gameHistory}">
         <div class="list-group-item">
-            <a style="margin-right: 40px" th:href="@{/demo?gameId={gameId}(gameId=${history.id_game})}">
+            <a style="margin-right: 40px" th:href="@{/demo(gameId=${history.id_game}, user1=${username}, user2=${history.opponentName}, position=${history.position})}">
                 <div class="badge" th:classappend="${history.win} ? badge-success : badge-danger">
                     <span th:text="${username}"/>
                     <span style="margin-left: 10px; margin-right: 10px">VS</span>
                     <span th:text="${history.opponentName}"/>
                 </div>
             </a>
+            <span style="margin-left: 40px" th:text="${history.gameDate}"/>
         </div>
     </div>
 </div>

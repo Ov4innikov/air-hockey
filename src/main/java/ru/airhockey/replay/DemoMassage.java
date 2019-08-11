@@ -3,6 +3,7 @@ package ru.airhockey.replay;
 import ru.airhockey.playingarea.Play;
 import ru.airhockey.playingarea.model.PlayStatus;
 import ru.airhockey.playingarea.model.Player;
+import ru.airhockey.playingarea.model.PlayerPosition;
 import ru.airhockey.playingarea.model.Puck;
 import ru.airhockey.web.ws.model.IMessage;
 
@@ -49,12 +50,14 @@ public class DemoMassage implements IMessage {
         builder.append(player1.getY() + ";");
         builder.append(player1.getScore() + ";");
         builder.append(player1.getPlayAccount() + ";");
-        builder.append(player1.getPlayerPosition() + ";");
+//        builder.append(player1.getPlayerPosition() + ";");
+        builder.append(PlayerPosition.DOWN + ";");
         builder.append(player2.getX() + ";");
         builder.append(player2.getY() + ";");
         builder.append(player2.getScore() + ";");
         builder.append(player2.getPlayAccount() + ";");
-        builder.append(player2.getPlayerPosition() + ";");
+//        builder.append(player2.getPlayerPosition() + ";");
+        builder.append(PlayerPosition.UP + ";");
         builder.append(puck.getX() + ";");
         builder.append(puck.getY() + ";");
         builder.append(playStatus + ";\n");

@@ -18,10 +18,15 @@ import ru.airhockey.statistics.entity.GameHistory;
 import ru.airhockey.statistics.entity.UserStatistics;
 
 import java.security.Principal;
+import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
 public class AuthController {
+
+    public static final String BOT_NAME = "BOT";
+
     @Autowired
     private AppUserDao appUserDao;
 
@@ -107,14 +112,17 @@ public class AuthController {
         return "redirect:/registerSuccessful";
     }
 
-    @RequestMapping(value = "/sockets", method = RequestMethod.GET)
-    public String socket(Model model, Principal principal) {
-        return "sockets";
-    }
-
     @RequestMapping(value = "/demo", method = RequestMethod.GET)
-    public String demo(Model model, Principal principal, @RequestParam String gameId) {
+    public String demo(Model model, Principal principal, @RequestParam String gameId, @RequestParam String user1, @RequestParam String user2, @RequestParam PlayerPosition position) {
         model.addAttribute("gameId", gameId);
+        String username1 = user1;
+        String username2 = user2;
+        if (position == PlayerPosition.UP) {
+            username1 = user2;
+            username2 = user1;
+        }
+        model.addAttribute("user1", username1);
+        model.addAttribute("user2", username2);
         return "demo";
     }
 
@@ -122,12 +130,23 @@ public class AuthController {
     public String game(Model model, Principal principal, @RequestParam int user1, @RequestParam int user2 , @RequestParam String gameID, @RequestParam PlayerPosition userPosition) {
         model.addAttribute("user1", user1);
         model.addAttribute("user2", user2);
+        if ("bot".equals(gameID)) {
+            gameID = gameID = String.valueOf(user1) + "_" + String.valueOf(user2) + "_" + Instant.now().toString();
+        }
         model.addAttribute("gameID", gameID);
         model.addAttribute("userPosition", userPosition);
-        AppUser appUser1 = appUserDao.findUserById(user1);
-        AppUser appUser2 = appUserDao.findUserById(user2);
-        model.addAttribute("userName1", appUser1.getName());
-        model.addAttribute("userName2", appUser2.getName());
+        String username1 = BOT_NAME;
+        String username2 = BOT_NAME;
+        if (user1 != -1) {
+            AppUser appUser = appUserDao.findUserById(user1);
+            username1 = appUser.getName();
+        }
+        if (user2 != -1) {
+            AppUser appUser = appUserDao.findUserById(user2);
+            username2 = appUser.getName();
+        }
+        model.addAttribute("userName1", username1);
+        model.addAttribute("userName2", username2);
         return "game";
     }
 
@@ -135,16 +154,15 @@ public class AuthController {
     public String gameHistory(Model model, Principal principal) {
         User loginedUser = (User) ((Authentication) principal).getPrincipal();
         AppUser appUser = appUserDao.findUserAccount(loginedUser.getUsername());
-//        userStatisticsDAO.insertStatistics(appUser.getId());
-//        historyDAO.insertGame("demoPlay", appUser.getId());
         List<GameHistory> historyList = historyDAO.getGamesByIdUser(appUser.getId());
         for (GameHistory history: historyList) {
-            if(history.getOpponent() != 0) {
+            if(history.getOpponent() != -1) {
                 AppUser opponent = appUserDao.findUserById(history.getOpponent());
                 history.setOpponentName(opponent.getName());
-            } else history.setOpponentName("none");
+            } else history.setOpponentName(BOT_NAME);
         }
         UserStatistics statistics = userStatisticsDAO.getStatisticsByUserId(appUser.getId());
+        Collections.reverse(historyList);
         model.addAttribute("gameHistory", historyList);
         model.addAttribute("userStatistics", statistics);
         model.addAttribute("username", appUser.getName());
@@ -158,5 +176,4 @@ public class AuthController {
         model.addAttribute( "UserQueueID", appUser.getId());
         return "waitingList";
     }
-
 }

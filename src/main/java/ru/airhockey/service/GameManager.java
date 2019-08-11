@@ -54,10 +54,10 @@ public class GameManager implements IManager {
     public void endGame(String gameId) {
         Game game = gameMap.remove(gameId);
         if (game == null) return;
-        List<DemoMassage> demoMassageList = game.getDemoMassageList();
+        List<String> demoMassageList = game.getDemoMassageList();
         StringBuilder builder = new StringBuilder();
-        for (DemoMassage demoMassage : demoMassageList) {
-            builder.append(demoMassage.toDBFormat());
+        for (String demoMassage : demoMassageList) {
+            builder.append(demoMassage);
         }
         template.insertGame(gameId, builder.toString());
         boolean isBot = false;
@@ -74,8 +74,8 @@ public class GameManager implements IManager {
             user2 = UserResult.WIN;
             isWin = false;
         }
-        if (game.getUser1() != -1) historyDAO.insertGame(gameId, game.getUser1(), game.getUser2(), isWin);
-        if (game.getUser2() != -1) historyDAO.insertGame(gameId, game.getUser2(), game.getUser1(), !isWin);
+        if (game.getUser1() != -1) historyDAO.insertGame(gameId, game.getUser1(), game.getUser2(), isWin, PlayerPosition.DOWN);
+        if (game.getUser2() != -1) historyDAO.insertGame(gameId, game.getUser2(), game.getUser1(), !isWin, PlayerPosition.UP);
         userStatisticsDAO.updateStatistics(game.getUser1(), user1, (int) player1.getPlayAccount(), (int) player2.getPlayAccount(), isBot);
         userStatisticsDAO.updateStatistics(game.getUser2(), user2, (int) player2.getPlayAccount(), (int) player1.getPlayAccount(), isBot);
     }

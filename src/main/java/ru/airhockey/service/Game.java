@@ -22,7 +22,7 @@ public class Game {
     private ISender sender;
     private String gameId;
     private long tick;
-    private List<DemoMassage> demoMassageList;
+    private List<String> demoMassageList;
     private boolean isStarted;
     private int user1;
     private int user2;
@@ -42,7 +42,7 @@ public class Game {
 
     private DemoMassage getDemoMessage() {
         DemoMassage demoMassage = new DemoMassage(tick, simplePlay);
-        demoMassageList.add(demoMassage);
+        demoMassageList.add(demoMassage.toDBFormat());
         return demoMassage;
     }
 
@@ -88,10 +88,10 @@ public class Game {
 
     /**
      * Need for bot
-     * I think, that bot always must be on TOP
+     * I think, that bot always must be on DOWN
      * @return
      */
-    public Player getPlayer2() {
+    public Player getPlayer() {
         return simplePlay.getPlayState().getPlayer1();
     }
 }

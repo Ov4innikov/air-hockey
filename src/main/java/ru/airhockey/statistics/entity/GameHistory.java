@@ -1,5 +1,7 @@
 package ru.airhockey.statistics.entity;
 
+import ru.airhockey.playingarea.model.PlayerPosition;
+
 /**
  * @author folkland
  */
@@ -11,13 +13,17 @@ public class GameHistory {
     private int opponent;
     private String opponentName;
     private boolean isWin;
+    private PlayerPosition position;
+    private String gameDate;
 
-    public GameHistory(int id, String id_game, int id_user, int opponent, boolean isWin) {
+    public GameHistory(int id, String id_game, int id_user, int opponent, boolean isWin, PlayerPosition position, String gameDate) {
         this.id = id;
         this.id_game = id_game;
         this.id_user = id_user;
         this.opponent = opponent;
         this.isWin = isWin;
+        this.position = position;
+        this.gameDate = gameDate;
     }
 
     public int getId() {
@@ -68,6 +74,22 @@ public class GameHistory {
         isWin = win;
     }
 
+    public PlayerPosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(PlayerPosition position) {
+        this.position = position;
+    }
+
+    public String getGameDate() {
+        return gameDate;
+    }
+
+    public void setGameDate(String gameDate) {
+        this.gameDate = gameDate;
+    }
+
     @Override
     public String toString() {
         return "GameHistory{" +
@@ -77,6 +99,7 @@ public class GameHistory {
                 ", opponent=" + opponent +
                 ", opponentName='" + opponentName + '\'' +
                 ", isWin=" + isWin +
+                ", position=" + position +
                 '}';
     }
 }

@@ -1,26 +1,9 @@
-// import { connect } from 'ws/ws-app';
-// import { disconnect } from 'ws/ws-app';
-// import { sendMessage } from 'ws/ws-app';
-
-var timeNow = 0;
-
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#userinfo").html("");
-}
-
 function showMessage(message) {
     console.log(message);
     if (message.playStatus === 'BREAK') {
         disconnect();
-        jQuery.get("/app/end", {gameId:$("#gameId").val()});
+        if (user1 != -1) jQuery.get("/app/end", {gameId:$("#gameId").val()});
+        else jQuery.get("/app/bot-game-end", {gameId:$("#gameId").val()});
         return;
     }
     statusText.text(message.playStatus);
@@ -38,17 +21,13 @@ function convertMs(ms) {
 }
 
 function setStart(id,user1,user2) {
-    jQuery.get("/app/start", {gameId:id ,user1:user1, user2:user2});
+    if (user1 != -1) jQuery.get("/app/start", {gameId:id ,user1:user1, user2:user2});
+    else jQuery.get("/app/bot-game", {gameId:id , level:'MIDDLE', user: user2});
 }
 
-function setBot(id) {
-    jQuery.get("/app/bot-game", {gameId:id, level: 'MIDDLE'});
-    // jQuery.post("/app/bot-game", {gameId:id, level: 'MIDDLE'});
-    timeNow = new Date().getTime();
-}
 $(function () {
     let gameId = $("#gameId").val();
     connect();
     openChanel(gameId, showMessage);
     setStart(gameId,$("#user1").val(),$("#user2").val());
-})
+});
