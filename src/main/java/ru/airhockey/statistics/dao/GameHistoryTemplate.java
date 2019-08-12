@@ -26,7 +26,7 @@ public class GameHistoryTemplate extends JdbcDaoSupport implements GameHistoryDA
     @Override
     public void insertGame(String idGame, int idUser, int opponent, boolean isWin, PlayerPosition position) {
         String sql = "insert into public.GAME_HISTORY(id_game, id_user, opponent, is_win, position, game_date) values(?,?,?,?,?,?)";
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         this.getJdbcTemplate().update(sql, idGame, idUser, opponent, isWin, position.toString(), format.format(new Date()));
     }
 

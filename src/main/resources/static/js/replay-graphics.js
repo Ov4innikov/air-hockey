@@ -55,12 +55,13 @@ var rpuck = field.circle(rpuckDiameter).attr({
 var myBat = field.circle(batDiameter).attr({
     cx: fieldX + fieldWidth / 2,
     cy: fieldY + fieldHeight - 30,
-    fill: '#dbe3de'
+    fill: '#ffc734ff'
 });
 
 var enemyBat = myBat.clone();
 enemyBat.attr({
-    cy: fieldY + 30
+    cy: fieldY + 30,
+    fill: '#ff3459ff'
 });
 
 var scoreMyText = draw.text(scoreMy + '').font({

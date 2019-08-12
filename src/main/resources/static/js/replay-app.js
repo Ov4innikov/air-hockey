@@ -14,8 +14,9 @@ function showMessage(message) {
 }
 
 function convertMs(ms) {
-    var date = new Date(ms);
-    return date.toLocaleTimeString();
+    min = 0|(ms/1000/60);
+    sec = 0|(ms/1000) % 60;
+    return min + ':' + sec;
 }
 
 function startReplay(id) {

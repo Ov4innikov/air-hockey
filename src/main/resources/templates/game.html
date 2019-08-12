@@ -40,14 +40,35 @@
         <!--      </div>-->
         <!--  </div>-->
         <!--  <button id="bot" class="btn btn-default" type="submit">BOT</button>-->
-        <input type="text" id="user1" th:value="${user1}"/>
-        <input type="text" id="user2" th:value="${user2}"/>
-        <input type="text" id="userName1" th:value="${userName1}"/>
-        <input type="text" id="userName2" th:value="${userName2}"/>
-        <input type="text" id="gameId" th:value="${gameID}"/>
-        <input type="text" id="userPosition" th:value="${userPosition}"/>
+        <input type="hidden" id="user1" th:value="${user1}"/>
+        <input type="hidden" id="user2" th:value="${user2}"/>
+        <input type="hidden" id="userName1" th:value="${userName1}"/>
+        <input type="hidden" id="userName2" th:value="${userName2}"/>
+        <input type="hidden" id="gameId" th:value="${gameID}"/>
+        <input type="hidden" id="userPosition" th:value="${userPosition}"/>
 
     </form>
 </div>
+
+<div id="myModalBox" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Заголовок модального окна -->
+            <div class="modal-header">
+                <h3 class="modal-title">Игра окончена!</h3>
+            </div>
+            <!-- Основное содержимое модального окна -->
+            <div class="modal-body">
+                Содержимое модального окна...
+            </div>
+            <!-- Футер модального окна -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" th:onclick="'window.location.href = \''+@{/waitingList}+'\''">Перейти в лист ожидания</button>
+                <button type="button" class="btn btn-primary" th:onclick="'window.location.href = \''+@{/userStatistics}+'\''">Перейти к статистике</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

@@ -69,7 +69,7 @@ public class GameManager implements IManager {
         UserResult user2 = UserResult.LOSE;
         Player player1 = game.getSimplePlay().getPlayState().getPlayer1();
         Player player2 = game.getSimplePlay().getPlayState().getPlayer2();
-        if (player2.equals(game.getSimplePlay().getPlayState().getWinner())) {
+        if (isPlayer2Win(player1, player2)) {
             user1 = UserResult.LOSE;
             user2 = UserResult.WIN;
             isWin = false;
@@ -78,6 +78,12 @@ public class GameManager implements IManager {
         if (game.getUser2() != -1) historyDAO.insertGame(gameId, game.getUser2(), game.getUser1(), !isWin, PlayerPosition.UP);
         userStatisticsDAO.updateStatistics(game.getUser1(), user1, (int) player1.getPlayAccount(), (int) player2.getPlayAccount(), isBot);
         userStatisticsDAO.updateStatistics(game.getUser2(), user2, (int) player2.getPlayAccount(), (int) player1.getPlayAccount(), isBot);
+    }
+
+    private boolean isPlayer2Win(Player player1, Player player2) {
+        if (player1.getPlayAccount() != player2.getPlayAccount() && player2.getPlayAccount() > player1.getPlayAccount()) return true;
+        if (player1.getPlayAccount() == player2.getPlayAccount() && player2.getScore() > player1.getScore()) return true;
+        return false;
     }
 
     @Override
