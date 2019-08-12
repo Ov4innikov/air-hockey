@@ -65,11 +65,11 @@ public class Game {
         System.out.println("Service started on " + gameId + " channel");
         ExecutorService executorService = new ForkJoinPool(20);
         simplePlay = new SimplePlay(executorService, player1, player2);
-        tick = System.currentTimeMillis();
+        tick = 0;
         executorService.submit(simplePlay);
         while (simplePlay.getPlayState().getPlayStatus() != PlayStatus.BREAK) {
             sender.send(gameId, getDemoMessage());
-            tick += Puck.WAIT_TIME;
+            if (simplePlay.getPlayState().getPlayStatus() == PlayStatus.PLAYING) tick += Puck.WAIT_TIME;
             LockSupport.parkNanos(Puck.WAIT_TIME * 1_000_000);
         }
         if (simplePlay.getPlayState().getPlayStatus() == PlayStatus.BREAK) {
